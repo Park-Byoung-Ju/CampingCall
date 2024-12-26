@@ -99,7 +99,7 @@ $(document).ready(function(){
 					$("#joinBtn").attr("disabled", true);
 					
 					$("#join-modal").css("display", "none");
-					$("#login-modal").fadeIn();	
+					$("#login-modal").css("display", "block");	
 				}else{
 					alert("회원가입 실패");
 				}			
