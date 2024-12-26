@@ -90,7 +90,16 @@ $(document).ready(function(){
 			,success:function(response){
 				if(response){
 					alert("회원가입이 완료되었습니다");
-					location.reload();					
+					
+					$("#id").val(status);
+					$("#password").val(status);
+					$("#passwordCheck").val(status);
+					$("#name").val(status);
+					$("#email").val(status);
+					$("#joinBtn").attr("disabled", true);
+					
+					$("#join-modal").css("display", "none");
+					$("#login-modal").fadeIn();	
 				}else{
 					alert("회원가입 실패");
 				}			
@@ -137,15 +146,15 @@ $(document).ready(function(){
 	});
 	
 	// 로그인 눌렀을때 실행
-	$("#login").on("click", function(){
-		$("#login-modal").fadeIn();
+	$(".login").on("click", function(){
 		$("#join-modal").fadeOut();
+		$("#login-modal").fadeIn();	
 	});
 	
 	// 모달에서 회원가입 눌렀을때 실행
-	$("#join").on("click",function(){
-		$("#join-modal").fadeIn();
+	$("#join").on("click",function(){		
 		$("#login-modal").fadeOut();
+		$("#join-modal").fadeIn();
 	});
 	
 	// 모달에서 닫기 눌렀을때 실행
