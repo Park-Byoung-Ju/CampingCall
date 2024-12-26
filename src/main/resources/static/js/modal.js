@@ -90,8 +90,7 @@ $(document).ready(function(){
 			,success:function(response){
 				if(response){
 					alert("회원가입이 완료되었습니다");
-					$("#login-modal").fadeIn();
-					$("#join-modal").fadeOut();
+					location.reload();					
 				}else{
 					alert("회원가입 실패");
 				}			

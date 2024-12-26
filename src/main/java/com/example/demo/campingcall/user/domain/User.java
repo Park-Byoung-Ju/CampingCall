@@ -1,6 +1,6 @@
 package com.example.demo.campingcall.user.domain;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -39,8 +39,11 @@ public class User {
 	@Column(name="email")
 	private String email;
 	
+	@Column(name="createdAt")
 	@CreationTimestamp
-	private LocalDate createdAt;
+	private LocalDateTime createdAt;
+	
+	@Column(name="updatedAt")
 	@UpdateTimestamp
-	private LocalDate updatedAt;
+	private LocalDateTime updatedAt;
 }
