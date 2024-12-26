@@ -1,7 +1,25 @@
 
-<script>
-	$(document).ready(function(){
-		let a = 1;
-		alert(a);
-	});
-</script>
+	<div id="login-modal" class="modal">
+		<div class="modal-body bg-yellowGreen">
+			<div class="modal-item-box text-center">
+				<div class="d-flex justify-content-between">
+					<div></div>
+					<h1 class="p-2 ml-5">로그인</h1>
+					<span class="text-white mt-3 modal-close">닫기 ✕</span>		
+				</div>
+				
+				<input id="loginId" type="text" class="form-control mt-3" placeholder="아이디">
+				<input id="loginPassword" i type="password" class="form-control mt-2" placeholder="비밀번호">
+				
+				<div>
+					<button id="loginBtn" class="btn bg-white mt-4 w-100">로그인</button>
+				</div>
+				
+				<hr class="mt-5">
+				
+				<div class="p-2">
+					아이디가 없으신가요? <span id="join">회원가입</span>
+				</div>
+			</div>
+		</div>
+	</div>

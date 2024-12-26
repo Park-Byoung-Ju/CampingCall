@@ -17,6 +17,7 @@ nav > ul > .nav-item{
 	align-items:center;
 	justify-content:center;
 	cursor:pointer;
+	font-weight:bold;
 }
 
 .nav-item-option:hover{
@@ -26,6 +27,7 @@ nav > ul > .nav-item{
 
 .login-logout{
 	cursor:pointer;
+	color:blue;
 }
 
 .login-logout:hover{

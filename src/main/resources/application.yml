@@ -5,7 +5,7 @@ spring:
         import: security-variable.yml
     thymeleaf: #thymeleaf 설정
         cache: false
-    datasource: #mybatis 설정
+    datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://localhost:3306/campingcall
         username: root
