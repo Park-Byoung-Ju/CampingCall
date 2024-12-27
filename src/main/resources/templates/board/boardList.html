@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/main.html}">
+    
+    <th:block>
+	    <article layout:fragment="contents" class="box-center w-100">
+	    	<div class="p-5">
+	    		<h1 class="text-left">게시판</h1>
+	    		
+	    		<table class="table text-center mt-3">
+	    			<thead>
+	    				<tr>
+	    					<th class="col-2">작성자</th>
+	    					<th class="col-8">제목</th>
+	    					<th class="col-2">작성날짜</th>
+	    				</tr>
+	    			</thead>
+	    			
+	    			<tbody>
+	    				<tr>
+	    					<td>실험용</td>
+	    					<td>실험용 작성글입니다</td>
+	    					<td>2024-12-27</td>
+	    				</tr>
+	    				
+	    				<tr>
+	    					<td>실험용</td>
+	    					<td>실험용 작성글입니다</td>
+	    					<td>2024-12-27</td>
+	    				</tr>
+	    				
+	    				<tr>
+	    					<td>실험용</td>
+	    					<td>실험용 작성글입니다</td>
+	    					<td>2024-12-27</td>
+	    				</tr>
+	    				
+	    				<tr>
+	    					<td>실험용</td>
+	    					<td>실험용 작성글입니다</td>
+	    					<td>2024-12-27</td>
+	    				</tr>
+	    				
+	    				<tr>
+	    					<td>실험용</td>
+	    					<td>실험용 작성글입니다</td>
+	    					<td>2024-12-27</td>
+	    				</tr>
+	    				
+	    				<tr>
+	    					<td>실험용</td>
+	    					<td>실험용 작성글입니다</td>
+	    					<td>2024-12-27</td>
+	    				</tr>
+	    				
+	    				<tr>
+	    					<td>실험용</td>
+	    					<td>실험용 작성글입니다</td>
+	    					<td>2024-12-27</td>
+	    				</tr>
+	    			</tbody>
+	    		</table>
+	    		
+	    		<div class="d-flex justify-content-end">
+		    		<button class="btn btn-secondary">글쓰기</button>   		
+	    		</div>
+	    		
+	    		<div class="text-center">
+		    		<a th:if="${paging.now != 1}" href="#"><<</a>
+		    		<span th:unless="${paging.now != 1}"><<</span>
+		    		
+		    		<a th:if="${paging.first != null}" href="#">
+		    			<span th:if="${paging.first == paging.now}"><b>1</b></span>
+		    			<span th:unless="${paging.first == paging.now}">1</span>
+		    		</a>
+		    		
+		    		<a th:if="${paging.second != null}" href="#">
+		    			<span th:if="${paging.second == paging.now}"><b>2</b></span>
+		    			<span th:unless="${paging.second == paging.now}">2</span>
+		    		</a>
+		    		
+		    		<a th:if="${paging.third != null}" href="#">
+		    			<span th:if="${paging.third == paging.now}"><b>3</b></span>
+		    			<span th:unless="${paging.third == paging.now}">3</span>
+		    		</a>
+		    		
+		    		<a th:if="${paging.fourth != null}" href="#">
+		    			<span th:if="${paging.fourth == paging.now}"><b>4</b></span>
+		    			<span th:unless="${paging.fourth == paging.now}">4</span>
+		    		</a>
+		    		
+		    		<a th:if="${paging.fifth != null}" href="#">
+		    			<span th:if="${paging.fifth == paging.now}"><b>5</b></span>
+		    			<span th:unless="${paging.fifth == paging.now}">5</span>
+		    		</a>
+		    		
+		    		<a th:if="${paging.now != paging.end}" href="#">>></a>
+		    		<span th:unless="${paging.now != paging.end}">>></span>
+	    		</div>
+	    		
+	    		<div class="d-flex justify-content-center">	
+		    		<div class="input-group mt-3 col-11">
+		    			<input class="form-control" type="text">
+		    			
+		    			<div class="input-group-append">
+			    			<button class="btn btn-secondary">검색</button>
+		    			</div>
+		    		</div>
+	    		</div>
+	    	</div>
+	    </article> 
+    </th:block>
+</html>

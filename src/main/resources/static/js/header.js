@@ -20,3 +20,23 @@
 			}
 		});
 	});
+// 로그아웃 끝
+
+// location
+// 캠핑장
+
+// 캠핑장 끝
+
+// 관광지
+// 관광지 끝
+
+// 계획
+// 계획 끝
+
+// 게시판
+$("#boardLocation").on("click",function(){
+	location.href="/board/list-view"
+});
+// 게시판 끝
+
+// locaion 끝

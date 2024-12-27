@@ -5,16 +5,16 @@
 			
 			<nav class="col-7">
 				<ul class="nav nav-fill">
-					<li class="nav-item nav-item-option" href="#">캠핑장</li>
-					<li class="nav-item nav-item-option" href="#">관광지</li>
-					<li class="nav-item nav-item-option" href="#">계획</li>
-					<li class="nav-item nav-item-option" href="#">마이페이지</li>	
+					<li class="nav-item nav-item-option" id="campingLocation">캠핑장</li>
+					<li class="nav-item nav-item-option" id="tripLocation">관광지</li>
+					<li class="nav-item nav-item-option" id="planLocation">계획</li>
+					<li class="nav-item nav-item-option" id="boardLocation">게시판</li>	
 				</ul>
 			</nav>
 			
 			<div class="col-2 text-right pr-5">
 			<!-- 여기에 회원가입에 쓰이는 중복 효과 사용 -->
-				<th:block th:if="${session.userId != null}"><span th:text="${session.userName}">???님</span><span id="logout" class="login-logout ml-2">로그아웃</span></th:block>
+				<th:block th:if="${session.userId != null}"><span th:text="${session.userName}" th:data-id="${session.userId}">???님</span><span id="logout" class="login-logout ml-2">로그아웃</span></th:block>
 				<th:block th:unless="${session.userId != null}"><span class="login-logout login">로그인</span></th:block>
 			</div>
 		</header>
