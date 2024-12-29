@@ -1,6 +1,7 @@
 package com.example.demo.campingcall.board;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class BoardController {
 						, HttpServletResponse response
 						, Model model) {
 		
-		List<Board> boardList;
+		List<Board> boardList = new ArrayList<>();
 		
 		if(page == null && search == null) {
 			// 기본 초기화면이므로 page=1에 대한 데이터 얻기?
@@ -54,22 +55,15 @@ public class BoardController {
 		
 		Map<String, Integer> resultPaging = new HashMap<>();
 		
-		int count = boardService.countByAll();
-		int avg = count / 7 + 1; // 게시글 6 개 기준 / 7 하면 0이 return 되어서 1을 더해준다
+		int count = boardService.countByAll(); // 데이터 총 개수
+		int avg = count / 7 + 1;
+		int mypage = (page - 1) / 5;
 		
-		int first = page - 4;
-		int second = page - 3;
-		int third = page - 2;
-		int fourth = page - 1;
-		int fifth = page;
-		
-		while(first < 1) {
-			first++;
-			second++;
-			third++;
-			fourth++;
-			fifth++;
-		}
+		int first = mypage * 5 + 1;
+		int second = mypage * 5 + 2;
+		int third = mypage * 5 + 3;
+		int fourth = mypage * 5 + 4;
+		int fifth = mypage * 5 + 5;
 		
 		resultPaging.put("first", first);
 		resultPaging.put("second", second);
@@ -80,17 +74,19 @@ public class BoardController {
 		Set<String> keySet = resultPaging.keySet();
 		
 		for(String key : keySet) {
-			int sum = resultPaging.get(key) + 2;
+			int sum = resultPaging.get(key);
 			
 			if(sum <= avg) {
-				resultPaging.put(key, sum);
+				continue;
 			}else {
 				resultPaging.put(key, null);
 			}
 		}
 		resultPaging.put("end", avg);
 		resultPaging.put("now", page);
-
+		resultPaging.put("group", mypage);
+		
+		model.addAttribute("resultList", boardList);
 		model.addAttribute("paging", resultPaging);
 		
 		return "board/boardList";

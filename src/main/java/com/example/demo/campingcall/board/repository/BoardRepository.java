@@ -12,7 +12,8 @@ import com.example.demo.campingcall.board.domain.Board;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Integer>{
 
-	@Query(value="SELECT * FROM `board` ORDER BY `id` DESC #{start}, #{end}", nativeQuery=true)
+	// 오류나는데 작동하는데는 문제가 없음
+	@Query(value="SELECT * FROM `board` ORDER BY `id` DESC LIMIT :start, :end", nativeQuery=true)
 	public List<Board> boardList(@Param("start") int start
 								,@Param("end") int end);
 	

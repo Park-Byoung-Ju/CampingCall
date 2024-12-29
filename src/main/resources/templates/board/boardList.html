@@ -4,8 +4,13 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout/main.html}">
     
-    <th:block>
-	    <article layout:fragment="contents" class="box-center w-100">
+    <th:block layout:fragment="css">
+<link rel="stylesheet" href="/static/css/boardList.css">
+    
+    </th:block>
+    
+    <th:block layout:fragment="contents">
+	    <article class="box-center w-100">
 	    	<div class="p-5">
 	    		<h1 class="text-left">게시판</h1>
 	    		
@@ -19,85 +24,81 @@
 	    			</thead>
 	    			
 	    			<tbody>
-	    				<tr>
-	    					<td>실험용</td>
-	    					<td>실험용 작성글입니다</td>
-	    					<td>2024-12-27</td>
-	    				</tr>
-	    				
-	    				<tr>
-	    					<td>실험용</td>
-	    					<td>실험용 작성글입니다</td>
-	    					<td>2024-12-27</td>
-	    				</tr>
-	    				
-	    				<tr>
-	    					<td>실험용</td>
-	    					<td>실험용 작성글입니다</td>
-	    					<td>2024-12-27</td>
-	    				</tr>
-	    				
-	    				<tr>
-	    					<td>실험용</td>
-	    					<td>실험용 작성글입니다</td>
-	    					<td>2024-12-27</td>
-	    				</tr>
-	    				
-	    				<tr>
-	    					<td>실험용</td>
-	    					<td>실험용 작성글입니다</td>
-	    					<td>2024-12-27</td>
-	    				</tr>
-	    				
-	    				<tr>
-	    					<td>실험용</td>
-	    					<td>실험용 작성글입니다</td>
-	    					<td>2024-12-27</td>
-	    				</tr>
-	    				
-	    				<tr>
-	    					<td>실험용</td>
-	    					<td>실험용 작성글입니다</td>
-	    					<td>2024-12-27</td>
-	    				</tr>
+	    				<th:block th:each="board : ${resultList}">
+		    				<tr class="boardDetailLocation" th:data-id="${board.id}">
+		    					<td th:text="${board.Id}">실험용</td>
+		    					<td th:text="${board.title}">실험용 작성글입니다</td>
+		    					<td th:text="${#temporals.format(board.createdAt, 'yyyy-MM-dd')}">2024-12-27</td>
+		    				</tr>
+	    				</th:block>
 	    			</tbody>
 	    		</table>
 	    		
 	    		<div class="d-flex justify-content-end">
-		    		<button class="btn btn-secondary">글쓰기</button>   		
+		    		<button id="boardCreateBtn" class="btn btn-secondary">글쓰기</button>   		
 	    		</div>
 	    		
 	    		<div class="text-center">
-		    		<a th:if="${paging.now != 1}" href="#"><<</a>
-		    		<span th:unless="${paging.now != 1}"><<</span>
-		    		
-		    		<a th:if="${paging.first != null}" href="#">
-		    			<span th:if="${paging.first == paging.now}"><b>1</b></span>
-		    			<span th:unless="${paging.first == paging.now}">1</span>
-		    		</a>
-		    		
-		    		<a th:if="${paging.second != null}" href="#">
-		    			<span th:if="${paging.second == paging.now}"><b>2</b></span>
-		    			<span th:unless="${paging.second == paging.now}">2</span>
-		    		</a>
-		    		
-		    		<a th:if="${paging.third != null}" href="#">
-		    			<span th:if="${paging.third == paging.now}"><b>3</b></span>
-		    			<span th:unless="${paging.third == paging.now}">3</span>
-		    		</a>
-		    		
-		    		<a th:if="${paging.fourth != null}" href="#">
-		    			<span th:if="${paging.fourth == paging.now}"><b>4</b></span>
-		    			<span th:unless="${paging.fourth == paging.now}">4</span>
-		    		</a>
-		    		
-		    		<a th:if="${paging.fifth != null}" href="#">
-		    			<span th:if="${paging.fifth == paging.now}"><b>5</b></span>
-		    			<span th:unless="${paging.fifth == paging.now}">5</span>
-		    		</a>
-		    		
-		    		<a th:if="${paging.now != paging.end}" href="#">>></a>
-		    		<span th:unless="${paging.now != paging.end}">>></span>
+	    		<!-- 처음으로 -->
+	    			<th:block th:unless="${paging.now == 1}">
+	    			<a href="/board/list-view?page=1"><<</a>
+	    			</th:block>
+	    			
+	    			<th:block th:if="${paging.now == 1}">
+	    			<span><<</span>
+	    			</th:block>
+	    			
+	    		<!-- 이전 그룹으로 -->
+	    			<th:block th:unless="${paging.first == 1}" th:with="number = ${paging.first} - 1">
+	    			<a th:href="|/board/list-view?page=${number}|"><</a>
+	    			</th:block>
+	    			
+	    			<th:block th:if="${paging.now == 1}">
+	    			<span><</span>
+	    			</th:block>
+	    			
+	    		<!-- 첫번째 번호 -->	   		
+	    			<th:block th:if="${paging.first != null}">
+	    			<a th:text="${paging.first}" th:href="|/board/list-view?page=${paging.first}|">1</a>
+	    			</th:block>
+	    			
+	    		<!-- 두번째 번호 -->	
+	    			<th:block th:if="${paging.second != null}">
+	    			<a href="#" th:text="${paging.second}" th:href="|/board/list-view?page=${paging.second}|">2</a>
+	    			</th:block>
+	    			
+	    		<!-- 세번째 번호 -->	
+	    			<th:block th:if="${paging.third != null}">
+	    			<a href="#" th:text="${paging.third}" th:href="|/board/list-view?page=${paging.third}|">3</a>
+	    			</th:block>
+	    		
+	    		<!-- 네번째 번호 -->		
+	    			<th:block th:if="${paging.fourth != null}">
+	    			<a href="#" th:text="${paging.fourth}" th:href="|/board/list-view?page=${paging.fourth}|">4</a>
+	    			</th:block>
+	    		
+	    		<!-- 다섯번째 번호 -->	
+	    			<th:block th:if="${paging.fifth != null}">
+	    			<a href="#" th:text="${paging.fifth}" th:href="|/board/list-view?page=${paging.fifth}|">5</a>
+	    			</th:block>
+	    		
+	    		<!-- 다음 그룹으로 -->	
+	    			<th:block th:unless="${paging.fifth == paging.end}" th:with="number = ${paging.fifth} + 1">
+	    			<a th:href="|/board/list-view?page=${number}|">></a>
+	    			</th:block>
+	    			
+	    			<th:block th:if="${paging.fifth == paging.end}">
+	    			<span>></span>
+	    			</th:block>
+	    			
+				<!-- 끝으로 -->
+	    			<th:block th:unless="${paging.now == paging.end}">
+	    			<a th:href="|/board/list-view?page=${paging.end}|">>></a>
+	    			</th:block>
+	    			
+	    			<th:block th:if="${paging.now == paging.end}">
+	    			<span>>></span>
+	    			</th:block>
 	    		</div>
 	    		
 	    		<div class="d-flex justify-content-center">	
@@ -112,4 +113,21 @@
 	    	</div>
 	    </article> 
     </th:block>
+    
+<script layout:fragment="script">
+	$(document).ready(function(){
+		$("#boardCreateBtn").on("click",function(){
+			location.href = "/main";
+		});
+		
+		$(".boardDetailLocation").on("click",function(){
+			let id = $(this).data("id");
+			
+			alert("id : " + id);
+			
+			location.href = "/main";
+			
+		});
+	});
+</script>
 </html>

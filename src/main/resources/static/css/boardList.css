@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.boardDetailLocation{
+	cursor:pointer;
+}
+
+.boardDetailLocation:hover{
+	background-color:#cccccc;
+	color:white;
+	font-weight:bold;
+}

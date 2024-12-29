@@ -18,17 +18,8 @@ public class BoardService {
 	
 	public List<Board> boardList(int page){
 		int start = (page - 1) * 7; 			  // 0  7   14
-		int end = page * 7 - 1;     			 // 6  13  20
+		int end = 7;     			 // 7  14  21
 		
-		int allCount = boardRepository.listByAllCount();
-		
-		if(end >= allCount) {
-			end = allCount;
-		}
-		
-		if(start >= end) {
-			start = end;
-		}
 		
 		return boardRepository.boardList(start, end);	
 	}
