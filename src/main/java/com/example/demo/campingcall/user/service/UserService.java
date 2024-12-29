@@ -58,4 +58,12 @@ public class UserService {
 		return userRepository.findByLoginId(loginId);
 	}
 	// 아이디 중복체크 끝
+	
+	// primary key로 user정보 조회
+	public User userById(int id) {
+		Optional<User> optionalUser = userRepository.findById(id);
+		User user = optionalUser.orElse(null);
+		
+		return user;
+	}
 }

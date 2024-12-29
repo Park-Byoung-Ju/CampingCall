@@ -18,9 +18,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Builder
+@Builder(toBuilder=true)
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "board")
@@ -31,7 +33,7 @@ public class Board {
 	private int id;
 	
 	@Column(name="userId") 
-	private String userId;
+	private int userId;
 	
 	@Column(name="title")
 	private String title;

@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.margin-y{
+	margin-top:50px;
+	margin-bottom:50px;
+}
+
+#headHr{
+	margin-top:-7px;
+}
