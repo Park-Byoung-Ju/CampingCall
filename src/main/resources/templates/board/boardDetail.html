@@ -15,6 +15,7 @@
     		<div class="d-flex justify-content-between">
 	    		<h2 th:text="${board.title}">제목</h2>
 	    		
+	    		<span id="session" th:data-session="${session.userId}"></span>
 	    		<th:block th:if="${session.userId == board.userId}">
 	    		<div>
 					<i id="option" class="bi bi-three-dots"></i>
@@ -86,7 +87,39 @@
 <th:block layout:fragment="script">
 <script>
 
-	$(document).ready(function(){		
+	$(document).ready(function(){	
+		
+		// 댓글 작성
+		$("#commentBtn").on("click", function(){
+			let comment = $("#comment").val();
+			let id = $("#list").data("value");
+			let session = $("#session").data("session");
+			
+			if(session == null){
+				alert("로그인을 해주세요");
+				return false;
+			}
+			
+			$.ajax({
+				type:"post"
+				,url:"/comment/create"
+				,data:{"contents" : comment
+						,"contentId" : id
+						,"category" : 1}
+				,success:function(response){
+					if(response){
+						alert("댓글 작성 성공!");
+						location.reload();
+					}else{
+						alert("실패!");
+						location.reload();
+					}
+				}
+				,error:function(){
+					alert("서버문제");
+				}
+			});
+		});
 		// 3dot click 시 목록 보이기
 		$("#option").on("click", function(){
 			$("#list").removeClass("d-none");
