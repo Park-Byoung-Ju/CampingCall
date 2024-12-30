@@ -8,3 +8,36 @@
 #headHr{
 	margin-top:-7px;
 }
+
+#option{
+	cursor:pointer;
+	font-size:20px;
+	margin-top:6px;
+}
+
+#list, .comment-three-do{
+	width:70px;
+	height:50px;
+	margin-left:-10px;
+	position : absolute;
+	z-index:1;
+}
+
+.list-style-none{
+	list-style: none;
+}
+
+.option, .comment-option{
+	list-style: none;
+	width:70px;
+	height:25px;
+	border: 1px solid black;
+	position : relative;
+	z-index:1;
+}
+
+.option:hover, .comment-option:hover{
+	background-color:black;
+	color:white;
+	cursor:pointer;
+}

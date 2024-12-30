@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.campingcall.board.domain.Board;
 import com.example.demo.campingcall.board.service.BoardService;
+import com.example.demo.campingcall.comment.service.CommentService;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -99,6 +100,8 @@ public class BoardController {
 						,Model model) {
 		
 		Board board = boardService.boardById(id);
+		
+		
 		model.addAttribute("board", board);
 		
 		return "board/boardDetail";
