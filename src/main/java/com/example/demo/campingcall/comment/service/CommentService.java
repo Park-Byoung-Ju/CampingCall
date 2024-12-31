@@ -44,6 +44,13 @@ public class CommentService {
 	}
 	// 댓글 등록 끝
 	
+	public boolean boardCommentAllDelete(int boardId, int category) {
+		
+		commentRepository.deleteByContentIdAndCategory(boardId, category);
+		
+		return true;
+	}
+	
 	// 댓글 삭제
 	@Transactional
 	public boolean boardCommentDelete(int commentId) {

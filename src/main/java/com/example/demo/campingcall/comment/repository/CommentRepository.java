@@ -13,4 +13,7 @@ public interface CommentRepository extends JpaRepository<Comment,Integer>{
 
 	public List<Comment> findByContentIdAndCategory(@Param("contentId") int id
 													,@Param("category") int category);
+	
+	public void deleteByContentIdAndCategory(@Param("contentId") int id
+											,@Param("category") int category);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.campingcall.board.domain.Board;
 import com.example.demo.campingcall.board.repository.BoardRepository;
@@ -12,6 +13,8 @@ import com.example.demo.campingcall.comment.domain.Comment;
 import com.example.demo.campingcall.comment.service.CommentService;
 import com.example.demo.campingcall.user.domain.User;
 import com.example.demo.campingcall.user.service.UserService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class BoardService {
@@ -68,5 +71,63 @@ public class BoardService {
 		board.setCommentList(listComment);
 		
 		return board;
+	}
+	
+	// 게시글 삭제
+	@Transactional 
+	public boolean boardDelete(int id) {
+		
+		Optional<Board> optionalBoard = boardRepository.findById(id);
+		
+		if(optionalBoard == null) {
+			return false;
+		}
+		
+		boardRepository.deleteById(id);
+
+		optionalBoard = boardRepository.findById(id);
+		Board board = optionalBoard.orElse(null);
+		
+		
+		if(board == null) {
+			List<Comment> commentList = commentService.boardCommentList(id, 1);
+			if(commentList == null) {
+				return true;
+			}else {
+				return commentService.boardCommentAllDelete(id, 1);
+			}
+
+		}else {
+			return false;
+		}
+	}
+	
+	// 게시글 수정
+	@Transactional
+	public boolean boardUpdate(int id, String title, String contents, MultipartFile imagePath) {
+		// 이미지 처리
+		
+		//
+		Optional<Board> optionalBoard = boardRepository.findById(id);
+		
+		if(optionalBoard.isPresent()) {
+			Board board = optionalBoard.get();
+			
+			board = board.toBuilder()
+						.title(title)
+						.contents(contents)
+						.imagePath(null)
+						.build();
+			
+			try {
+				boardRepository.save(board);
+				return true;
+			} catch(Exception e) {
+				return false;
+			}
+		}
+		
+		return false;
+
 	}
 }

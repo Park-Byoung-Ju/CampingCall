@@ -1,6 +1,5 @@
 package com.example.demo.campingcall.board;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.campingcall.board.domain.Board;
 import com.example.demo.campingcall.board.service.BoardService;
-import com.example.demo.campingcall.comment.service.CommentService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/board")
 @Controller
@@ -38,21 +38,13 @@ public class BoardController {
 		
 		List<Board> boardList = new ArrayList<>();
 		
-		if(page == null && search == null) {
-			// 기본 초기화면이므로 page=1에 대한 데이터 얻기?
-			// 강제 redirect로 page=1로 보내기?
-			try {
-				response.sendRedirect("/board/list-view?page=1");
-				return null;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if(page == null && search == null || search == null) {
+			if(page == null) {
+				page = 1;
 			}
+			boardList = boardService.boardList(page);
 		}else if(page == null) {
 			// 검색을 통한 리스트 데이터 얻기
-		}else if(search == null) {
-			// 페이징을 통한 리스트 데이터 얻기
-			boardList = boardService.boardList(page);
 		}
 		
 		// 페이징 시작
@@ -85,9 +77,19 @@ public class BoardController {
 				resultPaging.put(key, null);
 			}
 		}
+		
+		int endGroup = avg;
+		
+		while(!(endGroup % 5 == 0)) {
+			endGroup++;
+		}
+		
+		endGroup /= 5;
+		
 		resultPaging.put("end", avg);
 		resultPaging.put("now", page);
 		resultPaging.put("group", mypage);
+		resultPaging.put("endGroup", endGroup);
 		
 		model.addAttribute("resultList", boardList);
 		model.addAttribute("paging", resultPaging);
@@ -105,5 +107,34 @@ public class BoardController {
 		model.addAttribute("board", board);
 		
 		return "board/boardDetail";
+	}
+	
+	@GetMapping("/create")
+	public String create() {
+		return "board/boardCreate";
+	}
+	
+	@GetMapping("/update-view/{id}")
+	public String update(@PathVariable("id") int id
+						,HttpServletRequest request
+						,Model model) {
+		
+		HttpSession session = request.getSession();
+		Integer sessionUserId = (Integer)session.getAttribute("userId");
+		
+		Board board = boardService.boardById(id);
+		
+		int userId = board.getUser().getId();
+		
+		if(sessionUserId == null || sessionUserId != userId) {
+			model.addAttribute("msg", "잘못된 접근입니다");
+			model.addAttribute("url", "/board/list-view");
+			
+			return "board/alert";
+		}
+		
+		model.addAttribute("board", board);
+		
+		return "board/boardUpdate";
 	}
 }

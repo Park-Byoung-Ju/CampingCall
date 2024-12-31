@@ -12,14 +12,14 @@
     <th:block layout:fragment="contents">
     <article class="box-center w-100 p-5">
     	<div class="p-5">
-    		<div class="d-flex justify-content-between">
+    		<div id="contentsId" class="d-flex justify-content-between"  th:data-value="${board.id}">
 	    		<h2 th:text="${board.title}">제목</h2>
 	    		
 	    		<span id="session" th:data-session="${session.userId}"></span>
 	    		<th:block th:if="${session.userId == board.userId}">
 	    		<div>
 					<i id="option" class="bi bi-three-dots"></i>
-					<ul id="list" class="d-none text-center" th:data-value="${board.id}">
+					<ul id="list" class="d-none text-center">
 						<li class="option" data-value="update">수정하기</li>
 						<li class="option" data-value="delete">삭제하기</li>
 					</ul>   
@@ -92,7 +92,7 @@
 		// 댓글 작성
 		$("#commentBtn").on("click", function(){
 			let comment = $("#comment").val();
-			let id = $("#list").data("value");
+			let id = $("#contentsId").data("value");
 			let session = $("#session").data("session");
 			
 			if(session == null){
@@ -134,18 +134,40 @@
 		$(".option").on("click",function(){
 			let option = $(this).data("value");
 			
-			let id = $("#list").data("value");
+			let id = $("#contentsId").data("value");
 			
 			if(option == "update"){
-				alert("update : " + id);
+				location.href = "/board/update-view/" + id;
 			}else{
-				alert("delete : " + id);
+				
+				if(confirm("게시글을 삭제하시겠습니까?")){
+					
+					$.ajax({
+						type:"delete"
+						,url:"/board/delete"
+						,data:{"id" : id}
+						,success:function(response){
+							if(response){
+								alert("게시글이 삭제되었습니다");
+								location.href = "/board/list-view";
+							}else{
+								alert("게시글 삭제 실패 : " + response);
+							}
+							
+						}
+						,error:function(){
+							alert("서버 문제로 삭제 실패");
+						}
+					});
+				}
+				
+				
 			}
 		});
 		
 		// 댓글 click 목록 보이기
 		$(".comment-three-dot").on("click", function(){
-			$(".comment-list").removeClass("d-none");
+			$(this).next().removeClass("d-none");
 		});
 		
 		$(".comment-list").on("mouseup",function(){
