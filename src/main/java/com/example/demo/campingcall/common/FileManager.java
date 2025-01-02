@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileManager {
 	
-	public static final String FILE_UPLOAD_PATH = "C:\\Users\\t9864\\OneDrive\\바탕 화면\\Spring\\project\\upload\\image";
+	public static final String FILE_UPLOAD_PATH = "C:\\Users\\t9864\\OneDrive\\바탕 화면\\Spring\\campingcall\\upload\\image";
 
 	public static String saveFile(int userId, MultipartFile file) {
 		
@@ -20,16 +20,17 @@ public class FileManager {
 		
 		String directoryName = "/" + userId + "_" + System.currentTimeMillis();
 	
+		// 디렉토리 만들기
 		String directoryPath = FILE_UPLOAD_PATH + directoryName;
 		
 		File directory = new File(directoryPath);
 		
 		if(!directory.mkdir()) {
-			
+			// 디렉토리 생성 실패
 			return null;
 		}
 		
-		
+		// 파일 저장
 		String filePath = directoryPath + "/" + file.getOriginalFilename();
 		
 		try {
@@ -43,11 +44,11 @@ public class FileManager {
 			
 			e.printStackTrace();
 			
-			
+			// 파일 저장 실패
 			return null;
 			
 		}
-		
+
 		return "/images" + directoryName + "/" + file.getOriginalFilename();
 
 	}

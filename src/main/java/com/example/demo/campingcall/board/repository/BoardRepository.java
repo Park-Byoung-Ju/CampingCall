@@ -19,4 +19,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer>{
 	
 	@Query(value="SELECT COUNT(*) FROM `board`", nativeQuery=true)
 	public int listByAllCount();
+	
+	public List<Board> findTop5ByTitleContains(@Param("search") String search);
 }

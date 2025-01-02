@@ -35,65 +35,72 @@ public class BoardController {
 						, @RequestParam(name="search", required=false) String search
 						, HttpServletResponse response
 						, Model model) {
+		if(page == null) {
+			page = 0;
+		}
 		
 		List<Board> boardList = new ArrayList<>();
 		
-		if(page == null && search == null || search == null) {
-			if(page == null) {
+		if(page == 0 && search == null || search == null) {
+			if(page == 0) {
 				page = 1;
 			}
 			boardList = boardService.boardList(page);
-		}else if(page == null) {
-			// 검색을 통한 리스트 데이터 얻기
-		}
-		
-		// 페이징 시작
-		Map<String, Integer> resultPaging = new HashMap<>();
-		
-		int count = boardService.countByAll(); // 데이터 총 개수
-		int avg = count / 7 + 1;
-		int mypage = (page - 1) / 5;
-		
-		int first = mypage * 5 + 1;
-		int second = mypage * 5 + 2;
-		int third = mypage * 5 + 3;
-		int fourth = mypage * 5 + 4;
-		int fifth = mypage * 5 + 5;
-		
-		resultPaging.put("first", first);
-		resultPaging.put("second", second);
-		resultPaging.put("third", third);
-		resultPaging.put("fourth", fourth);
-		resultPaging.put("fifth", fifth);
-		
-		Set<String> keySet = resultPaging.keySet();
-		
-		for(String key : keySet) {
-			int sum = resultPaging.get(key);
 			
-			if(sum <= avg) {
-				continue;
-			}else {
-				resultPaging.put(key, null);
+			// 페이징 시작
+			Map<String, Integer> resultPaging = new HashMap<>();
+			
+			int count = boardService.countByAll(); // 데이터 총 개수
+			int avg = count / 7 + 1;
+			int mypage = (page - 1) / 5;
+			
+			int first = mypage * 5 + 1;
+			int second = mypage * 5 + 2;
+			int third = mypage * 5 + 3;
+			int fourth = mypage * 5 + 4;
+			int fifth = mypage * 5 + 5;
+			
+			resultPaging.put("first", first);
+			resultPaging.put("second", second);
+			resultPaging.put("third", third);
+			resultPaging.put("fourth", fourth);
+			resultPaging.put("fifth", fifth);
+			
+			Set<String> keySet = resultPaging.keySet();
+			
+			for(String key : keySet) {
+				int sum = resultPaging.get(key);
+				
+				if(sum <= avg) {
+					continue;
+				}else {
+					resultPaging.put(key, null);
+				}
 			}
+			
+			int endGroup = avg;
+			
+			while(!(endGroup % 5 == 0)) {
+				endGroup++;
+			}
+			
+			endGroup /= 5;
+			
+			resultPaging.put("end", avg);
+			resultPaging.put("now", page);
+			resultPaging.put("group", mypage);
+			resultPaging.put("endGroup", endGroup);
+			
+			model.addAttribute("paging", resultPaging);
+			
+			
+		}else if(page == 0) {
+			// 검색을 통한 리스트 데이터 얻기
+			boardList = boardService.boardSearchList(search);
 		}
-		
-		int endGroup = avg;
-		
-		while(!(endGroup % 5 == 0)) {
-			endGroup++;
-		}
-		
-		endGroup /= 5;
-		
-		resultPaging.put("end", avg);
-		resultPaging.put("now", page);
-		resultPaging.put("group", mypage);
-		resultPaging.put("endGroup", endGroup);
 		
 		model.addAttribute("resultList", boardList);
-		model.addAttribute("paging", resultPaging);
-		
+	
 		return "board/boardList";
 	}
 	
@@ -107,11 +114,6 @@ public class BoardController {
 		model.addAttribute("board", board);
 		
 		return "board/boardDetail";
-	}
-	
-	@GetMapping("/create")
-	public String create() {
-		return "board/boardCreate";
 	}
 	
 	@GetMapping("/update-view/{id}")
@@ -136,5 +138,22 @@ public class BoardController {
 		model.addAttribute("board", board);
 		
 		return "board/boardUpdate";
+	}
+	
+	@GetMapping("/create-view")
+	public String createView(HttpServletRequest request
+							,Model model) {
+		
+		HttpSession session = request.getSession();
+		
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		if(userId == null) {
+			model.addAttribute("msg","잘못된 접근 입니다. 로그인을 해주세요");
+			model.addAttribute("url", "/board/list-view");
+			return "board/alert";
+		}
+		
+		return "board/boardCreate";
 	}
 }

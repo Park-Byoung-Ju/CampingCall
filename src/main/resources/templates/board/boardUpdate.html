@@ -64,15 +64,20 @@
 				return false;
 			}
 			
+			let formData = new FormData();
+			
+			formData.append("id", id);
+			formData.append("title", title);
+			formData.append("contents", contents);
+			formData.append("imagePath", file);
+			
 			$.ajax({
 				type:"put"
 				,url:"/board/update"
-				,data:{
-					"id" : id
-					, "title" : title
-					, "contents" : contents
-					, "imagePath" : file
-				}
+				,data:formData
+				,enctype:"multipart/form-data"
+				,processData:false
+				,contentType:false
 				,success:function(response){
 					if(response){
 						alert("수정되었습니다");

@@ -38,6 +38,7 @@
 		    		<button id="boardCreateBtn" class="btn btn-secondary">글쓰기</button>   		
 	    		</div>
 	    		
+	    		<th:block th:if="${paging != null}">
 	    		<div class="text-center">
 	    		<!-- 처음으로 -->
 	    			<th:block th:unless="${paging.now == 1}">
@@ -100,13 +101,14 @@
 	    			<span>>></span>
 	    			</th:block>
 	    		</div>
+	    		</th:block>
 	    		
 	    		<div class="d-flex justify-content-center">	
 		    		<div class="input-group mt-3 col-11">
-		    			<input class="form-control" type="text">
+		    			<input id="search" class="form-control" type="text">
 		    			
 		    			<div class="input-group-append">
-			    			<button class="btn btn-secondary">검색</button>
+			    			<button id="searchBtn" class="btn btn-secondary">검색</button>
 		    			</div>
 		    		</div>
 	    		</div>
@@ -116,8 +118,18 @@
     
 <script layout:fragment="script">
 	$(document).ready(function(){
+		$("#searchBtn").on("click", function(){
+			let search = $("#search").val();
+			
+			if(search.length == 0){
+				return false;
+			}
+			
+			location.href= "/board/list-view?search=" + search;
+		});
+		
 		$("#boardCreateBtn").on("click",function(){
-			location.href = "/board/create";
+			location.href = "/board/create-view";
 		});
 		
 		$(".boardDetailLocation").on("click",function(){

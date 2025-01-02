@@ -36,10 +36,10 @@
     		
     		<div class="margin-y">
     			<th:block th:if="${board.imagePath != null}">
-    			<img th:src="@{board.imagePath}">
+    			<img th:src="${board.imagePath}" class="img">
     			</th:block>
     			
-    			<div th:text="${board.contents}">
+    			<div th:text="${board.contents}" class="mt-2">
     			내용
     			</div>
     		</div>

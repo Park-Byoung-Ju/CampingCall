@@ -11,6 +11,7 @@ import com.example.demo.campingcall.board.domain.Board;
 import com.example.demo.campingcall.board.repository.BoardRepository;
 import com.example.demo.campingcall.comment.domain.Comment;
 import com.example.demo.campingcall.comment.service.CommentService;
+import com.example.demo.campingcall.common.FileManager;
 import com.example.demo.campingcall.user.domain.User;
 import com.example.demo.campingcall.user.service.UserService;
 
@@ -29,6 +30,46 @@ public class BoardService {
 		this.boardRepository = boardRepository;
 		this.userService = userService;
 		this.commentService = commentService;
+	}
+	
+	// 게시글 검색
+	public List<Board> boardSearchList(String search){
+		
+		List<Board> boardList = boardRepository.findTop5ByTitleContains(search);
+		
+		for(int i = 0; i < boardList.size(); i++) {
+			User user = userService.userById(boardList.get(i).getUserId());
+			List<Comment> commentList = commentService.boardCommentList(boardList.get(i).getId(), 1);
+			
+			boardList.get(i).setCommentList(commentList);
+			boardList.get(i).setUser(user);
+		}
+		
+		return boardList;
+	}
+	
+	// 게시글 삽입
+	public Board boardCreate(int userId
+							, String title
+							, String contents
+							, MultipartFile imagePath) {
+		String imagePathEncoding = FileManager.saveFile(userId, imagePath);
+		
+		Board board = Board.builder()
+							.userId(userId)
+							.title(title)
+							.contents(contents)
+							.imagePath(imagePathEncoding)
+							.build();
+							
+		
+		try {
+			Board reulstBoard = boardRepository.save(board);
+			
+			return reulstBoard;
+		}catch(Exception e) {
+			return null;
+		}
 	}
 	
 	// 게시글 리스트
@@ -83,6 +124,10 @@ public class BoardService {
 			return false;
 		}
 		
+		Board selectBoard = optionalBoard.get();
+		
+		FileManager.removeFile(selectBoard.getImagePath());
+		
 		boardRepository.deleteById(id);
 
 		optionalBoard = boardRepository.findById(id);
@@ -104,19 +149,23 @@ public class BoardService {
 	
 	// 게시글 수정
 	@Transactional
-	public boolean boardUpdate(int id, String title, String contents, MultipartFile imagePath) {
+	public boolean boardUpdate(int id, String title, String contents, MultipartFile imagePath, int userId) {
 		// 이미지 처리
-		
+		String imagePathEncoding = FileManager.saveFile(userId, imagePath);
 		//
 		Optional<Board> optionalBoard = boardRepository.findById(id);
 		
 		if(optionalBoard.isPresent()) {
 			Board board = optionalBoard.get();
 			
+			if(!imagePathEncoding.isEmpty()) {
+				FileManager.removeFile(board.getImagePath());
+			}
+			
 			board = board.toBuilder()
 						.title(title)
 						.contents(contents)
-						.imagePath(null)
+						.imagePath(imagePathEncoding)
 						.build();
 			
 			try {
