@@ -41,11 +41,17 @@ public class BoardService {
 			User user = userService.userById(boardList.get(i).getUserId());
 			List<Comment> commentList = commentService.boardCommentList(boardList.get(i).getId(), 1);
 			
+			//boardList.get(i).setTitle(boardList.get(i).getTitle().replace(search, "<b>" + search + "</b>"));
 			boardList.get(i).setCommentList(commentList);
 			boardList.get(i).setUser(user);
 		}
 		
 		return boardList;
+	}
+	
+	// 검색데이터 개수
+	public int boardSearchCount(String search) {
+		return boardRepository.countByTitleContains(search);
 	}
 	
 	// 게시글 삽입

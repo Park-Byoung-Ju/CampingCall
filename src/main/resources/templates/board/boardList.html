@@ -38,66 +38,70 @@
 		    		<button id="boardCreateBtn" class="btn btn-secondary">글쓰기</button>   		
 	    		</div>
 	    		
-	    		<th:block th:if="${paging != null}">
+	    		<th:block>
 	    		<div class="text-center">
 	    		<!-- 처음으로 -->
-	    			<th:block th:unless="${paging.now == 1}">
-	    			<a href="/board/list-view?page=1"><<</a>
+	    			<th:block th:if="${start != 1}">
+		    			<th:block th:if="${search == null}">
+		    			<a th:href="|/board/list-view?page=1|"><<</a> 
+		    			</th:block>
+		    			
+		    			<th:block th:unless="${search == null}">
+			    			<a th:href="|/board/list-view?page=1&search=${search}|"><<</a>	    				
+		    			</th:block>
 	    			</th:block>
 	    			
-	    			<th:block th:if="${paging.now == 1}">
+	    			<th:block th:unless="${start != 1}">
 	    			<span><<</span>
 	    			</th:block>
 	    			
 	    		<!-- 이전 그룹으로 -->
-	    			<th:block th:unless="${paging.first == 1}" th:with="number = ${paging.first} - 1">
-	    			<a th:href="|/board/list-view?page=${number}|"><</a>
+	    			<th:block th:if="${start != 1}" th:with="number = ${start} - 1">
+	    				<th:block th:if="${search == null}">
+	    					<a th:href="|/board/list-view?page=${number}|"><</a>
+	    				</th:block>
+	    				
+	    				<th:block th:unless="${search == null}">
+			    			<a th:href="|/board/list-view?page=${number}&search=${search}|"><</a>		
+	    				</th:block>
 	    			</th:block>
 	    			
-	    			<th:block th:if="${paging.first == 1}">
+	    			<th:block th:if="${start == 1}">
 	    			<span><</span>
 	    			</th:block>
+	    			    			
+	    		<!-- 페이징 -->	
+	    			<th:block th:each="paging : ${pagingList.pageList}">
 	    			
-	    		<!-- 첫번째 번호 -->	   		
-	    			<th:block th:if="${paging.first != null}">
-	    			<a th:text="${paging.first}" th:href="|/board/list-view?page=${paging.first}|">1</a>
+	    				<th:block th:if="${page == paging}">
+	    					<span><b th:text="${paging}"></b></span>
+	    				</th:block>
+	    				
+	    				<th:block th:unless="${page == paging}">
+	    					<a th:if="${search != null}" th:text="${paging}" th:href="|/board/list-view?page=${paging}&search=${search}|"></a>
+	    					<a th:if="${search == null}" th:text="${paging}" th:href="|/board/list-view?page=${paging}|"></a>
+	    				</th:block>
 	    			</th:block>
-	    			
-	    		<!-- 두번째 번호 -->	
-	    			<th:block th:if="${paging.second != null}">
-	    			<a href="#" th:text="${paging.second}" th:href="|/board/list-view?page=${paging.second}|">2</a>
-	    			</th:block>
-	    			
-	    		<!-- 세번째 번호 -->	
-	    			<th:block th:if="${paging.third != null}">
-	    			<a href="#" th:text="${paging.third}" th:href="|/board/list-view?page=${paging.third}|">3</a>
-	    			</th:block>
+	    		<!-- 페이징 -->
 	    		
-	    		<!-- 네번째 번호 -->		
-	    			<th:block th:if="${paging.fourth != null}">
-	    			<a href="#" th:text="${paging.fourth}" th:href="|/board/list-view?page=${paging.fourth}|">4</a>
-	    			</th:block>
-	    		
-	    		<!-- 다섯번째 번호 -->	
-	    			<th:block th:if="${paging.fifth != null}">
-	    			<a href="#" th:text="${paging.fifth}" th:href="|/board/list-view?page=${paging.fifth}|">5</a>
-	    			</th:block>
 	    		
 	    		<!-- 다음 그룹으로 -->	
-	    			<th:block th:unless="${(paging.first / 5 + 1)  == paging.endGroup}" th:with="number = ${paging.fifth} + 1">
-	    			<a th:data-id="${paging.endGroup}" th:href="|/board/list-view?page=${number}|">></a>
+	    			<th:block th:unless="${(end + 1) > pagingList.allPage}" th:with="number = ${end} + 1">
+	    			<a th:if="${search != null}" th:href="|/board/list-view?page=${number}&search=${search}|">></a>
+	    			<a th:if="${search == null}" th:href="|/board/list-view?page=${number}|">></a>
 	    			</th:block>
 	    			
-	    			<th:block th:if="${(paging.first / 5 + 1)  == paging.endGroup}">
-	    			<span th:data-id="${paging.endGroup}">></span>
+	    			<th:block th:if="${(end + 1) > pagingList.allPage}">
+	    			<span>></span>
 	    			</th:block>
 	    			
 				<!-- 끝으로 -->
-	    			<th:block th:unless="${paging.now == paging.end}">
-	    			<a th:href="|/board/list-view?page=${paging.end}|">>></a>
+	    			<th:block th:unless="${end == pagingList.allPage}">
+	    			<a th:if="${search != null}" th:href="|/board/list-view?page=${pagingList.allPage}&search=${search}|">>></a>
+	    			<a th:if="${search == null}" th:href="|/board/list-view?page=${pagingList.allPage}|">>></a>
 	    			</th:block>
 	    			
-	    			<th:block th:if="${paging.now == paging.end}">
+	    			<th:block th:if="${end == pagingList.allPage}">
 	    			<span>>></span>
 	    			</th:block>
 	    		</div>

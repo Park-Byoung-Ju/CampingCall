@@ -21,4 +21,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer>{
 	public int listByAllCount();
 	
 	public List<Board> findTop5ByTitleContains(@Param("search") String search);
+	
+	public int countByTitleContains(@Param("search") String search);
 }

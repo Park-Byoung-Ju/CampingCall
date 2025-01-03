@@ -1,10 +1,7 @@
 package com.example.demo.campingcall.board;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.campingcall.board.domain.Board;
 import com.example.demo.campingcall.board.service.BoardService;
+import com.example.demo.campingcall.common.Paging;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,66 +37,46 @@ public class BoardController {
 			page = 0;
 		}
 		
+		if(search == null || search.equals("null")) {
+			search = null;
+		}
+		Paging paging;
 		List<Board> boardList = new ArrayList<>();
 		
-		if(page == 0 && search == null || search == null) {
+		if((page == 0 && search == null )|| search == null) {
 			if(page == 0) {
 				page = 1;
 			}
-			boardList = boardService.boardList(page);
+			boardList = boardService.boardList(page);			
+			paging = new Paging(boardService.countByAll());
 			
-			// 페이징 시작
-			Map<String, Integer> resultPaging = new HashMap<>();
-			
-			int count = boardService.countByAll(); // 데이터 총 개수
-			int avg = count / 7 + 1;
-			int mypage = (page - 1) / 5;
-			
-			int first = mypage * 5 + 1;
-			int second = mypage * 5 + 2;
-			int third = mypage * 5 + 3;
-			int fourth = mypage * 5 + 4;
-			int fifth = mypage * 5 + 5;
-			
-			resultPaging.put("first", first);
-			resultPaging.put("second", second);
-			resultPaging.put("third", third);
-			resultPaging.put("fourth", fourth);
-			resultPaging.put("fifth", fifth);
-			
-			Set<String> keySet = resultPaging.keySet();
-			
-			for(String key : keySet) {
-				int sum = resultPaging.get(key);
-				
-				if(sum <= avg) {
-					continue;
-				}else {
-					resultPaging.put(key, null);
-				}
+		}else {
+			if(page == 0) {
+				page = 1;
 			}
-			
-			int endGroup = avg;
-			
-			while(!(endGroup % 5 == 0)) {
-				endGroup++;
-			}
-			
-			endGroup /= 5;
-			
-			resultPaging.put("end", avg);
-			resultPaging.put("now", page);
-			resultPaging.put("group", mypage);
-			resultPaging.put("endGroup", endGroup);
-			
-			model.addAttribute("paging", resultPaging);
-			
-			
-		}else if(page == 0) {
 			// 검색을 통한 리스트 데이터 얻기
 			boardList = boardService.boardSearchList(search);
+			paging = new Paging(boardService.boardSearchCount(search));
 		}
 		
+		// 페이징
+		
+		List<Integer> pagingList = paging.getPagingList(7, 5, page);
+		paging.setPageList(pagingList);
+		int size = pagingList.size() - 1;
+		
+		int start = pagingList.get(0);
+		int end = pagingList.get(size);
+		
+		if(search == null) {
+			search = null;
+		}
+		
+		model.addAttribute("search", search);
+		model.addAttribute("page", page);
+		model.addAttribute("start", start);
+		model.addAttribute("end", end);
+		model.addAttribute("pagingList", paging);
 		model.addAttribute("resultList", boardList);
 	
 		return "board/boardList";
