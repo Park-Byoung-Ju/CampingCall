@@ -24,18 +24,26 @@
 
 // location
 // 캠핑장
-
+$("#campingLocation").on("click",function(){
+	location.href="/camp/campList";
+});
 // 캠핑장 끝
 
 // 관광지
+$("#tripLocation").on("click",function(){
+	location.href="/trip/tripList";
+});
 // 관광지 끝
 
 // 계획
+$("#planLocation").on("click",function(){
+	
+});
 // 계획 끝
 
 // 게시판
 $("#boardLocation").on("click",function(){
-	location.href="/board/list-view"
+	location.href="/board/list-view";
 });
 // 게시판 끝
 
