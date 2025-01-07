@@ -5,12 +5,91 @@
     layout:decorate="~{layout/main.html}">
     
 <th:block layout:fragment="css">
-
+<link rel="stylesheet" href="/static/css/trip.css">
 </th:block>
 
 	<th:block layout:fragment="contents">
+		<article class="w-100">
+			<div class="p-5">
+					
+				<div class="input-group w-100 mt-2">
+					<div class="input-group-prepend">
+						<select id="select" class="form-control">
+							<option value="location" checked>지역</option>
+							<option value="name">관광지명</option>
+						</select>
+					</div>			
+					
+					<input id="search" type="text" class="form-control">
+					
+					<div class="input-group-append">
+						<button id="searchBtn" class="btn btn-secondary">검색</button>
+					</div>
+				</div>
+				
+				<h2 class="mt-2">관광지</h2>
+				
+				<hr>
+				
+				<div>
+					<!-- 리스트 -->
+					<div class="d-flex mb-2 list-item cursor-pointer">
+						<div class="col-3">
+							<img class="w-100" src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
+						</div>
+						
+						<div class="col-9">
+							<div>
+								<h3>관광지 명</h2>
+							</div>
+							
+							<div>
+								설명설명
+							</div>
+							
+							<div class="small mt-1">
+								주소 : ~~
+							</div>
+						</div>
+					</div>
+					<!-- 리스트  끝-->
+					
+					<div class="text-center mt-4">
+						<a href="#"><<</a>
+						<a href="#"><</a>
+						<a href="#">1</a>
+						<a href="#">2</a>
+						<a href="#">3</a>
+						<a href="#">4</a>
+						<a href="#">5</a>
+						<a href="#">></a>
+						<a href="#">>></a>
+					</div>
+				</div>
+	
+			</div>
+		</article>
 	</th:block>
 	
 	<th:block layout:fragment="script">
+	<script>
+		$(document).ready(function(){
+			$(".list-item").on("click", function(){
+				location.href="/trip/detail";
+			});
+			
+			$("#searchBtn").on("click",function(){
+				let search = $("#search").val();
+				
+				if(search == null || search.length == 0){
+					return false;
+				}
+				
+				alert(search);
+				
+				location.href="/trip/search?search=" + search;
+			});
+		});
+	</script>
 	</th:block>
 </html>

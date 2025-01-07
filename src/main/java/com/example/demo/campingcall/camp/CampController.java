@@ -9,7 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CampController {
 
 	@GetMapping("/campList")
-	public String tripList() {
+	public String campList() {
 		return "camp/campingList";
+	}
+	
+	@GetMapping("/detail")
+	public String campDetail() {
+		return "camp/detail";
+	}
+	
+	@GetMapping("/search")
+	public String campSearch() {
+		return "camp/search";
 	}
 }

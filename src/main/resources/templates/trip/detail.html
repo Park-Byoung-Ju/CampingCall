@@ -5,12 +5,120 @@
     layout:decorate="~{layout/main.html}">
     
 <th:block layout:fragment="css">
-
+<link rel="stylesheet" href="/static/css/trip.css">
 </th:block>
 
 	<th:block layout:fragment="contents">
+		<article class="w-100">
+			<div class="p-5">
+				<div>
+					<h2 class="title-margin">관광지명</h2>
+					<div class="d-flex justify-content-center">
+						<img width=600 class="box-center" src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
+					</div>
+				</div>
+			</div>
+			
+			<div id="menu" class="d-flex w-100">
+				<div id="information" class="menu-select menu-item cursor-pointer">
+					<h4 id="info" class="font-weight-bold">상세정보</h4>
+				</div>
+				
+				<div id="comment" class="menu-non-select menu-item cursor-pointer">
+					<h4 id="comt">리뷰</h4>
+				</div>
+			</div>
+			
+			<div class="content p-4">
+				<div id="information-item">
+					<div>내용은 이러이러합니다. 맑은 하늘과 바람이 불어 시원한 숲에서...</div>
+					
+					<div class="d-flex justify-content-center mt-5">
+						<div>
+							<div class="d-flex justify-content-center">						
+								<img width=300	height=300 src="https://cdn.pixabay.com/photo/2024/01/01/23/41/trees-8482254_1280.jpg">
+							</div>
+							
+							<div class="d-flex justify-content-center mt-3">
+								<div class="d-flex">
+									<div>							
+										<div>주소 : </div>
+										<div>전화번호 : </div>
+										<div>휴일 : </div>
+									</div>
+									
+									<div class="mx-2">
+										<div>~~~도 ~~~시 ~~~~~~!!!</div>
+										<div>010-1234-5678</div>
+										<div>연중무휴</div>
+									</div>
+								</div>
+								
+								<div class="d-flex">
+									<div>
+										<div>홈페이지 : </div>
+										<div>이용시간 : </div>
+										<div>입장료 : </div>
+									</div>
+									
+									<div class="ml-2">
+										<div>https://~~~~~</div>
+										<div>??시 ??분 ~ ??시 ??분</div>
+										<div>5000원</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<h4 class="mt-5">체험 안내</h4>
+					
+					<hr class="bg-dark">
+					
+					<div class="mb-4">체험요소는 ~~~~입니다</div>
+				</div>
+				
+				<div id="comment-item" class="d-none">
+					<div class="input-group">
+						<input type="text" class="form-control">
+						<div class="input-group-append">
+							<button class="btn btn-secondary" type="button">게시</button>
+						</div>
+					</div>
+					
+					<div>
+						<!-- 리뷰 item -->
+						<div class="d-flex mt-4">
+							<div><b>아이디</b></div>
+							
+							<div>내용을 적었습니다</div>
+						</div>
+						<!-- 리뷰 item 끝 -->
+					</div>
+				</div>
+			</div>
+		</article>
 	</th:block>
 	
 	<th:block layout:fragment="script">
+	<script>
+		$(document).ready(function(){
+			$("#information").on("click", function(){
+				$("#information-item").removeClass("d-none");
+				$("#info").addClass("font-weight-bold");
+				
+				$("#comment-item").addClass("d-none");
+				$("#comt").removeClass("font-weight-bold");
+			});
+			
+			$("#comment").on("click", function(){
+				$("#information-item").addClass("d-none");
+				$("#info").removeClass("font-weight-bold");
+				
+				$("#comment-item").removeClass("d-none");
+				$("#comt").addClass("font-weight-bold");
+			});
+		});
+	</script>
 	</th:block>
 </html>

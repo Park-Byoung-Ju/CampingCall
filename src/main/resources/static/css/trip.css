@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+.cursor-pointer{
+	cursor:pointer;
+}
+
+.list-item:hover{
+	background-color:#cccccc;
+	font-weight:bold;
+}
+
+#menu{
+	height:80px;
+}
+
+.menu-select{
+	background-color:gray;
+}
+
+.menu-non-select{
+	background-color:#cccccc;
+}
+
+.menu-item{
+	width:50%;
+	height:100%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.menu-item:hover{
+	background-color:black;
+	color:white;
+}
+
+.title-margin{
+	margin-left:100px;
+}

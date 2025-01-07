@@ -1,10 +1,190 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/main.html}">
+    
+<th:block layout:fragment="css">
+<link rel="stylesheet" href="/static/css/camp.css">
+</th:block>
 
-</body>
+	<th:block layout:fragment="contents">
+	<article class="p-3">
+		<div>
+			<h2 class="ml-3">??? 캠핑장</h2>
+			
+			<div class="mt-3 d-flex">
+				<div class="col-6">
+					<img class="w-100 mt-2" src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
+				</div>
+				
+				<div class="small ml-3">
+					<div>주소 : <span>???도 ???시 ??동 ???</span></div><hr>
+					<div>문의처 : <span>???</span></div><hr>
+					<div>예약 방법 : <span>????</span></div><hr>
+					<div>운영일 : <span>???</span></div><hr>
+					<div>홈페이지 : <span>???</span></div><hr>
+					<div>주변시설 : <span>???</span></div>
+				</div>
+			</div>
+			
+			<div id="menu" class="mt-3">
+				<div id="bookingBtn" class="col-4 menu-list bg-ccc">예약</div>
+				<div id="informationBtn" class="col-4 menu-list bg-gray">캠핑장 정보</div>
+				<div id="reviewBtn" class="col-4 menu-list bg-ccc">리뷰</div>
+			</div>
+			
+			<div class="mt-4">
+				<!-- 예약 -->
+				<div id="booking" class="">
+					<!-- 예약 item -->
+					<div class="mt-2 d-flex hover w-100 p-2">
+						<div class="col-3">
+							<img class="w-100" src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
+						</div>
+						
+						<div class="d-flex justify-content-between w-100">
+							<div>
+								<div><h3>??사이트</h3></div>
+								<div class="mt-3"><small>크기 : ? X ? m<sup>2</sup></small></div>
+								<div class="mt-3">가격 : <span>???원</span></div>
+							</div>
+							
+							<div class="d-flex align-items-end mr-5">
+								<button class="w-100 btn btn-success bookingBtn" type="button">예약하기</button>
+							</div>
+						</div>
+					</div>
+					<!-- 예약 item 끝 -->
+				</div>
+				<!-- 예약 끝 -->
+				
+				<!-- 캠핑장 정보 -->
+				<div id="information" class="d-none">
+					<div class="p-2">
+						?? 캠핑장은 산속에 있고 바람이 잘 통하며 계곡 물이 맑고~~~
+					</div>
+					
+					<div class="mt-5">
+						<h3>시설</h3>
+						
+						<hr class="margin-top-minus">
+						
+						<div class="d-flex flex-wrap">
+							<!-- 시설 item -->
+							<div class="info-item text-center p-2">
+								<div>
+									<img class="w-100" src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
+								</div>
+								
+								<div>화장실</div>
+							</div>
+							<!-- 시설 item 끝 -->
+						</div>
+					</div>
+					
+					
+					<div class="mt-4">
+						<h3>상세정보</h3>
+						
+						<hr class="margin-top-minus">
+						
+						<div class="text-center d-flex justify-content-center">
+							<table class="table w-75">
+								<tr>
+									<th class="col-4">주요시설</th>
+									<td class="col-6">????</td>
+								</tr>
+								
+								<tr>
+									<th>기타정보</th>
+									<td>????</td>
+								</tr>
+								
+								<tr>
+									<th>기타 부대시설</th>
+									<td>????</td>
+								</tr>
+								
+								<tr>
+									<th>사이트 간격</th>
+									<td>????</td>
+								</tr>
+								
+								<tr>
+									<th>캠핑장비대여</th>
+									<td>????</td>
+								</tr>
+								
+								<tr>
+									<th>반려동물 출입</th>
+									<td>????</td>
+								</tr>
+								
+								<tr>
+									<th>화로대</th>
+									<td>????</td>
+								</tr>
+								
+								<tr>
+									<th>안전시설현황</th>
+									<td>????</td>
+								</tr>
+							</table>
+						</div>
+							
+							
+					
+					</div>
+					
+					
+				</div>
+				<!-- 캠핑장 정보 끝 -->
+				
+				<!-- 리뷰 -->
+				<div id="review" class="d-none">
+					<div class="input-group mt-3">
+						<input type="text" class="form-control">
+						<div class="input-group-append">
+							<button class="btn btn-secondary">게시</button>
+						</div>
+					</div>
+					
+					<div class="p-2 mt-2">
+						<div class="d-flex mt-2">
+							<div class="col-2"><b>아이디</b></div>
+							<div>댓글입니다</div>
+						</div>
+					</div>
+				</div>
+				<!-- 리뷰 끝 -->
+			</div>
+			
+		</div>
+	</article>
+	</th:block>
+	
+	<th:block layout:fragment="script">
+	<script>
+		$(document).ready(function(){
+			$("#informationBtn").on("click",function(){
+				$("#booking").addClass("d-none");
+				$("#information").removeClass("d-none");
+				$("#review").addClass("d-none");
+			});
+			
+			$("#bookingBtn").on("click",function(){
+				$("#booking").removeClass("d-none");
+				$("#information").addClass("d-none");
+				$("#review").addClass("d-none");
+			});
+			
+			$("#reviewBtn").on("click",function(){
+				$("#booking").addClass("d-none");
+				$("#information").addClass("d-none");
+				$("#review").removeClass("d-none");
+			});
+		});
+	</script>
+	</th:block>
 </html>

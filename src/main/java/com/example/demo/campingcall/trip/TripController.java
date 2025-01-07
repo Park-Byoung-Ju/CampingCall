@@ -12,4 +12,14 @@ public class TripController {
 	public String tripList() {
 		return "trip/tripList";
 	}
+	
+	@GetMapping("/detail")
+	public String tripDetail() {
+		return "trip/detail";
+	}
+	
+	@GetMapping("/search")
+	public String tripSearch() {
+		return "trip/search";
+	}
 }
