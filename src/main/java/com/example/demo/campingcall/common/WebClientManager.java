@@ -1,11 +1,18 @@
 package com.example.demo.campingcall.common;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import com.example.demo.campingcall.api.ApiResponse;
+import com.example.demo.campingcall.api.Item;
+import com.example.demo.campingcall.api.Items;
 
 
 public class WebClientManager {
@@ -23,14 +30,18 @@ public class WebClientManager {
 	                .build();
 	}
 	
-	public static <T> T getClient(String uri, ParameterizedTypeReference<T> responseType) {
+	//ParameterizedTypeReference<T> responseType
+	public static <T> ApiResponse getClient(String uri) {
 		WebClient webClient = create();
 
-		return webClient.get()
-                .uri(uri)
-                .retrieve()
-                .bodyToMono(responseType)
-                .block();
+
+		return webClient
+				.get()
+				.uri(uri)
+				.header("Accept",MediaType.APPLICATION_JSON_VALUE)
+				.retrieve()
+				.bodyToMono(ApiResponse.class)
+				.block();
 										
 	}
 	

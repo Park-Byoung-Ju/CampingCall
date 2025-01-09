@@ -1,17 +1,19 @@
 package com.example.demo.campingcall.trip;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.reactive.function.client.WebClient;
 
-import com.example.demo.campingcall.api.AreaCode1;
+import com.example.demo.campingcall.api.ApiResponse;
+import com.example.demo.campingcall.api.Item;
 import com.example.demo.campingcall.common.WebClientManager;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,31 +39,34 @@ public class TripController {
 	
 	@ResponseBody
 	@GetMapping("/api")
-	public AreaCode1 test(HttpServletResponse response) {
+	public ApiResponse test(HttpServletResponse response) {
 
 		String baseUri = "http://apis.data.go.kr/B551011/KorService1/areaCode1";
 		//String baseUri = "http://apis.data.go.kr/B551011/KorService1/locationBasedList1";
 		String uriuri = "http://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=LEoRzNehyS3bpMxZp6vlzEMYTKR9epu5kIxxesG2T9L0DEOYz1korA86TalB4gAHGTffD3mHdZoaB9%2FRNzmQ4g%3D%3D&numOfRows=1&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json";
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		map.add("serviceKey", WebClientManager.KEY);
-		map.add("numOfRows", "17");
+		map.add("numOfRows", "10");
+		map.add("pageNo", "2");
 		map.add("MobileOS", "WIN");
 		map.add("MobileApp", "TestApp");
 		map.add("_type", "json");
 		
 		String uri = WebClientManager.setParamUri(baseUri, map);
-		
-		Test test = new Test();
-		//test.setSomeField("1");
-		
+	
+		/*
 		return WebClient.create()
 				.get()
 				.uri(uri)
 				.header("Accept",MediaType.APPLICATION_JSON_VALUE)
 				.retrieve()
-				.bodyToMono(new ParameterizedTypeReference<AreaCode1>() {})
+				.bodyToMono(new ParameterizedTypeReference<ApiResponse>() {})
 				.block();
-		 
+		 */
+		
+		List<Item> itemList = new ArrayList<>();
+		// new ParameterizedTypeReference<Item>() {}
+		return WebClientManager.getClient(uri);
 		
 		//return test;
 	}

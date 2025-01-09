@@ -3,13 +3,14 @@ package com.example.demo.campingcall.api;
 import java.util.List;
 
 public class Items {
-	private List<testItem> item;
+	private List<Item> item;
 
-	public List<testItem> getItem() {
+	public List<Item> getItem() {
 		return item;
 	}
 
-	public void setItem(List<testItem> item) {
+	public void setItem(List<Item> item) {
 		this.item = item;
 	}
+
 }
