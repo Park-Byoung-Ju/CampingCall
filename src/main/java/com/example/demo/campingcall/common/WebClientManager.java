@@ -1,26 +1,32 @@
 package com.example.demo.campingcall.common;
 
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
 import org.springframework.web.util.UriComponentsBuilder;
+
 
 public class WebClientManager {
 	
-	private final static String KEY= "LEoRzNehyS3bpMxZp6vlzEMYTKR9epu5kIxxesG2T9L0DEOYz1korA86TalB4gAHGTffD3mHdZoaB9%2FRNzmQ4g%3D%3D";	
+	public final static String KEY= "LEoRzNehyS3bpMxZp6vlzEMYTKR9epu5kIxxesG2T9L0DEOYz1korA86TalB4gAHGTffD3mHdZoaB9%2FRNzmQ4g%3D%3D";	
 	
 	public static WebClient create() {
-		return WebClient.create();
+		return WebClient.builder()
+					.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+					.defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+	                .build();
 	}
 	
-	public static WebClient getClient(String uri) {
+	public static <T> T getClient(String uri, ParameterizedTypeReference<T> responseType) {
 		WebClient webClient = create();
 
-		webClient.get()
-                .uri(uri);
-				
-		return webClient;
+		return webClient.get()
+                .uri(uri)
+                .retrieve()
+                .bodyToMono(responseType)
+                .block();
 										
 	}
 	

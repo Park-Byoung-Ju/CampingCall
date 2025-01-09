@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <h1>Trip List</h1>
+    <div id="tripData"></div>
+
+    <script>
+        // API에서 JSON 데이터를 받아오기
+        fetch('/trip/api')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);  // 받은 데이터를 콘솔에 출력
+
+                // 데이터를 화면에 표시하기
+                const tripDataDiv = document.getElementById('tripData');
+                data.items.forEach(item => {
+                    const tripItem = document.createElement('div');
+                    tripItem.textContent = `Name: ${item.name}, ID: ${item.id}`;  // 예시: 데이터 항목을 화면에 표시
+                    tripDataDiv.appendChild(tripItem);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+</html>
