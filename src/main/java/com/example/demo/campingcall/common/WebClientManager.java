@@ -10,7 +10,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 public class WebClientManager {
 	
-	public final static String KEY= "LEoRzNehyS3bpMxZp6vlzEMYTKR9epu5kIxxesG2T9L0DEOYz1korA86TalB4gAHGTffD3mHdZoaB9%2FRNzmQ4g%3D%3D";	
+	// encoding key
+	//public final static String KEY= "LEoRzNehyS3bpMxZp6vlzEMYTKR9epu5kIxxesG2T9L0DEOYz1korA86TalB4gAHGTffD3mHdZoaB9%2FRNzmQ4g%3D%3D";	
+	
+	// decoding key
+	public final static String KEY = "LEoRzNehyS3bpMxZp6vlzEMYTKR9epu5kIxxesG2T9L0DEOYz1korA86TalB4gAHGTffD3mHdZoaB9/RNzmQ4g==";
 	
 	public static WebClient create() {
 		return WebClient.builder()

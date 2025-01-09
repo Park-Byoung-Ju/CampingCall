@@ -1,10 +1,7 @@
 package com.example.demo.campingcall.trip;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.example.demo.campingcall.api.AreaCode1;
 import com.example.demo.campingcall.common.WebClientManager;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,15 +37,16 @@ public class TripController {
 	
 	@ResponseBody
 	@GetMapping("/api")
-	public Test test(HttpServletResponse response) {
+	public AreaCode1 test(HttpServletResponse response) {
 
 		String baseUri = "http://apis.data.go.kr/B551011/KorService1/areaCode1";
+		//String baseUri = "http://apis.data.go.kr/B551011/KorService1/locationBasedList1";
 		String uriuri = "http://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=LEoRzNehyS3bpMxZp6vlzEMYTKR9epu5kIxxesG2T9L0DEOYz1korA86TalB4gAHGTffD3mHdZoaB9%2FRNzmQ4g%3D%3D&numOfRows=1&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json";
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		map.add("serviceKey", WebClientManager.KEY);
-		map.add("numOfRows", "1");
-		map.add("MobileOS", "ETC");
-		map.add("MobileApp", "TestWeb");
+		map.add("numOfRows", "17");
+		map.add("MobileOS", "WIN");
+		map.add("MobileApp", "TestApp");
 		map.add("_type", "json");
 		
 		String uri = WebClientManager.setParamUri(baseUri, map);
@@ -57,10 +56,10 @@ public class TripController {
 		
 		return WebClient.create()
 				.get()
-				.uri(uriuri)
+				.uri(uri)
 				.header("Accept",MediaType.APPLICATION_JSON_VALUE)
 				.retrieve()
-				.bodyToMono(Test.class)
+				.bodyToMono(new ParameterizedTypeReference<AreaCode1>() {})
 				.block();
 		 
 		
@@ -71,26 +70,46 @@ public class TripController {
 	public String getTest() {
 		return "trip/test";
 	}
-	
+	/*	
 	@ResponseBody
 	@GetMapping("/test2")
-	public Map<String,String> getGap(){
-		Map<String,String> resultMap = new HashMap<>();
-		resultMap.put("name", "한라산");
-		resultMap.put("good", "제주감귤");
-		return resultMap;
+	public List<Map<String,Object>> getGap(){
+		List<Map<String, Object>> resultList = new ArrayList<>();
+		
+		for(int i = 0; i < 5; i++) {
+			Map<String,Object> resultMap = new HashMap<>();
+			resultMap.put("name", "한라산");
+			resultMap.put("good", "제주감귤");
+			resultMap.put("price", "1000원");		
+			resultList.add(resultMap);
+		}
+		return resultList;
 	}
 	
 	@ResponseBody
 	@GetMapping("/test3")
-	public Map<String,String> getApiData(){
-
-		return WebClient.create()
+	public BodyArea getApiData(){
+		Items items = new Items();
+		items.setItem(WebClient.create()
 				.get()
 				.uri("http://localhost:8080/trip/test2")
 				.header("Accept",MediaType.APPLICATION_JSON_VALUE)
 				.retrieve()
-				.bodyToMono(Map.class)
-				.block();
+				.bodyToMono(new ParameterizedTypeReference<List<Map<String,Object>>>() {})
+				.block());
+		
+		items.setItem1(WebClient.create()
+				.get()
+				.uri("http://localhost:8080/trip/test2")
+				.header("Accept",MediaType.APPLICATION_JSON_VALUE)
+				.retrieve()
+				.bodyToMono(new ParameterizedTypeReference<List<Item>>() {})
+				.block());
+		
+		BodyArea bodyArea = new BodyArea();
+		bodyArea.setItems(items);
+		
+		return bodyArea;
 	}
+	*/
 }
