@@ -33,25 +33,35 @@
 				
 				<div>
 					<!-- 리스트 -->
-					<div class="d-flex mb-2 list-item cursor-pointer">
+					<th:block th:each="trip : ${tripList}">
+					<div class="d-flex mb-2 list-item cursor-pointer p-2">
 						<div class="col-3">
-							<img class="w-100" src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
+							<img class="w-100" th:src="${trip.areaBaseList.firstimage}">
 						</div>
 						
 						<div class="col-9">
 							<div>
-								<h3>관광지 명</h2>
+								<h3 th:text="${trip.areaBaseList.title}">관광지 명</h3>
 							</div>
 							
-							<div>
+							<th:block th:if="${trip.detailCommon.overview.length >= 30}">
+							<div th:text="${#strings.substring(trip.detailCommon.overview,0,30) + '...'}">
 								설명설명
 							</div>
+							</th:block>
 							
-							<div class="small mt-1">
+							<th:block th:unless="${trip.detailCommon.overview.length >= 30}">
+							<div th:text="${trip.detailCommon.overview}">
+								설명설명
+							</div>
+							</th:block>
+							
+							<div class="small mt-1" th:text="${trip.areaBaseList.addr1}">
 								주소 : ~~
 							</div>
 						</div>
 					</div>
+					</th:block>
 					<!-- 리스트  끝-->
 					
 					<div class="text-center mt-4">

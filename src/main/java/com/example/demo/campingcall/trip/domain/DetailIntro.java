@@ -1,10 +1,13 @@
 package com.example.demo.campingcall.trip.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DetailIntro {
 // 관광지 소개 정보
 	// id

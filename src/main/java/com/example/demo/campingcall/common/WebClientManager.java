@@ -70,7 +70,11 @@ public class WebClientManager {
 	}
 	
 	// 원래는 웹클라이언트에서 파싱을 해야하지만 손수 변환
-	public static <T> List<T> convertorData(List<AreaBaseList> list, Class<T> type) throws JsonProcessingException{
+	public static <T> List<T> convertorData(List<T> list, Class<T> type) throws JsonProcessingException{
+		if(list == null) {
+			return null;
+		}
+		
 		List<T> result = new ArrayList<>();
 				
 		for(int i = 0; i < list.size(); i++) {
