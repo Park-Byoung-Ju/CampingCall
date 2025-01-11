@@ -2,6 +2,7 @@ package com.example.demo.campingcall.common;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
@@ -11,8 +12,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.demo.campingcall.api.ApiResponse;
-import com.example.demo.campingcall.api.Item;
-import com.example.demo.campingcall.api.Items;
+import com.example.demo.campingcall.trip.domain.AreaBaseList;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class WebClientManager {
@@ -31,9 +34,9 @@ public class WebClientManager {
 	}
 	
 	//ParameterizedTypeReference<T> responseType
-	public static <T> ApiResponse getClient(String uri) {
+	public static <T> ApiResponse<T> getClient(String uri) {
 		WebClient webClient = create();
-
+		
 
 		return webClient
 				.get()
@@ -44,16 +47,19 @@ public class WebClientManager {
 				.block();
 										
 	}
-	
-	public static WebClient postClient(String uri) {
+/*		
+	public static <T> ApiResponse<T> postClient(String uri) {
 		WebClient webClient = create();
 
-		webClient.post()
-                .uri(uri);
-				
-		return webClient;
+		return webClient
+				.post()
+				.uri(uri)
+				.header("Accept",MediaType.APPLICATION_JSON_VALUE)
+				.retrieve()
+				.bodyToMono(ApiResponse.class)
+				.block();
 	}
-	
+*/	
 	public static String setParamUri(String url, MultiValueMap<String, String> paramMap) {
 		
 		return UriComponentsBuilder
@@ -63,16 +69,21 @@ public class WebClientManager {
 				.toUriString();
 	}
 	
-	public static <T> Object start(WebClient.RequestHeadersSpec<?> webClient, ParameterizedTypeReference<T> responseType) {
-		/* 원리는 제대로 모르겠지만 WebClient.RequestHeadersSpec<?> 에서 retrieve()가 실행되는데
-		 * webclient에서 build 하는 과정에서는 WebClient.RequestHeadersSpec<?>가 같이 실행되기 때문에
-		 * 
-		*/
-		
-		// List 타입은 new ParameterizedTypeReference<List<T>>() 로 생성해서 넘길것
-		return  webClient
-                .retrieve()
-                .bodyToMono(responseType)
-                .block();
+	// 원래는 웹클라이언트에서 파싱을 해야하지만 손수 변환
+	public static <T> List<T> convertorData(List<AreaBaseList> list, Class<T> type) throws JsonProcessingException{
+		List<T> result = new ArrayList<>();
+				
+		for(int i = 0; i < list.size(); i++) {
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			String jsonString = objectMapper.writeValueAsString(list.get(i));
+
+			T t = (T) objectMapper.readValue(jsonString, type);
+			
+			result.add(t);
+		}
+
+		return result;
 	}
+
 }

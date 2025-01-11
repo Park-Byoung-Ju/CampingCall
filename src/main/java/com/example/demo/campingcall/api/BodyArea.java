@@ -1,7 +1,7 @@
 package com.example.demo.campingcall.api;
 
-public class BodyArea {
-	private Items items;
+public class BodyArea<T> {
+	private Items<T> items;
 	
 	private int numOfRows;
 	
@@ -9,11 +9,11 @@ public class BodyArea {
     
     private int totalCount;
     
-	public Items getItems() {
+	public Items<T> getItems() {
 		return items;
 	}
 
-	public void setItems(Items items) {
+	public void setItems(Items<T> items) {
 		this.items = items;
 	}
 

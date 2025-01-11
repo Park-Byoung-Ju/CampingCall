@@ -1,9 +1,9 @@
 package com.example.demo.campingcall.api;
 
-public class Response {
+public class Response<T> {
 	private HeaderArea header;
 	
-	private BodyArea body;
+	private BodyArea<T> body;
 
 	public HeaderArea getHeader() {
 		return header;
@@ -13,11 +13,11 @@ public class Response {
 		this.header = header;
 	}
 
-	public BodyArea getBody() {
+	public BodyArea<T> getBody() {
 		return body;
 	}
 
-	public void setBody(BodyArea body) {
+	public void setBody(BodyArea<T> body) {
 		this.body = body;
 	}	
 }

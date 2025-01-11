@@ -1,15 +1,13 @@
 package com.example.demo.campingcall.api;
 
-import java.util.List;
+public class Items<T> {
+	private T item;
 
-public class Items {
-	private List<Item> item;
-
-	public List<Item> getItem() {
+	public T getItem() {
 		return item;
 	}
 
-	public void setItem(List<Item> item) {
+	public void setItem(T item) {
 		this.item = item;
 	}
 

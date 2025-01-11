@@ -1,13 +1,13 @@
 package com.example.demo.campingcall.api;
 
-public class ApiResponse {
-	private Response response;
+public class ApiResponse<T> {
+	private Response<T> response;
 
-	public Response getResponse() {
+	public Response<T> getResponse() {
 		return response;
 	}
 
-	public void setResponse(Response response) {
+	public void setResponse(Response<T> response) {
 		this.response = response;
 	}
 }
