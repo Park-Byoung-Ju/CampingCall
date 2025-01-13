@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.campingcall.comment.domain.Comment;
+import com.example.demo.campingcall.comment.service.CommentService;
 import com.example.demo.campingcall.common.Paging;
 import com.example.demo.campingcall.trip.domain.Trip;
 import com.example.demo.campingcall.trip.service.TripService;
@@ -20,8 +22,12 @@ public class TripController {
 	
 	private TripService tripService;
 	
-	public TripController(TripService tripService) {
+	private CommentService commentService;
+	
+	public TripController(TripService tripService
+						, CommentService commentService) {
 		this.tripService = tripService;
+		this.commentService = commentService;
 	}
 	
 	@GetMapping("/tripList")
@@ -67,7 +73,10 @@ public class TripController {
 		
 		Trip trip = tripService.getTrip(contentId);
 		
+		List<Comment> commentList = commentService.boardCommentList(Integer.parseInt(contentId), 2);
+		
 		model.addAttribute("trip",trip);
+		model.addAttribute("commentList", commentList);
 		
 		return "trip/detail";
 	}

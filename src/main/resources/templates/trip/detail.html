@@ -7,7 +7,7 @@
 <th:block layout:fragment="css">
 <link rel="stylesheet" href="/static/css/trip.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
+<link rel="stylesheet" href="/static/css/boardDetail.css">
 </th:block>
 
 	<th:block layout:fragment="contents">
@@ -44,57 +44,35 @@
 							</div>
 							
 							<div class="d-flex justify-content-center mt-3">
-								<div class="d-flex">
-									<div>							
-										<div>주소 : </div>
-										<div>휴일 : </div>
-										<div>전화번호 : </div>
-									</div>
+								<table class="text-center table">
+									<tr>
+										<th class="col-2">주소</th>
+										<td class="col-4" th:text="${trip.detailCommon.addr1}"></td>
+										<th class="col-3">홈페이지</th>
+										<td class="col-3" th:utext="${trip.detailCommon.homepage}"></td>
+									</tr>
 									
-									<div class="mx-2">
-										<div th:text="${trip.detailCommon.addr1}">~~~도 ~~~시 ~~~~~~!!!</div>
-										<div th:text="${trip.detailIntro.restdate}">연중무휴</div>
-										
-										<th:block th:if="${trip.detailCommon.tel} != null">
-										<div th:text="${trip.detailCommon.tel}">010-1234-5678</div>
-										</th:block>
-										
-										<th:block th:if="${trip.detailCommon.tel} == null">
-										<div>X</div>
-										</th:block>
-										
-									</div>
-								</div>
-								
-								<div class="d-flex">
-									<div>
-										<div>홈페이지 : </div>
-										<div>이용시간 : </div>
-										<div>입장료 : </div>
-									</div>
-									
-									<div class="ml-2">
-										<div th:utext="${trip.detailCommon.homepage}">https://~~~~~</div>
-										
-										<!-- 이용시간 -->
+									<tr>
+										<th>휴일</th>
+										<td th:utext="${trip.detailIntro.restdate}"></td>
+										<th>이용시간</th>
 										<th:block th:if="${trip.detailIntro.usetime} != null">
-										<div th:utext="${trip.detailIntro.usetime}">??시 ??분 ~ ??시 ??분</div>
+										<td th:utext="${trip.detailIntro.usetime}">??시 ??분 ~ ??시 ??분</td>
 										</th:block>
 										
 										<th:block th:unless="${trip.detailIntro.usetime} != null">
-										<div>X</div>
+										<td>X</td>
 										</th:block>
-										
-										<!-- 이용 요금 -->
-										<th:block th:if="${trip.detailIntro.usefee} != null">
-										<div th:text="${trip.detailIntro.usefee}">5000원</div>
-										</th:block>
-										
-										<th:block th:unless="${trip.detailIntro.usefee} != null">
-										<div>X</div>
-										</th:block>
-									</div>
-								</div>
+									</tr>
+									
+									<tr>
+										<th>전화번호</th>
+										<td th:text="${trip.detailCommon.tel}">
+										<th>입장료</th>
+										<td th:text="${trip.detailIntro.usefee}"></td>
+									</tr>
+								</table>
+								
 							</div>
 						</div>
 					</div>
@@ -103,38 +81,39 @@
 					
 					<hr class="bg-dark">
 					
-					<div class="mb-4" th:text="${trip.detailIntro.expguide}">체험요소는 ~~~~입니다</div>
+					<div class="mb-4" th:utext="${trip.detailIntro.expguide}">체험요소는 ~~~~입니다</div>
 				
 				</div>
 				
 				<div id="comment-item" class="d-none">
 					<div class="input-group">
-						<input type="text" class="form-control">
+						<input id="commentInput" type="text" class="form-control">
 						<div class="input-group-append">
-							<button class="btn btn-secondary" type="button">게시</button>
+							<button id="commentBtn" class="btn btn-secondary" type="button">게시</button>
 						</div>
 					</div>
 					
 					<div>
 						<!-- 리뷰 item -->
+						<th:block th:each="comment : ${commentList}">
 						<div class="d-flex mt-4 justify-content-between">
 							<div class="d-flex">
-								<div><b>아이디</b></div>
+								<div><b th:text="${comment.user.name}">아이디</b></div>
 								
-								<div class="ml-2">내용을 적었습니다</div>
+								<div class="ml-2" th:text="${comment.contents}">내용을 적었습니다</div>
 							</div>
 							
 		    				<div class="mr-2">
-
+		    					<th:block th:if="${session.userId == comment.userId}">
 		    					<i class="bi bi-three-dots comment-three-dot"></i>
 		    					<ul class="d-none text-center comment-list">
 		    						<li class="d-none list-style-none">					
-									<li class="comment-option" data-value="delete">삭제하기</li>
+									<li class="comment-option" data-value="delete" th:data-id="${comment.id}">삭제하기</li>
 								</ul> 
-							
-	    					
+								</th:block>
 	    					</div>
 						</div>
+						</th:block>
 						<!-- 리뷰 item 끝 -->
 					</div>
 				</div>
@@ -165,7 +144,68 @@
 			
 			// 댓글 점3개 클릭
 			$(".comment-three-dot").on("click",function(){
-				$(this).next().removeClass("d-none");
+				if($(this).next().hasClass("d-none")){
+					$(this).next().removeClass("d-none");			
+				}else{
+					$(this).next().addClass("d-none");
+				}
+			});
+			
+			// 댓글 삭제
+			$(".comment-option").on("click",function(){
+				let id = $(this).data("id");
+				
+				if(!confirm("댓글을 정말로 삭제하시겠습니까?")){
+					return false;
+				}
+				
+				$.ajax({
+					type:"delete"
+					,url:"/comment/delete"
+					,data:{"contentId" : id}
+					,success:function(response){
+						if(response){
+							location.reload();
+						}else{
+							alert("댓글 삭제 실패");
+						}
+					}
+					,error:function(){
+						alert("서버문제");
+					}
+				});
+			});
+			
+			// 댓글 추가
+			$("#commentBtn").on("click",function(){
+				let comment = $("#commentInput").val();
+				let contentId = $("#id").data("id");
+				
+				if(comment.length == 0){
+					
+					return false;
+				}
+				
+				$.ajax({
+					type: "post"
+					,url: "/comment/create"
+					,data:{
+						"contentId" : contentId
+						,"category" : 2
+						,"contents" : comment
+					}
+					,success:function(response){
+						if(response){
+							alert("댓글 게시 성공!");
+							location.reload();
+						}else{
+							alert("댓글 게시 실패!");
+						}
+					}
+					,error:function(){
+						alert("서버에러");
+					}
+				});
 			});
 		});
 	</script>
