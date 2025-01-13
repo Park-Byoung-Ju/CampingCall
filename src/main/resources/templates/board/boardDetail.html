@@ -167,11 +167,11 @@
 		
 		// 댓글 click 목록 보이기
 		$(".comment-three-dot").on("click", function(){
-			$(this).next().removeClass("d-none");
-		});
-		
-		$(".comment-list").on("mouseup",function(){
-			$(".comment-list").addClass("d-none");
+			if($(this).next().hasClass("d-none")){
+				$(this).next().removeClass("d-none");
+			}else{
+				$(this).next().addClass("d-none");
+			}
 		});
 		
 		$(".comment-option").on("click",function(){
