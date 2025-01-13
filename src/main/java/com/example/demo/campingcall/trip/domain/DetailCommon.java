@@ -16,15 +16,27 @@ public class DetailCommon {
 	
 	private String homepage;
 	
+	private String addr1;
+	
 	private String tel;
 	
 	private String telname;
 	
 	private String title;
 	
+	private String firstimage;
+	
+	private String firstimage2;
+	
 	private String areacode;
 	
 	private String sigungucode;
+	
+	private String mapx;
+	
+	private String mapy;
+	
+	private String mlevel;
 	
 	private String overview;
 }

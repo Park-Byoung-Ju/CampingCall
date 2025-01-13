@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 @Service
 public class TripService {
 
-	public List<AreaBaseList> getData(String pageNo) { // 관광지와 상세 데이터
+	public List<AreaBaseList> getData(String pageNo, String areacode, String sigunguCode) { // 관광지와 상세 데이터
 
 		String baseUri = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1";
 		
@@ -28,7 +28,17 @@ public class TripService {
 		map.add("pageNo", pageNo);
 		map.add("contentTypeId", "12");
 		map.add("MobileOS", "WIN");
+		
+		if(areacode != null) {
+			map.add("areaCode", areacode);
+		}
+
+		if(sigunguCode != null) {
+			map.add("sigunguCode", sigunguCode);
+		}
+		
 		map.add("MobileApp", "TestApp");
+		map.add("arrange", "Q");
 		map.add("_type", "json");
 		
 		String uri = WebClientManager.setParamUri(baseUri, map);
@@ -38,13 +48,14 @@ public class TripService {
 		List<AreaBaseList> result = new ArrayList<>();	
 		
 		try {
-			result = WebClientManager.convertorData(api.getResponse().getBody().getItems().getItem(),AreaBaseList.class);
-			
-			
+			result = WebClientManager.convertorData(api.getResponse().getBody().getItems().getItem(),AreaBaseList.class);			
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		result.get(0).setAllCount(api.getResponse().getBody().getTotalCount());
+		
 		return result;
 	}
 	
@@ -58,6 +69,9 @@ public class TripService {
 		map.add("contentId", contentId);
 		map.add("contentTypeId", "12");
 		map.add("defaultYN", "Y");
+		map.add("firstImageYN", "Y");
+		map.add("addrinfoYN", "Y");
+		map.add("mapinfoYN", "Y");
 		map.add("areacodeYN", "Y");
 		map.add("overviewYN", "Y");
 		map.add("_type", "json");
@@ -106,20 +120,18 @@ public class TripService {
 		return detail.get(0);
 	}
 	
-	public List<Trip> getTripList(int pageNo) {
-		List<AreaBaseList> areaBaseList = getData(String.valueOf(pageNo));
+	public List<Trip> getTripList(int pageNo, String areaCode, String sigunguCode) {
+		List<AreaBaseList> areaBaseList = getData(String.valueOf(pageNo), areaCode, sigunguCode);
 		
 		List<Trip> tripList = new ArrayList<>();
 		for(int i = 0; i < areaBaseList.size(); i++) {
 			String contentId = areaBaseList.get(i).getContentid();
 			
 			AreaBaseList areaBaseListItem = areaBaseList.get(i);
-			DetailIntro detailIntro = getDetail(contentId);
 			DetailCommon detailCommon = getDetailCommon(contentId);
 			
 			Trip trip = new Trip();
 			trip.setAreaBaseList(areaBaseListItem);
-			trip.setDetailIntro(detailIntro);
 			trip.setDetailCommon(detailCommon);
 			
 			tripList.add(trip);
@@ -128,16 +140,15 @@ public class TripService {
 		return tripList;
 	}
 	
-	public Trip getTrip(int pageNo) {
-		List<AreaBaseList> areaBaseList = getData(String.valueOf(pageNo));
-		
-		String contentId = areaBaseList.get(0).getContentid();
-		
-		AreaBaseList areaBaseListItem = areaBaseList.get(0);
+	public Trip getTrip(String contentId) {
+
+		// detailCommon 데이터
+		DetailCommon detailCommon = getDetailCommon(contentId);
+		// detailIntro 데이터
 		DetailIntro detailIntro = getDetail(contentId);
 		
 		Trip trip = new Trip();
-		trip.setAreaBaseList(areaBaseListItem);
+		trip.setDetailCommon(detailCommon);
 		trip.setDetailIntro(detailIntro);
 
 		

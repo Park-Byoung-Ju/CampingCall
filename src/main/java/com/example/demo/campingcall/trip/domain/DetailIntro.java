@@ -32,5 +32,7 @@ public class DetailIntro {
 	private String useseason;
 	
 	private String usetime;
+	
+	private String usefee;
 
 }

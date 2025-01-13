@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="ko" 
     xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -9,13 +9,15 @@
 </th:block>
 
 	<th:block layout:fragment="contents">
-		<article class="w-100">
+		<article id="main-article">
 			<div class="p-5">
 				<div>
-					<h2 class="title-margin">관광지명</h2>
+					<h2 class="title-margin" th:text="${trip.detailCommon.title}">관광지명</h2>
+					<th:block th:if="${trip.detailCommon.firstimage != null}">
 					<div class="d-flex justify-content-center">
-						<img width=600 class="box-center" src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
+						<img width=600 class="box-center" th:src="${trip.detailCommon.firstimage}">
 					</div>
+					</th:block>
 				</div>
 			</div>
 			
@@ -31,7 +33,7 @@
 			
 			<div class="content p-4">
 				<div id="information-item">
-					<div>내용은 이러이러합니다. 맑은 하늘과 바람이 불어 시원한 숲에서...</div>
+					<div th:text="${trip.detailCommon.overview}">내용은 이러이러합니다. 맑은 하늘과 바람이 불어 시원한 숲에서...</div>
 					
 					<div class="d-flex justify-content-center mt-5">
 						<div>
@@ -43,14 +45,22 @@
 								<div class="d-flex">
 									<div>							
 										<div>주소 : </div>
-										<div>전화번호 : </div>
 										<div>휴일 : </div>
+										<div>전화번호 : </div>
 									</div>
 									
 									<div class="mx-2">
-										<div>~~~도 ~~~시 ~~~~~~!!!</div>
-										<div>010-1234-5678</div>
-										<div>연중무휴</div>
+										<div th:text="${trip.detailCommon.addr1}">~~~도 ~~~시 ~~~~~~!!!</div>
+										<div th:text="${trip.detailIntro.restdate}">연중무휴</div>
+										
+										<th:block th:if="${trip.detailCommon.tel} != null">
+										<div th:text="${trip.detailCommon.tel}">010-1234-5678</div>
+										</th:block>
+										
+										<th:block th:if="${trip.detailCommon.tel} == null">
+										<div>X</div>
+										</th:block>
+										
 									</div>
 								</div>
 								
@@ -62,9 +72,25 @@
 									</div>
 									
 									<div class="ml-2">
-										<div>https://~~~~~</div>
-										<div>??시 ??분 ~ ??시 ??분</div>
-										<div>5000원</div>
+										<div th:utext="${trip.detailCommon.homepage}">https://~~~~~</div>
+										
+										<!-- 이용시간 -->
+										<th:block th:if="${trip.detailIntro.usetime} != null">
+										<div th:utext="${trip.detailIntro.usetime}">??시 ??분 ~ ??시 ??분</div>
+										</th:block>
+										
+										<th:block th:unless="${trip.detailIntro.usetime} != null">
+										<div>X</div>
+										</th:block>
+										
+										<!-- 이용 요금 -->
+										<th:block th:if="${trip.detailIntro.usefee} != null">
+										<div th:text="${trip.detailIntro.usefee}">5000원</div>
+										</th:block>
+										
+										<th:block th:unless="${trip.detailIntro.usefee} != null">
+										<div>X</div>
+										</th:block>
 									</div>
 								</div>
 							</div>
@@ -75,7 +101,7 @@
 					
 					<hr class="bg-dark">
 					
-					<div class="mb-4">체험요소는 ~~~~입니다</div>
+					<div class="mb-4" th:text="${trip.detailIntro.expguide}">체험요소는 ~~~~입니다</div>
 				</div>
 				
 				<div id="comment-item" class="d-none">

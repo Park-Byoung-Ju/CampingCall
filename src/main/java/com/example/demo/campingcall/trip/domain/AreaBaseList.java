@@ -10,9 +10,9 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AreaBaseList {
 // 지역기반 관광 정보 조회	
-	private String contentid;
+	private int allCount;
 	
-	private String addr1;
+	private String contentid;
 	
 	private String areacode;
 	
@@ -20,23 +20,7 @@ public class AreaBaseList {
 	
 	private String contenttypeid;
 	
-	private String firstimage;
-	
-	private String firstimage2;
-	
 	private String cpyrhtDivCd;
-	
-	private String mapx;
-	
-	private String mapy;
-	
-	private String mlevel;
-	
-	private String sigungucode;
-	
-	private String tel;
-	
-	private String title;
 	
 	private String zipcode;
 

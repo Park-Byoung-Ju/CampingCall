@@ -31,17 +31,18 @@
 				
 				<hr>
 				
-				<div>
+				<div id="list" th:data-count="${tripList.get(0).areaBaseList.allCount}">
 					<!-- 리스트 -->
 					<th:block th:each="trip : ${tripList}">
-					<div class="d-flex mb-2 list-item cursor-pointer p-2">
+					<!-- 아이템 -->
+					<div class="d-flex mb-2 list-item cursor-pointer p-2" th:data-id="${trip.areaBaseList.contentid}">
 						<div class="col-3">
-							<img class="w-100" th:src="${trip.areaBaseList.firstimage}">
+							<img class="w-100" th:src="${trip.detailCommon.firstimage}">
 						</div>
 						
 						<div class="col-9">
 							<div>
-								<h3 th:text="${trip.areaBaseList.title}">관광지 명</h3>
+								<h3 th:text="${trip.detailCommon.title}">관광지 명</h3>
 							</div>
 							
 							<th:block th:if="${trip.detailCommon.overview.length >= 30}">
@@ -56,24 +57,66 @@
 							</div>
 							</th:block>
 							
-							<div class="small mt-1" th:text="${trip.areaBaseList.addr1}">
+							<div class="small mt-1" th:text="${trip.detailCommon.addr1}">
 								주소 : ~~
 							</div>
 						</div>
+						<!-- 아이템 끝 -->
 					</div>
 					</th:block>
 					<!-- 리스트  끝-->
 					
 					<div class="text-center mt-4">
-						<a href="#"><<</a>
-						<a href="#"><</a>
-						<a href="#">1</a>
-						<a href="#">2</a>
-						<a href="#">3</a>
-						<a href="#">4</a>
-						<a href="#">5</a>
-						<a href="#">></a>
-						<a href="#">>></a>
+					<th:block>
+						<th:block th:if="${first != 1}">
+						<a href="/trip/tripList?page=1"><<</a>
+						</th:block>
+						
+						<th:block th:unless="${first != 1}">
+						<span><<</span>
+						</th:block>
+					</th:block>
+					
+					<th:block>
+						<th:block th:if="${first != 1}" th:with="number = ${first} - 1">
+						<a th:href="|/trip/tripList?page=${number}|"><</a>
+						</th:block>
+						
+						<th:block th:unless="${first != 1}">
+						<span><</span>
+						</th:block>
+					</th:block>
+					
+					<th:block th:each="paging : ${paging.pageList}">
+						<th:block th:if="${paging != page}">
+							<a th:href="|/trip/tripList?page=${paging}|" th:text="${paging}"></a>
+						</th:block>
+							
+						<th:block th:unless="${paging != page}">
+							<span th:text="${paging}"></span>
+						</th:block>
+					</th:block>
+					
+					<th:block>
+						<th:block th:if="${(end + 1) < paging.allPage}">
+						<a th:href="|/trip/tripList?page=${end + 1}|">></a>
+						</th:block>
+						
+						<th:block th:unless="${(end + 1) < paging.allPage}">
+						<span>></span>
+						</th:block>
+					</th:block>
+					
+					<th:block>
+						<th:block th:if="${end != paging.allPage}">
+						<a th:href="|/trip/tripList?page=${paging.allPage}|">>></a>
+						</th:block>
+						
+						<th:block th:unless="${end != paging.allPage}">
+						<span>>></span>
+						</th:block>
+					</th:block>
+						
 					</div>
 				</div>
 	
@@ -85,7 +128,9 @@
 	<script>
 		$(document).ready(function(){
 			$(".list-item").on("click", function(){
-				location.href="/trip/detail";
+				let id = $(this).data("id");
+				
+				location.href="/trip/detail/" + id;
 			});
 			
 			$("#searchBtn").on("click",function(){
