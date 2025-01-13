@@ -82,7 +82,11 @@ public class TripController {
 	}
 	
 	@GetMapping("/search")
-	public String tripSearch() {
+	public String tripSearch(@RequestParam("search") String search
+							,Model model) {
+		
+		
+		
 		return "trip/search";
 	}
 }
