@@ -51,23 +51,59 @@
 		$("#area").val("서울");
 		$("#area").data("id",$("#서울").data("id"));
 		
+		// 리스트 제어
 		$(".list").on("click",function(){
+			// 모든 list class를 가진 태그들은 click-list 삭제
 			$(".list").removeClass("click-list");
+			// 이 list를 가진 태그만 click-list를 추가
 			$(this).addClass("click-list");
+			// siGunGu를 담당하는 input에 이 정보를 기입하여 보여줘라
 			$("#siGunGu").val($(this).data("name"));
+			// siGunGu input data-id에 이 primary key를 기입
 			$("#siGunGu").data("id",$(this).data("id"));
 		});
 		
+		// 메뉴 리스트 제어
 		$(".nav-list").on("click",function(){
 			let id = $(this).data("id");
 			let areaId = $("#area").data("id");
 			
+			// nav-list를 가진 모든 태그에 click-list 삭제
 			$(".nav-list").removeClass("click-list");
+			// 이 태그에만 click-list 추가
 			$(this).addClass("click-list");
+			// siGunGu를 보여주는 모든 태그에 d-none을 설정
 			$("#" + areaId).addClass("d-none");
+			// 여기에 대응되는 siGunGu 태그만 화면에 보여라
 			$("#" + id).removeClass("d-none");
+			// area를 담당하는 input에 이 정보를 기입하여 보여줘라
 			$("#area").val($(this).data("name"));
+			// area input의 data-id에 area primary key를 기입
 			$("#area").data("id",$(this).data("id"));
+			// siGunGu 삭제
+			$("#siGunGu").val("");
+			$("#siGunGu").data("id","");
+		});
+		
+		// 확인 버튼 눌렀을때 이벤트
+		$("#inputBtn").on("click",function(){
+			let areaValue = $("#area").val();
+			let areaId = $("#area").data("id");
+			let siGunGuValue = $("#siGunGu").val();
+			let siGunGuId = $("#siGunGu").data("id");
+			
+			if(areaId.length == 0 || areaValue.length == 0){
+				window.close();
+			}
+			
+			let search = areaValue + " " + siGunGuValue;
+			let code = areaId + "/" + siGunGuId;
+			
+			
+			opener.document.getElementById("search").value = search;
+			opener.document.getElementById("search").setAttribute("data-id", code);
+		
+			window.close();
 		});
 	});
 </script>

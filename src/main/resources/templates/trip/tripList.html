@@ -20,7 +20,7 @@
 						</select>
 					</div>			
 					
-					<input id="search" type="text" class="form-control">
+					<input id="search" type="text" class="form-control" data-id="" readonly>
 					
 					<div class="input-group-append">
 						<button id="searchBtn" class="btn btn-secondary">검색</button>
@@ -133,16 +133,37 @@
 				location.href="/trip/detail/" + id;
 			});
 			
+			$("#select").on("change",function(){
+				let select = $("#select").val();
+				
+				if(select == "location"){
+					$("#search").attr("readonly",true);
+				}
+				
+				if(select == "name"){
+					$("#search").attr("readonly",false);
+				}
+			});
+			
+			$("#search").on("click",function(){
+				let select = $("#select").val();
+				
+				if(select == "location"){
+					window.open("/area",width = 700);
+				}
+			});
+			
 			$("#searchBtn").on("click",function(){
 				let search = $("#search").val();
+				let code = $("#search").data("id");
 				
 				if(search == null || search.length == 0){
 					return false;
 				}
 				
-				alert(search);
+				alert("search : " + search + "\n" + "code : " + code);
 				
-				location.href="/trip/search?search=" + search;
+				//location.href="/trip/search?search=" + search + "&code=" + code;
 			});
 		});
 	</script>
