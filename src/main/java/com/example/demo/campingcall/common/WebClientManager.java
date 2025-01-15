@@ -47,19 +47,7 @@ public class WebClientManager {
 				.block();
 										
 	}
-/*		
-	public static <T> ApiResponse<T> postClient(String uri) {
-		WebClient webClient = create();
 
-		return webClient
-				.post()
-				.uri(uri)
-				.header("Accept",MediaType.APPLICATION_JSON_VALUE)
-				.retrieve()
-				.bodyToMono(ApiResponse.class)
-				.block();
-	}
-*/	
 	public static String setParamUri(String url, MultiValueMap<String, String> paramMap) {
 		
 		return UriComponentsBuilder
