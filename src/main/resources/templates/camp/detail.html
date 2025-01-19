@@ -277,8 +277,6 @@
 							buttonCount = 1;
 							$.each(list,function(index,item){
 								if(item == data){
-									alert("같다");
-									
 									$(element).removeClass("btn-success");
 									$(element).removeClass("bookingBtn");
 									$(element).addClass("btn-danger");
@@ -286,7 +284,6 @@
 									
 									return false;
 								}else{
-									alert("다르다");
 									$(element).addClass("btn-success");
 									$(element).addClass("bookingBtn");
 									$(element).removeClass("btn-danger");
