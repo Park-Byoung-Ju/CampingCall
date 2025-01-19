@@ -58,17 +58,19 @@
 				<hr class="margin-top-minus">
 				
 				<div>
-					<div class="mt-2 d-flex campList-item click-cursor">
+					<th:block th:each="camp : ${campList}">
+					<div class="mt-2 d-flex campList-item click-cursor" th:data-id="${camp.contentId}" th:data-keyword="${camp.facltNm}">
 						<div class="col-3">
-							<img class="w-100" src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
+							<img class="w-100" th:src="${camp.firstImageUrl}">
 						</div>
 						
 						<div>
-							<div><h4>???캠핑장</h4></div>
-							<div class="mt-2">??도 ??시 ??동 ???</div>
-							<div class="small mt-3">???는 어쩌구저쩌구...</div>
+							<div><h4 th:text="${camp.facltNm}">???캠핑장</h4></div>
+							<div class="mt-2" th:text="${camp.addr1}">??도 ??시 ??동 ???</div>
+							<div class="small mt-3" th:text="${camp.lineIntro}">???는 어쩌구저쩌구...</div>
 						</div>
 					</div>
+					</th:block>
 				
 				</div>
 				
@@ -81,7 +83,10 @@
 		$(document).ready(function(){
 			
 			$(".campList-item").on("click",function(){
-				location.href="/camp/detail";
+				let keyword = $(this).data("keyword");
+				let id = $(this).data("id");
+				
+				location.href="/camp/detail?keyword=" + keyword + "&contentsId=" + id;
 			});
 			
 			$("#searchBtn").on("click",function(){

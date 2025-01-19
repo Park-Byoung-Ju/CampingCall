@@ -74,5 +74,22 @@ public class AreaCode {
 		
 		return list;
 	}
+	
+	public static Integer getAreaCode(String areaCode) {
+		if(areaCode == null) {
+			return null;
+		}
+		
+		String[] split = areaCode.split("/");
+		
+		if(split[0] == null || split[0].equals("undefined")) {
+			return null;
+		}
+		
+		Integer siGunGu = Integer.parseInt(split[0]);
+		
+		
+		return siGunGu;
+	}
 
 }

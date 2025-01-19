@@ -377,6 +377,7 @@ public class SiGunGuCode {
 	}
 	// 제주도
 	
+	// 서울 ~ 제주도까지 238개
 	public static List<SiGunGu> getList(String areaCode){
 		List<SiGunGu> list = new ArrayList<>();
 		switch(areaCode) {	
@@ -403,18 +404,20 @@ public class SiGunGuCode {
 		return list;
 	}
 	
-	public static SiGunGu getCode(String areaCode, String country) {
-		List<SiGunGu> list = new ArrayList<>();
-		
-		list = getList(areaCode);
-		
-		
-		for(SiGunGu sigungu:list) {
-			if(sigungu.getName().startsWith(country)) {
-				return sigungu;
-			}
+	public static Integer getSiGunGuCode(String areaCode) {
+		if(areaCode == null) {
+			return null;
 		}
 		
-		return null;
+		String[] split = areaCode.split("/");
+		
+		if(split[1] == null || split[1].equals("undefined")) {
+			return null;
+		}
+		
+		Integer siGunGu = Integer.parseInt(split[1]);
+		
+		
+		return siGunGu;
 	}
 }

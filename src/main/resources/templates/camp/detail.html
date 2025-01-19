@@ -6,25 +6,26 @@
     
 <th:block layout:fragment="css">
 <link rel="stylesheet" href="/static/css/camp.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
 </th:block>
 
 	<th:block layout:fragment="contents">
 	<article class="p-3">
-		<div>
-			<h2 class="ml-3">??? 캠핑장</h2>
+		<div id="user" th:data-id="${session.userId}" th:data-name="${session.userName}">
+			<h2 class="ml-3" id="campTitle" th:text="${camp.facltNm}" th:data-id="${camp.contentId}" th:data-value="${camp.facltNm}">??? 캠핑장</h2>
 			
 			<div class="mt-3 d-flex">
 				<div class="col-6">
-					<img class="w-100 mt-2" src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
+					<img class="w-100 mt-2" th:src="${camp.firstImageUrl}">
 				</div>
 				
 				<div class="small ml-3">
-					<div>주소 : <span>???도 ???시 ??동 ???</span></div><hr>
+					<div>주소 : <span th:text="${camp.addr1}">???도 ???시 ??동 ???</span></div><hr>
 					<div>문의처 : <span>???</span></div><hr>
-					<div>예약 방법 : <span>????</span></div><hr>
+					<div>예약 방법 : <span th:text="${camp.resveCl}">????</span></div><hr>
 					<div>운영일 : <span>???</span></div><hr>
-					<div>홈페이지 : <span>???</span></div><hr>
-					<div>주변시설 : <span>???</span></div>
+					<div>홈페이지 : <a th:href="${camp.homepage}" th:text="${camp.homepage}">???</a></div><hr>
+					<div>주변시설 : <span th:text="${camp.posblFcltyCl}">???</span></div>
 				</div>
 			</div>
 			
@@ -36,8 +37,19 @@
 			
 			<div class="mt-4">
 				<!-- 예약 -->
-				<div id="booking" class="">
+				<div id="booking">
 					<!-- 예약 item -->
+					<div class="d-flex justify-content-center my-3">
+						<div class="d-flex w-50 align-items-center">
+							<label class="w-25">날짜</label>
+							<input id="date" type="text" class="form-control" placeholder="시작일" readonly> <!-- 
+							~
+							<input id="date2" type="text" class="form-control" placeholder="종료일" readonly> -->
+						</div>
+						<button id="check" class="btn btn-secondary ml-2">확인</button>
+						<!-- <button id="format" class="btn btn-warning ml-2">초기화</button> -->
+					</div>
+					<th:block th:each="camping : ${camp.campList}">
 					<div class="mt-2 d-flex hover w-100 p-2">
 						<div class="col-3">
 							<img class="w-100" src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
@@ -45,23 +57,25 @@
 						
 						<div class="d-flex justify-content-between w-100">
 							<div>
-								<div><h3>??사이트</h3></div>
-								<div class="mt-3"><small>크기 : ? X ? m<sup>2</sup></small></div>
-								<div class="mt-3">가격 : <span>???원</span></div>
+								<div><h3 th:text="${camping}">??사이트</h3></div>
+								<div class="mt-3"><small>크기 : 7 X 7 m<sup>2</sup></small></div>
+								<div class="mt-3">가격 : <span>100,000원</span></div>
 							</div>
 							
 							<div class="d-flex align-items-end mr-5">
-								<button class="w-100 btn btn-success bookingBtn" type="button">예약하기</button>
-							</div>
+								<button class="w-100 btn btn-success bookingBtn checkBtnClass" type="button" th:data-value="${camping}" data-price="100000"  th:data-id="${campingStat.count}">예약하기</button>
+							</div>						
 						</div>
 					</div>
+					</th:block>
 					<!-- 예약 item 끝 -->
 				</div>
 				<!-- 예약 끝 -->
 				
+				
 				<!-- 캠핑장 정보 -->
 				<div id="information" class="d-none">
-					<div class="p-2">
+					<div class="p-2" th:text="${camp.featureNm}">
 						?? 캠핑장은 산속에 있고 바람이 잘 통하며 계곡 물이 맑고~~~
 					</div>
 					
@@ -73,11 +87,12 @@
 						<div class="d-flex flex-wrap">
 							<!-- 시설 item -->
 							<div class="info-item text-center p-2">
+							<!--  
 								<div>
 									<img class="w-100" src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
 								</div>
-								
-								<div>화장실</div>
+								-->
+								<div th:text="${camp.sbrsCl}">화장실</div>
 							</div>
 							<!-- 시설 item 끝 -->
 						</div>
@@ -92,38 +107,38 @@
 						<div class="text-center d-flex justify-content-center">
 							<table class="table w-75">
 								<tr>
-									<th class="col-4">주요시설</th>
-									<td class="col-6">????</td>
+									<th class="col-4">체험프로그램</th>
+									<td class="col-6" th:text="${camp.exprnProgrm}">????</td>
 								</tr>
 								
 								<tr>
 									<th>기타정보</th>
-									<td>????</td>
+									<td th:text="${camp.posblFcltyEtc}">????</td>
 								</tr>
 								
 								<tr>
 									<th>기타 부대시설</th>
-									<td>????</td>
+									<td th:text="${camp.sbrsEtc}">????</td>
 								</tr>
 								
 								<tr>
 									<th>사이트 간격</th>
-									<td>????</td>
+									<td th:text="${camp.sitedStnc}">????</td>
 								</tr>
 								
 								<tr>
 									<th>캠핑장비대여</th>
-									<td>????</td>
+									<td th:text="${camp.eqpmnLendCl}">????</td>
 								</tr>
 								
 								<tr>
 									<th>반려동물 출입</th>
-									<td>????</td>
+									<td th:text="${camp.animalCmgCl}">????</td>
 								</tr>
 								
 								<tr>
 									<th>화로대</th>
-									<td>????</td>
+									<td th:text="${camp.brazierCl}">????</td>
 								</tr>
 								
 								<tr>
@@ -165,8 +180,59 @@
 	</th:block>
 	
 	<th:block layout:fragment="script">
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+	
 	<script>
 		$(document).ready(function(){
+			var startDate = 0;
+			var startDate2 = 0;
+			var selectDate = "";
+			
+			var buttonCount = 0;
+			
+			
+			$("#format").on("click",function(){
+				var startDate = 0;
+				var startDate2 = 0;
+				var selectDate = "";
+				
+				$("#date2").val("");
+				$("#date").val("");
+				
+				$("#date2").datepicker("option", "minDate", 0);
+				$("#date").datepicker("option", "maxDate", "");	
+			});
+			
+			$("#date").datepicker({
+                dateFormat:"yy-mm-dd",
+                minDate: startDate,
+                maxDate:selectDate,
+                dayNamesMin: ['일','월','화','수','목','금','토'],
+                monthNames: ['1월','2월','3월','4월','5월','6월',
+                '7월','8월','9월','10월','11월','12월']
+			
+				,onSelect:function(selectDate){
+					buttonCount = 0;
+					//$("#date2").datepicker("option", "minDate",selectDate);		
+
+				}
+            });
+			
+			$("#date2").datepicker({
+                dateFormat:"yy-mm-dd",
+                minDate: startDate2,
+                dayNamesMin: ['일','월','화','수','목','금','토'],
+                monthNames: ['1월','2월','3월','4월','5월','6월',
+                '7월','8월','9월','10월','11월','12월']
+			
+				,onSelect:function(selectDate){
+					
+					$("#date").datepicker("option", "maxDate",selectDate);		
+
+				}
+            });
+			
 			$("#informationBtn").on("click",function(){
 				$("#booking").addClass("d-none");
 				$("#information").removeClass("d-none");
@@ -184,6 +250,155 @@
 				$("#information").addClass("d-none");
 				$("#review").removeClass("d-none");
 			});
+			
+			$("#check").on("click",function(){
+				let date = $("#date").val();
+				let id = $("#campTitle").data("id");
+				
+				if(date.length == 0){
+					alert("날짜를 입력해주세요");
+					return false;
+				}
+				
+				$.ajax({
+					type:"get"
+					,url:"/camp/payList"
+					,data:{
+						"contentId" : id
+						,"date" : date
+					}
+					,success:function(response){
+						let list = response.camp.bookingList;
+						console.log(list);
+						alert("성공");
+						
+						$(".checkBtnClass").each(function(index, element){
+							let data = $(element).data("id");
+							buttonCount = 1;
+							$.each(list,function(index,item){
+								if(item == data){
+									alert("같다");
+									
+									$(element).removeClass("btn-success");
+									$(element).removeClass("bookingBtn");
+									$(element).addClass("btn-danger");
+									$(element).text("예약마감");
+									
+									return false;
+								}else{
+									alert("다르다");
+									$(element).addClass("btn-success");
+									$(element).addClass("bookingBtn");
+									$(element).removeClass("btn-danger");
+									$(element).text("예약하기");
+								}
+							});
+						});
+						
+					}
+					,error:function(){
+						alert("서버 문제");
+					}
+				});
+			});
+			
+			// 결제
+			$(".bookingBtn").on("click",function(){
+				let userId = $("#user").data("id");
+				let userName = $("#user").data("name");
+				let id = $("#campTitle").data("id");
+				
+				if(buttonCount == 0){
+					alert("날짜를 선택하고 확인버튼을 눌러주세요");
+					return false;
+				}
+				
+				if(userId.length == 0){
+					alert("로그인 이후 사용할수있는 서비스입니다");
+					return false;
+				}
+				
+				let campTitle = $("#campTitle").data("value");
+				let campPrice = $(this).data("price");
+				let campValue = $(this).data("value");
+				
+				let price = $(this).data("price");
+				let count = $(this).data("id");
+				
+				let title = campTitle + " " + campValue;
+				let date = $("#date").val();
+				
+				if(date.length == 0){
+					alert("날짜를 입력해주세요");
+					return false;
+				}
+				
+				let today = new Date();
+				let hours = today.getHours(); // 시
+				let minutes = today.getMinutes();  // 분
+				let seconds = today.getSeconds();  // 초
+				let milliseconds = today.getMilliseconds();
+				
+				let merchant_uid = hours + "" + minutes + "" + seconds + "" + milliseconds + "" + userId;
+				
+				$.ajax({
+					type:"get"
+					,url:"/camp/pay"
+					,data:{					
+						"contentId" : id				
+						,"userId" : userId				
+						,"bookingNumber" : count				
+						,"price" : price				
+						,"date" : date
+					}
+					,success:function(response){
+						if(response){
+							alert("성공");
+							location.reload();
+							
+						}else{
+							alert("db저장 실패");
+						}
+					}
+					,error:function(){
+						alert("서버 문제");
+					}
+				});
+				
+								/*
+				var IMP = window.IMP;
+				IMP.init("imp12658013");
+				
+				IMP.request_pay({
+				    pg : 'kakaopay.TC0ONETIME',
+				    pay_method : 'card',
+				    merchant_uid: merchant_uid, // 상점에서 관리하는 주문 번호
+				    name : title,
+				    amount : campPrice,
+				    buyer_name : userName
+				}, function(rsp) {
+				    if ( rsp.success ) {
+						//location.href="/camp/pay?contentId=" + id + "&userId=" + userId + "&bookingNumber=" + count + "&price=" + price + "&date=" + date;
+										
+						alert("결제성공");
+						//location.href="/main";
+						
+						//location.href="/camp/pay?contentId=" + id + "&userId=" + userId + "&bookingNumber=" + count + "&price=" + price + "&date=" + date;
+						
+						
+						
+				    	
+				    } else {
+				        var msg = '결제에 실패하였습니다.';
+				        msg += rsp.error_msg;
+				        
+				        alert(msg);
+				    }
+				});
+				*/
+				
+			});
+			//결제 끝
 		});
 	</script>
 	</th:block>

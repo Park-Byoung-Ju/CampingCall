@@ -1,14 +1,23 @@
 package com.example.demo.campingcall.camp.domain;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Camp {
+	private int allCount;
 	
+	private List<Integer> bookingList = null;
+	
+	private List<String> campList = Arrays.asList("A사이트", "B사이트", "C사이트");
 	// 이미지 리스트
 	private List<CampImage> imageList;
 	// primary key
