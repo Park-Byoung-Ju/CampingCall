@@ -362,7 +362,7 @@
 					}
 				});
 				
-								/*
+			/*					
 				var IMP = window.IMP;
 				IMP.init("imp12658013");
 				
@@ -381,7 +381,29 @@
 						//location.href="/main";
 						
 						//location.href="/camp/pay?contentId=" + id + "&userId=" + userId + "&bookingNumber=" + count + "&price=" + price + "&date=" + date;
-						
+						$.ajax({
+							type:"get"
+							,url:"/camp/pay"
+							,data:{					
+								"contentId" : id				
+								,"userId" : userId				
+								,"bookingNumber" : count				
+								,"price" : price				
+								,"date" : date
+							}
+							,success:function(response){
+								if(response){
+									alert("성공");
+									location.reload();
+									
+								}else{
+									alert("db저장 실패");
+								}
+							}
+							,error:function(){
+								alert("서버 문제");
+							}
+						});
 						
 						
 				    	
