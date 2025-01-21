@@ -2,10 +2,9 @@ package com.example.demo.campingcall;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class CampingCallApplication extends SpringBootServletInitializer{
+public class CampingCallApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CampingCallApplication.class, args);
