@@ -15,7 +15,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		FileManager fileManger = new FileManager();
 		
 		registry.addResourceHandler("/images/**") // 이미지와 url path를 연결하는 과정
-		.addResourceLocations("file:///" + fileManger.FILE_UPLOAD_PATH + "/");
+		.addResourceLocations("file://" + fileManger.FILE_UPLOAD_PATH + "/");
 	}
 
 }
