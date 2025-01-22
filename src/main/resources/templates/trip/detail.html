@@ -95,6 +95,7 @@
 					
 					<div>
 						<!-- 리뷰 item -->
+						<th:block th:if="${caommentList != null}">
 						<th:block th:each="comment : ${commentList}">
 						<div class="d-flex mt-4 justify-content-between">
 							<div class="d-flex">
@@ -113,6 +114,7 @@
 								</th:block>
 	    					</div>
 						</div>
+						</th:block>
 						</th:block>
 						<!-- 리뷰 item 끝 -->
 					</div>

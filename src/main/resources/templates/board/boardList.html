@@ -24,12 +24,14 @@
 	    			</thead>
 	    			
 	    			<tbody>
+	    				<th:block th:if="${resultList} != null">
 	    				<th:block th:each="board : ${resultList}">
 		    				<tr class="boardDetailLocation" th:data-id="${board.id}">
 		    					<td th:text="${board.user.name}">실험용</td>
 		    					<td th:text="${board.title}">실험용 작성글입니다</td>
 		    					<td th:text="${#temporals.format(board.createdAt, 'yyyy-MM-dd')}">2024-12-27</td>
 		    				</tr>
+	    				</th:block>
 	    				</th:block>
 	    			</tbody>
 	    		</table>
