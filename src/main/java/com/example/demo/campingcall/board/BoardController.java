@@ -47,7 +47,12 @@ public class BoardController {
 			if(page == 0) {
 				page = 1;
 			}
-			boardList = boardService.boardList(page);			
+			boardList = boardService.boardList(page);	
+			
+			if(boardList == null || boardList.size() < 1) {
+				return "board/boardList";
+			}
+			
 			paging = new Paging(boardService.countByAll());
 			
 		}else {
@@ -56,6 +61,11 @@ public class BoardController {
 			}
 			// 검색을 통한 리스트 데이터 얻기
 			boardList = boardService.boardSearchList(search);
+			
+			if(boardList == null || boardList.size() < 1) {
+				return "board/boardList";
+			}
+			
 			paging = new Paging(boardService.boardSearchCount(search));
 		}
 		

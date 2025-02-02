@@ -55,9 +55,6 @@ public class CampService {
 	
 	// 리스트 가져오기 끝
 	
-	// 댓글 리스트 가져오기
-	// 댓글 리스트 가져오기 끝
-	
 	// 상세정보 가져오기
 	public Camp getDetail(String keyword) {
 		
@@ -130,4 +127,38 @@ public class CampService {
 		return resultList;
 	}
 	// 결제 정보 가져오기 끝
+	
+	// 검색
+	public List<Camp> getSearchList(String keyword, Integer page){
+		String baseUri = "http://apis.data.go.kr/B551011/GoCamping/searchList";
+
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+		map.add("serviceKey", WebClientManager.KEY);
+		map.add("keyword", keyword);
+		map.add("pageNo", String.valueOf(page));
+		map.add("numOfRows", "10");
+		map.add("MobileOS", "WIN");
+		map.add("MobileApp", "TestApp");
+		map.add("_type", "json");
+		
+		String uri = WebClientManager.setParamUri(baseUri, map);
+				
+		List<Camp> campList = new ArrayList<>();
+		
+		try {
+			ApiResponse<List<Camp>> api = WebClientManager.getClient(uri);
+			
+			if(api == null) {
+				return null;
+			}
+			
+			campList = WebClientManager.convertorData(api.getResponse().getBody().getItems().getItem(), Camp.class);
+		} catch (JsonProcessingException e) { // 값이 없을 경우 오류에 걸려서 없을 경우 null을 리턴
+			// TODO Auto-generated catch block
+			return null;
+		}
+		
+		return campList;
+	}
+	// 검색 끝
 }

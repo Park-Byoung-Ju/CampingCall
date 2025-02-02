@@ -23,9 +23,9 @@ public class CommentRestController {
 	}
 	
 	@PostMapping("/create")
-	public boolean commentCreate(@RequestParam("contentId") int contentId
+	public boolean commentCreate(@RequestParam(name = "contentId", required=false) Integer contentId
 								, @RequestParam("contents") String contents
-								, @RequestParam("category") int category
+								, @RequestParam("category") Integer category
 								,HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();

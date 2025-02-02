@@ -59,6 +59,7 @@
     			</div>
     			
     			<div>
+    			<th:block th:if="${board.commentList != null}">
     				<th:block th:each="comment : ${board.commentList}">  			
 	    			<div class="d-flex mt-3">
 	    				<b class="col-2" th:text="${comment.user.name}">닉네임</b>
@@ -73,9 +74,10 @@
 								<li class="comment-option" data-value="delete">삭제하기</li>
 							</ul> 
 							
-	    					</th:block>
+	    				</th:block>
 	    				</div>
 	    			</div>
+	    			</th:block>
 	    			</th:block>
     			</div>
     		</div>

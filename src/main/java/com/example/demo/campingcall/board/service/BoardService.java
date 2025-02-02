@@ -37,8 +37,13 @@ public class BoardService {
 		
 		List<Board> boardList = boardRepository.findTop5ByTitleContains(search);
 		
+		if(boardList == null || boardList.size() < 1) {
+			return null;
+		}
+		
 		for(int i = 0; i < boardList.size(); i++) {
 			User user = userService.userById(boardList.get(i).getUserId());
+			
 			List<Comment> commentList = commentService.boardCommentList(boardList.get(i).getId(), 1);
 			
 			//boardList.get(i).setTitle(boardList.get(i).getTitle().replace(search, "<b>" + search + "</b>"));
@@ -85,6 +90,10 @@ public class BoardService {
 		
 		List<Board> resultBoard = new ArrayList<>();
 		resultBoard = boardRepository.boardList(start, end);
+		
+		if(resultBoard == null || resultBoard.size() < 1 || resultBoard.get(0).getContents() == null) {
+			return null;
+		}
 		
 		for(int i = 0; i < resultBoard.size(); i++) {
 			int id = resultBoard.get(i).getUserId();

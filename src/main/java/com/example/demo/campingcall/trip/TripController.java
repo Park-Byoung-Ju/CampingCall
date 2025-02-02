@@ -1,6 +1,7 @@
 package com.example.demo.campingcall.trip;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -32,14 +33,40 @@ public class TripController {
 	
 	@GetMapping("/tripList")
 	public String tripList(@RequestParam(name="page", required=false) Integer page
+						,@RequestParam(name="keyword", required=false) String keyword
+						,@RequestParam(name="code", required=false) String code
 						,Model model) {
 		
 		if(page == null || page <= 0) {
 			page = 1;
 		}
 		
+		if(keyword == null || keyword.length() < 1) {
+			keyword = null;
+		}
 		
-		List<Trip> tripList = tripService.getTripList(page, null, null);
+		model.addAttribute("keyword",keyword);
+		
+		String doCode = "";
+		String sigunguCode = "";
+		
+		if(code != null) {
+			String[] codeSplit = code.split("/");
+			
+			doCode = codeSplit[0];
+			sigunguCode = codeSplit[1];
+		}else {
+			doCode = null;
+			sigunguCode = null;
+		}
+		
+		List<Trip> tripList = new ArrayList<>();
+		
+		tripList = tripService.getTripList(page, doCode, sigunguCode);
+		
+		if(tripList == null) {
+			return "trip/detail";
+		}
 		
 		// 페이징
 		Paging paging = new Paging(tripList.get(0).getAreaBaseList().getAllCount());
@@ -81,12 +108,4 @@ public class TripController {
 		return "trip/detail";
 	}
 	
-	@GetMapping("/search")
-	public String tripSearch(@RequestParam("search") String search
-							,Model model) {
-		
-		
-		
-		return "trip/search";
-	}
 }
