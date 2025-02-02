@@ -1,5 +1,6 @@
 package com.example.demo.campingcall.camp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -49,7 +50,27 @@ public class CampController {
 	}
 	
 	@GetMapping("/search")
-	public String campSearch() {
+	public String campSearch(@RequestParam(name="keyword", required=false) String keyword
+							,@RequestParam(name="page", required=false) Integer page
+							,Model model) {
+		
+		if(page == null || page < 1) {
+			page = 1;	
+		}
+		
+		if(keyword == null) {
+			keyword = "";
+		}
+		
+		List<Camp> campList = new ArrayList<>();
+		campList = campService.getSearchList(keyword,page);
+		
+		if(campList != null) {
+			model.addAttribute("campList", campList);
+		}
+		
+		model.addAttribute("keyword",keyword);
+		
 		return "camp/search";
 	}
 }

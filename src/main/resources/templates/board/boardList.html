@@ -14,6 +14,7 @@
 	    	<div class="p-5">
 	    		<h1 class="text-left">게시판</h1>
 	    		
+	    		<th:block th:if="${resultList} != null">
 	    		<table class="table text-center mt-3">
 	    			<thead>
 	    				<tr>
@@ -35,11 +36,13 @@
 	    				</th:block>
 	    			</tbody>
 	    		</table>
+	    		</th:block>
 	    		
 	    		<div class="d-flex justify-content-end">
 		    		<button id="boardCreateBtn" class="btn btn-secondary">글쓰기</button>   		
 	    		</div>
 	    		
+	    		<th:block th:if="${resultList} != null">
 	    		<th:block>
 	    		<div class="text-center">
 	    		<!-- 처음으로 -->
@@ -108,7 +111,7 @@
 	    			</th:block>
 	    		</div>
 	    		</th:block>
-	    		
+	    		</th:block>
 	    		<div class="d-flex justify-content-center">	
 		    		<div class="input-group mt-3 col-11">
 		    			<input id="search" class="form-control" type="text">

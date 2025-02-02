@@ -35,7 +35,7 @@
 					<!-- 리스트 -->
 					<div class="d-flex mb-2 list-item cursor-pointer">
 						<div class="col-3">
-							<img class="w-100" src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
+							<img class="w-100" height=100 src="https://cdn.pixabay.com/photo/2022/10/02/06/12/dent-blanche-7492786_1280.jpg">
 						</div>
 						
 						<div class="col-9">
@@ -80,14 +80,15 @@
 			
 			$("#searchBtn").on("click",function(){
 				let search = $("#search").val();
+				let code = $("#search").data("id");
 				
 				if(search == null || search.length == 0){
 					return false;
 				}
 				
-				alert(search);
+				alert("search : " + search + "\n" + "code : " + code);
 				
-				location.href="/trip/search?search=" + search;
+				//location.href="/trip/search?search=" + search + "&code=" + code;
 			});
 		});
 	</script>

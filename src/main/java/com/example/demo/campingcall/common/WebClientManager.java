@@ -38,14 +38,19 @@ public class WebClientManager {
 		WebClient webClient = create();
 		
 
-		return webClient
-				.get()
-				.uri(uri)
-				.header("Accept",MediaType.APPLICATION_JSON_VALUE)
-				.retrieve()
-				.bodyToMono(ApiResponse.class)
-				.block();
-										
+		try {
+			ApiResponse<T> result =  webClient
+					.get()
+					.uri(uri)
+					.header("Accept",MediaType.APPLICATION_JSON_VALUE)
+					.retrieve()
+					.bodyToMono(ApiResponse.class)
+					.block();
+			
+			return result;
+		}catch(Exception e) {
+			return null;
+		}	
 	}
 
 	public static String setParamUri(String url, MultiValueMap<String, String> paramMap) {
