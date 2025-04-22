@@ -33,7 +33,7 @@ public class TripService {
 			map.add("areaCode", areacode);
 		}
 
-		if(sigunguCode != null) {
+		if(sigunguCode != null && !sigunguCode.equals("0")) {
 			map.add("sigunguCode", sigunguCode);
 		}
 		
