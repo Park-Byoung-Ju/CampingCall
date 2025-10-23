@@ -2,9 +2,9 @@ package com.example.demo.campingcall.common;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
@@ -12,14 +12,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.demo.campingcall.api.ApiResponse;
-import com.example.demo.campingcall.trip.domain.AreaBaseList;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class WebClientManager {
-	
+	//private static final AtomicInteger CALLS = new AtomicInteger(0);
 	// encoding key
 	//public final static String KEY= "LEoRzNehyS3bpMxZp6vlzEMYTKR9epu5kIxxesG2T9L0DEOYz1korA86TalB4gAHGTffD3mHdZoaB9%2FRNzmQ4g%3D%3D";	
 	
@@ -36,8 +34,14 @@ public class WebClientManager {
 	//ParameterizedTypeReference<T> responseType
 	public static <T> ApiResponse<T> getClient(String uri) {
 		WebClient webClient = create();
-		
-
+		/*
+		String reqId = UUID.randomUUID().toString().substring(0,8);
+	    int n = CALLS.incrementAndGet();
+	    System.out.println("[getClient] #" + n + " id=" + reqId + " uri=" + uri);
+	    new Exception("[getClient] call-trace id=" + reqId).printStackTrace();
+		*/
+		System.out.println("웹클라이언트 들어옴");
+		System.out.println("주소 : " + uri);
 		try {
 			ApiResponse<T> result =  webClient
 					.get()
@@ -47,8 +51,17 @@ public class WebClientManager {
 					.bodyToMono(ApiResponse.class)
 					.block();
 			
+			if(result == null) {
+				System.out.println("null값1");
+			}
+			
+			if(result.getResponse() == null) {
+				System.out.println("null값2");
+			}
+			
 			return result;
 		}catch(Exception e) {
+			System.out.println("오류");
 			return null;
 		}	
 	}

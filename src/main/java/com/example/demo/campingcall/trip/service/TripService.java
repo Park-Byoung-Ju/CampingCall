@@ -21,13 +21,14 @@ public class TripService {
 
 	public List<AreaBaseList> getData(String pageNo, String areacode, String sigunguCode) { // 관광지와 상세 데이터
 
-		String baseUri = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1";
+		String baseUri = "https://apis.data.go.kr/B551011/KorService2/areaBasedList2";
 		
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		map.add("serviceKey", WebClientManager.KEY);
 		map.add("pageNo", pageNo);
 		map.add("contentTypeId", "12");
 		map.add("MobileOS", "WIN");
+		map.add("MobileApp", "TestApp");
 		
 		if(areacode != null) {
 			map.add("areaCode", areacode);
@@ -37,11 +38,12 @@ public class TripService {
 			map.add("sigunguCode", sigunguCode);
 		}
 		
-		map.add("MobileApp", "TestApp");
+		
 		map.add("arrange", "Q");
 		map.add("_type", "json");
 		
 		String uri = WebClientManager.setParamUri(baseUri, map);
+		System.out.println("주소 : " + uri);
 		
 		ApiResponse<List<AreaBaseList>> api = WebClientManager.getClient(uri);
 		
@@ -60,13 +62,14 @@ public class TripService {
 	}
 	
 	public DetailCommon getDetailCommon(String contentId){
-		String baseUri = "https://apis.data.go.kr/B551011/KorService1/detailCommon1";
+		String baseUri = "https://apis.data.go.kr/B551011/KorService2/detailCommon2";
 		
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		map.add("serviceKey", WebClientManager.KEY);
 		map.add("MobileOS", "WIN");
 		map.add("MobileApp", "CampingCall");
 		map.add("contentId", contentId);
+		/*
 		map.add("contentTypeId", "12");
 		map.add("defaultYN", "Y");
 		map.add("firstImageYN", "Y");
@@ -74,6 +77,7 @@ public class TripService {
 		map.add("mapinfoYN", "Y");
 		map.add("areacodeYN", "Y");
 		map.add("overviewYN", "Y");
+		*/
 		map.add("_type", "json");
 	
 		String uri = WebClientManager.setParamUri(baseUri, map);
@@ -93,7 +97,7 @@ public class TripService {
 	}
 	
 	public DetailIntro getDetail(String contentId){
-		String baseUri = "https://apis.data.go.kr/B551011/KorService1/detailIntro1";
+		String baseUri = "https://apis.data.go.kr/B551011/KorService2/detailIntro2";
 		
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		map.add("serviceKey", WebClientManager.KEY);
