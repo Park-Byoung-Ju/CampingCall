@@ -75,21 +75,21 @@
 					</th:block>
 				
 				</div>
-				<!--  
+				  
 				<div class="text-center mt-4">
 					<th:block>
-						<th:block th:if="${first != 1}">
-						<a href="/trip/tripList?page=1"><<</a>
+						<th:block th:if="${page > 6}">
+						<a href="/camp/campList?page=1"><<</a>
 						</th:block>
 						
-						<th:block th:unless="${first != 1}">
+						<th:block th:unless="${page > 6}">
 						<span><<</span>
 						</th:block>
 					</th:block>
 					
 					<th:block>
-						<th:block th:if="${first != 1}" th:with="number = ${first} - 1">
-						<a th:href="|/trip/tripList?page=${number}|"><</a>
+						<th:block th:if="${paging.getPagingList().get(0) != 1}" th:with="number = ${paging.getPagingList().get(0)} - 1">
+						<a th:href="|/camp/campList?page=${number}|"><</a>
 						</th:block>
 						
 						<th:block th:unless="${first != 1}">
@@ -97,9 +97,9 @@
 						</th:block>
 					</th:block>
 					
-					<th:block th:each="paging : ${paging.pageList}">
+					<th:block th:each="paging : ${paging.getPagingList()}">
 						<th:block th:if="${paging != page}">
-							<a th:href="|/trip/tripList?page=${paging}|" th:text="${paging}"></a>
+							<a th:href="|/camp/campList?page=${paging}|" th:text="${paging}"></a>
 						</th:block>
 							
 						<th:block th:unless="${paging != page}">
@@ -109,7 +109,7 @@
 					
 					<th:block>
 						<th:block th:if="${(end + 1) < paging.allPage}">
-						<a th:href="|/trip/tripList?page=${end + 1}|">></a>
+						<a th:href="|/camp/campList?page=${end + 1}|">></a>
 						</th:block>
 						
 						<th:block th:unless="${(end + 1) < paging.allPage}">
@@ -119,7 +119,7 @@
 					
 					<th:block>
 						<th:block th:if="${end != paging.allPage}">
-						<a th:href="|/trip/tripList?page=${paging.allPage}|">>></a>
+						<a th:href="|/camp/campList?page=${paging.allPage}|">>></a>
 						</th:block>
 						
 						<th:block th:unless="${end != paging.allPage}">
@@ -127,7 +127,7 @@
 						</th:block>
 					</th:block>
 						
-					</div>-->
+					</div>
 			</div>
 		</article>
 	</th:block>

@@ -26,6 +26,9 @@ public class Paging{
 		this.allCount = allCount;
 	}
 	
+	public List<Integer> getPagingList(){
+		return this.pageList;
+	}
 	// size = 데이터를 1페이지에 묶을 개수	
 	// group = 한번에 보일 페이지 개수
 	// page = 현재 페이지

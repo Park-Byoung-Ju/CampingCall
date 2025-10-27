@@ -30,8 +30,6 @@ public class CampRestController {
 					,@RequestParam("price") int price
 					,@RequestParam("date") LocalDate date){
 		
-		
-		
 		return campService.setPay(Integer.parseInt(contentId), userId, bookingNumber, price, date);
 	}
 	

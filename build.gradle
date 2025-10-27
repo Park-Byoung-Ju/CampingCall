@@ -32,7 +32,6 @@ dependencies {
 
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf'
 
-
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
@@ -40,7 +39,6 @@ dependencies {
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
 
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-	
 	
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.campingcall.camp.domain.Camp;
 import com.example.demo.campingcall.camp.service.CampService;
+import com.example.demo.campingcall.common.Paging;
 
 @RequestMapping("/camp")
 @Controller
@@ -32,7 +33,20 @@ public class CampController {
 		
 		List<Camp> campList = campService.getList(page);
 		
+		Paging paging = new Paging(campList.get(0).getAllCount());
+
+		List<Integer> pagingList = paging.getPagingList(10,5,page);
+		
+		int end = 0;
+		for(int i = 0; i < pagingList.size(); i++) {
+			end = pagingList.get(i);
+		}
+		
+		
 		model.addAttribute("campList", campList);
+		model.addAttribute("paging", paging);
+		model.addAttribute("page", page);
+		model.addAttribute("end", end);
 		
 		return "camp/campingList";
 	}

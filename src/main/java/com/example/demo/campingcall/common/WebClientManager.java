@@ -40,8 +40,8 @@ public class WebClientManager {
 	    System.out.println("[getClient] #" + n + " id=" + reqId + " uri=" + uri);
 	    new Exception("[getClient] call-trace id=" + reqId).printStackTrace();
 		*/
-		System.out.println("웹클라이언트 들어옴");
-		System.out.println("주소 : " + uri);
+		//System.out.println("웹클라이언트 들어옴");
+		//System.out.println("주소 : " + uri);
 		try {
 			ApiResponse<T> result =  webClient
 					.get()
