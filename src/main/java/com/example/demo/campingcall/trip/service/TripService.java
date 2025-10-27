@@ -43,7 +43,6 @@ public class TripService {
 		map.add("_type", "json");
 		
 		String uri = WebClientManager.setParamUri(baseUri, map);
-		System.out.println("주소 : " + uri);
 		
 		ApiResponse<List<AreaBaseList>> api = WebClientManager.getClient(uri);
 		

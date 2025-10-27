@@ -83,7 +83,21 @@ public class CampController {
 			model.addAttribute("campList", campList);
 		}
 		
+		System.out.println("count : " + campList.get(0).getAllCount());
+		Paging paging = new Paging(campList.get(0).getAllCount());
+
+		List<Integer> pagingList = paging.getPagingList(10,5,page);
+		
+		int end = 0;
+		for(int i = 0; i < pagingList.size(); i++) {
+			end = pagingList.get(i);
+			System.out.println("list : " + end);
+		}
+		
 		model.addAttribute("keyword",keyword);
+		model.addAttribute("paging", paging);
+		model.addAttribute("page", page);
+		model.addAttribute("end", end);
 		
 		return "camp/search";
 	}

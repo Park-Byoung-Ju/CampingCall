@@ -78,11 +78,11 @@
 				  
 				<div class="text-center mt-4">
 					<th:block>
-						<th:block th:if="${page > 6}">
+						<th:block th:if="${page > 5}">
 						<a href="/camp/campList?page=1"><<</a>
 						</th:block>
 						
-						<th:block th:unless="${page > 6}">
+						<th:block th:unless="${page > 5}">
 						<span><<</span>
 						</th:block>
 					</th:block>
@@ -108,11 +108,11 @@
 					</th:block>
 					
 					<th:block>
-						<th:block th:if="${(end + 1) < paging.allPage}">
+						<th:block th:if="${(end + 1) <= paging.allPage}">
 						<a th:href="|/camp/campList?page=${end + 1}|">></a>
 						</th:block>
 						
-						<th:block th:unless="${(end + 1) < paging.allPage}">
+						<th:block th:unless="${(end + 1) <= paging.allPage}">
 						<span>></span>
 						</th:block>
 					</th:block>
@@ -127,7 +127,7 @@
 						</th:block>
 					</th:block>
 						
-					</div>
+				</div>
 			</div>
 		</article>
 	</th:block>

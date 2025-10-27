@@ -49,7 +49,6 @@ public class CampService {
 		}
 		
 		campList.get(0).setAllCount(api.getResponse().getBody().getTotalCount());
-		
 		return campList;	
 	}
 	
@@ -78,7 +77,6 @@ public class CampService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return campList.get(0);
 	}
 	// 상세정보 가져오기 끝
@@ -153,6 +151,7 @@ public class CampService {
 			}
 			
 			campList = WebClientManager.convertorData(api.getResponse().getBody().getItems().getItem(), Camp.class);
+			campList.get(0).setAllCount(api.getResponse().getBody().getTotalCount());
 		} catch (JsonProcessingException e) { // 값이 없을 경우 오류에 걸려서 없을 경우 null을 리턴
 			// TODO Auto-generated catch block
 			return null;
