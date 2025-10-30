@@ -41,8 +41,11 @@ public class TripController {
 			page = 1;
 		}
 		
+		String url = "/trip/tripList?";
 		if(keyword == null || keyword.length() < 1) {
 			keyword = null;
+		}else {
+			url = url + "keyword=" + keyword;
 		}
 		
 		model.addAttribute("keyword",keyword);
@@ -51,10 +54,23 @@ public class TripController {
 		String sigunguCode = "";
 		
 		if(code != null) {
-			String[] codeSplit = code.split("/");
+			if(!code.contains("/")) {
+				model.addAttribute("msg", "잘못된 접근입니다");
+				model.addAttribute("url", "/trip/tripList");
+				
+				return "board/alert";
+			}
 			
-			doCode = codeSplit[0];
-			sigunguCode = codeSplit[1];
+			if(code.replaceAll("/", "").length() == 0) {
+				
+			}else {
+				String[] codeSplit = code.split("/");
+				
+				doCode = codeSplit[0];
+				sigunguCode = codeSplit[1];
+				
+				url = url + "&code=" + code;
+			}
 		}else {
 			doCode = null;
 			sigunguCode = null;
@@ -62,14 +78,20 @@ public class TripController {
 		
 		List<Trip> tripList = new ArrayList<>();
 		
-		tripList = tripService.getTripList(page, doCode, sigunguCode);
 		
-		if(tripList == null) {
-			return "trip/detail";
+		Paging paging;
+		try {
+			tripList = tripService.getTripList(page, doCode, sigunguCode);
+			// 페이징
+			paging = new Paging(tripList.get(0).getAreaBaseList().getAllCount());
+		}catch(NullPointerException e) {
+			model.addAttribute("msg", "검색결과가 존재하지 않습니다");
+			model.addAttribute("url", "/trip/tripList");
+			
+			return "board/alert";
 		}
 		
-		// 페이징
-		Paging paging = new Paging(tripList.get(0).getAreaBaseList().getAllCount());
+		
 
 		List<Integer> pagingList = paging.getPagingList(10,5,page);
 		
@@ -78,11 +100,13 @@ public class TripController {
 			end = pagingList.get(i);
 		}
 		
+		url = url + "&page=";
 		model.addAttribute("tripList", tripList);
 		model.addAttribute("paging", paging);
 		model.addAttribute("page", page);
 		model.addAttribute("first", paging.getPageList().get(0));
 		model.addAttribute("end", end);
+		model.addAttribute("url", url);
 		
 		return "trip/tripList";
 	}

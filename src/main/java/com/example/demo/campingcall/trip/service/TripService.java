@@ -46,6 +46,10 @@ public class TripService {
 		
 		ApiResponse<List<AreaBaseList>> api = WebClientManager.getClient(uri);
 		
+		if(api == null) {
+			return null;
+		}
+		
 		List<AreaBaseList> result = new ArrayList<>();	
 		
 		try {
