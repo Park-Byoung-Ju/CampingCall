@@ -1,5 +1,7 @@
 package com.example.demo.campingcall.trip.service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +66,61 @@ public class TripService {
 		return result;
 	}
 	
+	public List<AreaBaseList> getSearch(String keyword, String pageNo){
+		String baseUri = "https://apis.data.go.kr/B551011/KorService2/searchKeyword2";
+		
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+		map.add("serviceKey", WebClientManager.KEY);
+		map.add("pageNo", pageNo);
+		map.add("MobileOS", "WEB");
+		map.add("MobileApp", "CampingCall");
+		map.add("arrange", "Q");
+		map.add("_type", "json");
+		map.add("keyword",keyword);
+		String uri = WebClientManager.setParamUri(baseUri, map);
+		//System.out.println("uri : " + uri);
+		
+		ApiResponse<List<AreaBaseList>> api = WebClientManager.getClient(uri);
+		
+		if(api == null) {
+			return null;
+		}
+		
+		List<AreaBaseList> result = new ArrayList<>();	
+		
+		try {
+			result = WebClientManager.convertorData(api.getResponse().getBody().getItems().getItem(),AreaBaseList.class);			
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		result.get(0).setAllCount(api.getResponse().getBody().getTotalCount());
+		
+		return result;
+	}
+	
+	public List<Trip> getSearchData(String keyword, Integer page){
+		String pageNo = String.valueOf(page);
+		List<AreaBaseList> areaBaseList = getSearch(keyword, String.valueOf(pageNo));
+		
+		List<Trip> tripList = new ArrayList<>();
+		for(int i = 0; i < areaBaseList.size(); i++) {
+			String contentId = areaBaseList.get(i).getContentid();
+			
+			AreaBaseList areaBaseListItem = areaBaseList.get(i);
+			DetailCommon detailCommon = getDetailCommon(contentId);
+			
+			Trip trip = new Trip();
+			trip.setAreaBaseList(areaBaseListItem);
+			trip.setDetailCommon(detailCommon);
+			
+			tripList.add(trip);
+		}
+		
+		return tripList;
+	}
+	
 	public DetailCommon getDetailCommon(String contentId){
 		String baseUri = "https://apis.data.go.kr/B551011/KorService2/detailCommon2";
 		
@@ -104,7 +161,7 @@ public class TripService {
 		
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		map.add("serviceKey", WebClientManager.KEY);
-		map.add("numOfRows", "6");
+		map.add("numOfRows", "1");
 		map.add("MobileOS", "WIN");
 		map.add("MobileApp", "CampingCall");
 		map.add("contentId", contentId);

@@ -167,6 +167,10 @@
 				}
 				
 				//alert("search : " + search + "\n" + "code : " + code);
+				if($("#select").val() == "name"){
+					code = "///";
+				}
+				
 				
 				location.href="/trip/tripList?keyword=" + search + "&code=" + code;
 			});

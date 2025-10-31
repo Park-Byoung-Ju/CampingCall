@@ -62,7 +62,8 @@ public class TripController {
 			}
 			
 			if(code.replaceAll("/", "").length() == 0) {
-				
+				doCode = null;
+				sigunguCode = null;
 			}else {
 				String[] codeSplit = code.split("/");
 				
@@ -81,7 +82,11 @@ public class TripController {
 		
 		Paging paging;
 		try {
-			tripList = tripService.getTripList(page, doCode, sigunguCode);
+			if(keyword != null & (sigunguCode == null & doCode == null)) {
+				tripList = tripService.getSearchData(keyword, page);
+			}else {
+				tripList = tripService.getTripList(page, doCode, sigunguCode);
+			}
 			// 페이징
 			paging = new Paging(tripList.get(0).getAreaBaseList().getAllCount());
 		}catch(NullPointerException e) {
