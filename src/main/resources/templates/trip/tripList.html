@@ -9,7 +9,7 @@
 </th:block>
 
 	<th:block layout:fragment="contents">
-		<article class="w-100">
+		<section class="w-100">
 			<div class="p-5">
 					
 				<h2 class="mt-2">관광지</h2>
@@ -126,12 +126,14 @@
 				
 				
 			</div>
-		</article>
+		</section>
 	</th:block>
 	
 	<th:block layout:fragment="script">
 	<script>
 		$(document).ready(function(){
+			var childwindow = null;
+			
 			$(".list-item").on("click", function(){
 				let id = $(this).data("id");
 				
@@ -153,10 +155,25 @@
 			$("#search").on("click",function(){
 				let select = $("#select").val();
 				
+				if(childwindow && childwindow.closed){
+					childwindow = null;
+				}
+				
+				if(childwindow != null){
+					return 0;
+				}
+				
 				if(select == "location"){
-					window.open("/area","_blank","width=700");
+					childwindow = window.open("/area","_blank","width=700");
 				}
 			});
+			
+			window.onbeforeunload = function(event) {
+				if(childwindow != null){
+					childwindow.close();
+					childwindow = null;
+				}
+			};
 			
 			$("#searchBtn").on("click",function(){
 				let search = $("#search").val();

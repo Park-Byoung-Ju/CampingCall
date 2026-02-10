@@ -50,7 +50,7 @@ public class WebClientManager {
 					.retrieve()
 					.bodyToMono(ApiResponse.class)
 					.block();
-			System.out.println("uri : " + uri);
+			
 			if(result == null) {
 				System.out.println("null값1");
 			}
