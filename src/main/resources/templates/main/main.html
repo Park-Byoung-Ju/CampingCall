@@ -4,7 +4,40 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout/main.html}">
     
-    <article layout:fragment="contents">
-    	메인화면
-    </article>
+    <th:block layout:fragment="css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+		<link rel="stylesheet" href="/static/css/mainPage.css">
+	</th:block>
+    
+    <th:block layout:fragment="contents">
+	    <section class="w-100">
+	    	메인화면
+	    	<div class="h-25 text-center">
+	    		스와이퍼가 생길 거에요
+	    	</div>
+	    	
+	    	<div class="d-flex justify-content-between mt-5">
+	    		<div class="text-center">
+	    			관광지 정보가 올라갈 거에요
+	    			
+	    			<div class="d-flex">
+	    				<div class=""></div>
+	    				<div class=""></div>
+	    			</div>
+	    		</div>
+	    		
+	    		<div class="text-ceneter">
+	    			캠핑장 정보가 올라갈 거에요
+	    			
+	    			<div>
+	    			
+	    			</div>
+	    		</div>
+	    	</div>
+	    </section>
+    </th:block>
+    
+    <th:block layout:fragment="script">
+    
+    </th:block>
 </html>

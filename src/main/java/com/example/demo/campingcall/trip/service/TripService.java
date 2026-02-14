@@ -34,10 +34,12 @@ public class TripService {
 		
 		if(areacode != null) {
 			map.add("areaCode", areacode);
+			//map.add("lDongRegnCd", areacode);
 		}
 
 		if(sigunguCode != null && !sigunguCode.equals("0")) {
 			map.add("sigunguCode", sigunguCode);
+			//map.add("lDongSignguCd", sigunguCode);
 		}
 		
 		
