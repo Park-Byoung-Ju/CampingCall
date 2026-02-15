@@ -1,2 +1,17 @@
 @charset "UTF-8";
 
+.infoList{
+	width:45%;
+}
+
+.clickPage{
+	font-size:16px;
+	padding:1%;
+}
+
+.clickPage:hover{
+	cursor:pointer;
+	background-color: gray;
+	color:white;
+	font-weight:bold;
+}
