@@ -11,14 +11,48 @@
     
     <th:block layout:fragment="contents">
 	    <section class="w-100">
-	    	메인화면
-	    	<div class="text-center">
-	    		스와이퍼가 생길 거에요
+	    	<div class="col-12 d-flex justify-content-center">
+	    			<div id="prev" class="imgBtn"><</div>
+	    			
+	    			<div>
+	    				<img id="imgBanner" width=500 height=300 src="https://www.urbanbrush.net/web/wp-content/uploads/edd/2017/11/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7-2017-11-11-%EC%98%A4%EC%A0%84-12.29.48.png">
+	    			</div>
+	    			
+	    			<div id="next" class="imgBtn">></div>
 	    	</div>
 	    	
 	    	<div class="d-flex justify-content-between mt-5">
 	    		<div class="infoList">
-	    			관광지 정보가 올라갈 거에요
+	    			<div class="d-flex justify-content-between">
+		    			<div class="list-title">캠핑장</div>
+	    				<div class="d-flex align-items-center plus-list" data-ad="/camp/campList">더보기+</div>
+	    			</div>
+	    			
+	    			<hr>
+	    			
+	    			<div class="d-flex mt-3 clickPage">
+	    				<div class="col-4"><img class="w-100" src="https://cdn.pixabay.com/photo/2024/01/01/23/41/trees-8482254_1280.jpg"></div>
+	    				<div class="col-8">캠핑장 명을 나타냅니다11111111</div>
+	    			</div>
+	    			
+	    			<div class="d-flex mt-3 clickPage">
+	    				<div class="col-4"><img class="w-100" src="https://cdn.pixabay.com/photo/2024/01/01/23/41/trees-8482254_1280.jpg"></div>
+	    				<div class="col-8">캠핑장 명을 나타냅니다222222</div>
+	    			</div>
+	    			
+	    			<div class="d-flex mt-3 clickPage">
+	    				<div class="col-4"><img class="w-100" src="https://cdn.pixabay.com/photo/2024/01/01/23/41/trees-8482254_1280.jpg"></div>
+	    				<div class="col-8">캠핑장 명을 나타냅니다3333</div>
+	    			</div>
+	    		</div>
+	    		
+	    		<div class="infoList">
+	    			<div class="d-flex justify-content-between">
+		    			<div class="list-title">관광지</div>
+	    				<div class="d-flex align-items-center plus-list" data-ad="/trip/tripList">더보기+</div>
+	    			</div>
+	    			
+	    			<hr>
 	    			
 	    			<div class="d-flex mt-3 clickPage">
 	    				<div class="col-4"><img class="w-100" src="https://cdn.pixabay.com/photo/2024/01/01/23/41/trees-8482254_1280.jpg"></div>
@@ -36,29 +70,58 @@
 	    			</div>
 	    		</div>
 	    		
-	    		<div class="infoList">
-	    			캠핑장 정보가 올라갈 거에요
-	    			
-	    			<div class="d-flex mt-3 clickPage">
-	    				<div class="col-4"><img class="w-100" src="https://cdn.pixabay.com/photo/2024/01/01/23/41/trees-8482254_1280.jpg"></div>
-	    				<div class="col-8">캠핑장 명을 나타냅니다11111111</div>
-	    			</div>
-	    			
-	    			<div class="d-flex mt-3 clickPage">
-	    				<div class="col-4"><img class="w-100" src="https://cdn.pixabay.com/photo/2024/01/01/23/41/trees-8482254_1280.jpg"></div>
-	    				<div class="col-8">캠핑장 명을 나타냅니다222222</div>
-	    			</div>
-	    			
-	    			<div class="d-flex mt-3 clickPage">
-	    				<div class="col-4"><img class="w-100" src="https://cdn.pixabay.com/photo/2024/01/01/23/41/trees-8482254_1280.jpg"></div>
-	    				<div class="col-8">캠핑장 명을 나타냅니다3333</div>
-	    			</div>
-	    		</div>
 	    	</div>
 	    </section>
     </th:block>
     
     <th:block layout:fragment="script">
-    
+    <script>
+    	var imgIndex = -1;
+    	var imgAd = ["https://www.urbanbrush.net/web/wp-content/uploads/edd/2017/11/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7-2017-11-11-%EC%98%A4%EC%A0%84-12.29.48.png",
+    				"https://cdn.pixabay.com/photo/2024/01/01/23/41/trees-8482254_1280.jpg",
+    				"https://littledeep.com/wp-content/uploads/2019/04/littledeep_illustration_flower_sns-1024x551.png"];
+    	var imgLength = imgAd.length;
+    	
+    	function imgChange(){
+    		$("#imgBanner").attr("src", imgAd[imgIndex]);
+    	}
+    	
+    	$("#prev").click(function(){
+    		imgIndex--;
+    		
+    		if(imgIndex < 0){
+    			imgIndex = imgLength - 1;
+    		}
+    		
+    		imgChange();
+    	});
+    	
+    	$("#next").click(function(){
+			imgIndex++;
+    		
+    		if(imgIndex >= imgLength){
+    			imgIndex = 0;
+    		}
+    		
+    		imgChange();
+    	});
+    	
+    	setInterval(function(){
+			imgIndex++;
+    		
+    		if(imgIndex >= imgLength){
+    			imgIndex = 0;
+    		}
+    		
+    		imgChange();
+    	}, 3000);
+    	
+    	$(".plus-list").click(function(){
+    		let address = $(this).attr("data-ad");
+    		
+    		location.href = address;
+    	});
+    	
+    </script>
     </th:block>
 </html>

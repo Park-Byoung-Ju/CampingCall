@@ -4,6 +4,22 @@
 	width:45%;
 }
 
+.imgBtn{
+	width:10%;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	background-color:black;
+	color:white;
+	cursor:pointer;
+	font-size:32px;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+	z-index:2;
+}
+
 .clickPage{
 	font-size:16px;
 	padding:1%;
@@ -14,4 +30,19 @@
 	background-color: gray;
 	color:white;
 	font-weight:bold;
+}
+
+.list-title{
+	font-weight:bold;
+	font-size:32px;
+}
+
+.plus-list{
+	color:gray;
+	font-size:12px;
+}
+
+.plus-list:hover{
+	cursor:pointer;
+	text-decoration:underline;
 }
