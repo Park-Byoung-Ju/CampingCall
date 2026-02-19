@@ -116,8 +116,9 @@ public class TripController {
 		return "trip/tripList";
 	}
 	
-	@GetMapping("/detail/{contentId}")
+	@GetMapping("/detail/{contentTypeId}/{contentId}")
 	public String tripDetail(@PathVariable(name="contentId", required=false) String contentId
+							,@PathVariable(name="contentTypeId", required=false) String contentType
 							,Model model) {
 		
 		if(contentId == null) {
@@ -127,7 +128,7 @@ public class TripController {
 			return "board/alert";
 		}
 		
-		Trip trip = tripService.getTrip(contentId);
+		Trip trip = tripService.getTrip(contentId, contentType);
 		
 		List<Comment> commentList = commentService.boardCommentList(Integer.parseInt(contentId), 2);
 		

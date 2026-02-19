@@ -1,7 +1,5 @@
 package com.example.demo.campingcall.trip.service;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 @Service
 public class TripService {
 
-	public List<AreaBaseList> getData(String pageNo, String areacode, String sigunguCode) { // 관광지와 상세 데이터
+	public List<AreaBaseList> getData(String pageNo, String areacode, String sigunguCode, int piece) { // 관광지와 상세 데이터
 
 		String baseUri = "https://apis.data.go.kr/B551011/KorService2/areaBasedList2";
 		
@@ -31,6 +29,7 @@ public class TripService {
 		map.add("contentTypeId", "12");
 		map.add("MobileOS", "WIN");
 		map.add("MobileApp", "TestApp");
+		map.add("numOfRows", String.valueOf(piece));
 		
 		if(areacode != null) {
 			map.add("areaCode", areacode);
@@ -158,7 +157,7 @@ public class TripService {
 		return detail.get(0);
 	}
 	
-	public DetailIntro getDetail(String contentId){
+	public DetailIntro getDetail(String contentId, String contentType){
 		String baseUri = "https://apis.data.go.kr/B551011/KorService2/detailIntro2";
 		
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
@@ -167,9 +166,9 @@ public class TripService {
 		map.add("MobileOS", "WIN");
 		map.add("MobileApp", "CampingCall");
 		map.add("contentId", contentId);
-		map.add("contentTypeId", "12");
+		map.add("contentTypeId", contentType);
 		map.add("_type", "json");
-	
+
 		String uri = WebClientManager.setParamUri(baseUri, map);
 		
 		ApiResponse<List<DetailIntro>> apiDetail = WebClientManager.getClient(uri);
@@ -187,7 +186,7 @@ public class TripService {
 	}
 	
 	public List<Trip> getTripList(int pageNo, String areaCode, String sigunguCode) {
-		List<AreaBaseList> areaBaseList = getData(String.valueOf(pageNo), areaCode, sigunguCode);
+		List<AreaBaseList> areaBaseList = getData(String.valueOf(pageNo), areaCode, sigunguCode, 10);
 		
 		List<Trip> tripList = new ArrayList<>();
 		for(int i = 0; i < areaBaseList.size(); i++) {
@@ -206,12 +205,12 @@ public class TripService {
 		return tripList;
 	}
 	
-	public Trip getTrip(String contentId) {
+	public Trip getTrip(String contentId, String contentType) {
 
 		// detailCommon 데이터
 		DetailCommon detailCommon = getDetailCommon(contentId);
 		// detailIntro 데이터
-		DetailIntro detailIntro = getDetail(contentId);
+		DetailIntro detailIntro = getDetail(contentId, contentType);
 		
 		Trip trip = new Trip();
 		trip.setDetailCommon(detailCommon);

@@ -25,14 +25,14 @@ public class CampService {
 	}
 
 	// 리스트 가져오기
-	public List<Camp> getList(int page){
+	public List<Camp> getList(int page, int piece){
 		List<Camp> campList = new ArrayList<>();
 		String baseUri = "http://apis.data.go.kr/B551011/GoCamping/basedList";
 		
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		map.add("serviceKey", WebClientManager.KEY);
 		map.add("pageNo", String.valueOf(page));
-		map.add("numOfRows", "10");
+		map.add("numOfRows", String.valueOf(piece));
 		map.add("MobileOS", "WIN");
 		map.add("MobileApp", "TestApp");
 		map.add("_type", "json");

@@ -31,7 +31,7 @@ public class CampController {
 			page = 1;
 		}
 		
-		List<Camp> campList = campService.getList(page);
+		List<Camp> campList = campService.getList(page, 10);
 		
 		Paging paging = new Paging(campList.get(0).getAllCount());
 
