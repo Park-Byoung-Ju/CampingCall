@@ -3,6 +3,7 @@ package com.example.demo.campingcall.main.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -13,21 +14,17 @@ import com.example.demo.campingcall.camp.service.CampService;
 import com.example.demo.campingcall.common.WebClientManager;
 import com.example.demo.campingcall.main.domain.MainBanner;
 import com.example.demo.campingcall.main.domain.MainTrip;
-import com.example.demo.campingcall.trip.service.TripService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @Service
 public class MainService {
-	private TripService tripService;
-	
 	private CampService campService;
 	
-	public MainService(TripService tripService,
-						CampService campService) {
-		this.tripService = tripService;
+	public MainService(CampService campService) {
 		this.campService = campService;
 	}
 	
+	@Cacheable(value = "MainTripList", key="'mainTrip'")
 	public List<MainTrip> getMainPageTripList(){
 		String baseUri = "https://apis.data.go.kr/B551011/KorService2/areaBasedList2";
 			
@@ -61,13 +58,13 @@ public class MainService {
 		return result;
 	}
 	
+	@Cacheable(value = "MainCampList", key="'mainCamp'")
 	public List<Camp> getMainPageCampList(){
-		List<Camp> campList = new ArrayList<>();
 		
-		
-		return campList;
+		return campService.getList(1, 3);
 	}
 	
+	@Cacheable(value = "MainBannerList", key="'mainBanner'")
 	public List<MainBanner> getMainBanner() {
 		// 행사정보 uri로 변경하기
 		String baseUri = "https://apis.data.go.kr/B551011/KorService2/searchFestival2";

@@ -17,19 +17,15 @@ public class MainController {
 	
 	private MainService mainService;
 	
-	private CampService campService;
-	
-	public MainController(MainService mainService
-						, CampService campService) {
+	public MainController(MainService mainService) {
 		this.mainService = mainService;
-		this.campService= campService;
 	}
 
 
 	@GetMapping("/main")
 	public String main(Model model) {
 		List<MainTrip> tripList  =mainService.getMainPageTripList();
-		List<Camp> campList = campService.getList(1, 3);
+		List<Camp> campList = mainService.getMainPageCampList();
 		List<MainBanner> bannerList = mainService.getMainBanner();
 		
 		/*
