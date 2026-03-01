@@ -5,9 +5,36 @@
     
     <th:block layout:fragment="css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+		<link rel="stylesheet" href="/static/css/pay.css">
 	</th:block>
     
     <th:block layout:fragment="contents">
+    <div class="w-100">
+	    <div class="w-100 d-flex justify-content-center">
+	    	<div class="w-75 mt-4">
+		    	<div>
+		    		<div><b id="title">결제완료</b></div>
+		    		<div class="mt-2">결제자명 :  ???  님</div>
+		    	</div>
+		    	
+		    	<div class="d-flex mt-3">
+		    		<div><img width=350 height=250></div>
+		    		
+		    		<div class="w-100 p-2 ml-3 d-flex flex-column justify-content-between">
+		    			<div class="d-flex">캠핑장명 : <div class="ml-3">???????</div></div>
+		    			<div>???사이트</div>
+		    			<div>가격 : 50000원</div>
+		    			<div class="d-flex">이용일 : <div class="ml-3">????/??/??</div></div>
+		    			<div class="d-flex">결제일 : <div class="ml-3">????/??/??</div></div>
+		    		</div>
+		    	</div>
+		    </div>
+	    </div>
+	    
+	    <div class="d-flex justify-content-end p-5">
+	    	<button class="mr-5">목록</button>
+	   </div>
+   </div>
     </th:block>
     
     <th:block layout:fragment="script">

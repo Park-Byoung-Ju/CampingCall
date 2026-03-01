@@ -2,7 +2,6 @@ package com.example.demo.campingcall.camp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -111,5 +110,10 @@ public class CampController {
 		model.addAttribute("end", end);
 		
 		return "camp/search";
+	}
+	
+	@GetMapping("/payment")
+	public String paymentFinish() {
+		return "pay/payment";
 	}
 }
