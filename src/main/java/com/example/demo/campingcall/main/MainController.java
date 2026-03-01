@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.campingcall.camp.domain.Camp;
-import com.example.demo.campingcall.camp.service.CampService;
 import com.example.demo.campingcall.main.domain.MainBanner;
 import com.example.demo.campingcall.main.domain.MainTrip;
 import com.example.demo.campingcall.main.service.MainService;
@@ -27,27 +26,6 @@ public class MainController {
 		List<MainTrip> tripList  =mainService.getMainPageTripList();
 		List<Camp> campList = mainService.getMainPageCampList();
 		List<MainBanner> bannerList = mainService.getMainBanner();
-		
-		/*
-		//데이터 확인
-		System.out.println();
-		System.out.println("trip List");
-		for(int i = 0; i < tripList.size(); i++) {
-			System.out.println((i + 1) + "번째");
-			System.out.println(tripList.get(i).toInfo());
-			System.out.println();
-		}
-		System.out.println();
-		
-		System.out.println("Banner List");
-		for(int i = 0; i < bannerList.size(); i++) {
-			System.out.println((i + 1) + "번째");
-			System.out.println(bannerList.get(i).toInfo());
-			System.out.println();
-		}
-		
-		System.out.println("CampList size : " + campList.size());
-		*/
 		
 		model.addAttribute("bannerList", bannerList);
 		model.addAttribute("campList", campList);

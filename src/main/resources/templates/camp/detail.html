@@ -7,6 +7,8 @@
 <th:block layout:fragment="css">
 <link rel="stylesheet" href="/static/css/camp.css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="/static/css/boardDetail.css">
 </th:block>
 
 	<th:block layout:fragment="contents">
@@ -159,17 +161,31 @@
 				<!-- 리뷰 -->
 				<div id="review" class="d-none">
 					<div class="input-group mt-3">
-						<input type="text" class="form-control">
+						<input id="text" type="text" class="form-control">
 						<div class="input-group-append">
-							<button class="btn btn-secondary">게시</button>
+							<button id="commentBtn" class="btn btn-secondary">게시</button>
 						</div>
 					</div>
 					
 					<div class="p-2 mt-2">
+					<th:block th:if="${commentList != null}">
+						<th:block th:each="comment : ${commentList}">
 						<div class="d-flex mt-2">
-							<div class="col-2"><b>아이디</b></div>
-							<div>댓글입니다</div>
+							<div class="col-2"><b th:text="${comment.user.name}">아이디</b></div>
+							<div class="col-9" th:text="${comment.contents}">댓글입니다</div>
+							
+							<div class="col-1">
+		    					<th:block th:if="${session.userId == comment.userId}">
+		    					<i class="bi bi-three-dots comment-three-dot"></i>
+		    					<ul class="d-none text-center comment-list">
+		    						<li class="d-none list-style-none">					
+									<li class="comment-option" data-value="delete" th:data-id="${comment.id}">삭제하기</li>
+								</ul> 
+								</th:block>
+	    					</div>
 						</div>
+						</th:block>
+					</th:block>
 					</div>
 				</div>
 				<!-- 리뷰 끝 -->
@@ -191,6 +207,76 @@
 			
 			var buttonCount = 0;
 			
+			$(window).on("load",function(){
+				let width = $("#user").width();
+				$("#user").width(width);
+			});
+			
+			// 댓글 점3개 클릭
+			$(".comment-three-dot").on("click",function(){
+				if($(this).next().hasClass("d-none")){
+					$(this).next().removeClass("d-none");			
+				}else{
+					$(this).next().addClass("d-none");
+				}
+			});
+			
+			// 댓글 삭제
+			$(".comment-option").on("click",function(){
+				let id = $(this).data("id");
+				
+				if(!confirm("댓글을 정말로 삭제하시겠습니까?")){
+					return false;
+				}
+				
+				$.ajax({
+					type:"delete"
+					,url:"/comment/delete"
+					,data:{"contentId" : id}
+					,success:function(response){
+						if(response){
+							location.reload();
+						}else{
+							alert("댓글 삭제 실패");
+						}
+					}
+					,error:function(){
+						alert("서버문제");
+					}
+				});
+			});
+			
+			// 댓글 추가
+			$("#commentBtn").on("click",function(){
+				let comment = $("#text").val();
+				let contentId = $("#campTitle").data("id");
+				
+				if(comment.length == 0){
+					
+					return false;
+				}
+				
+				$.ajax({
+					type: "post"
+					,url: "/comment/create"
+					,data:{
+						"contentId" : contentId
+						,"category" : 3
+						,"contents" : comment
+					}
+					,success:function(response){
+						if(response){
+							alert("댓글 게시 성공!");
+							location.reload();
+						}else{
+							alert("댓글 게시 실패!");
+						}
+					}
+					,error:function(){
+						alert("서버에러");
+					}
+				});
+			});	
 			
 			$("#format").on("click",function(){
 				var startDate = 0;
@@ -337,32 +423,7 @@
 				let milliseconds = today.getMilliseconds();
 				
 				let merchant_uid = hours + "" + minutes + "" + seconds + "" + milliseconds + "" + userId;
-			/*	
-				$.ajax({
-					type:"get"
-					,url:"/camp/pay"
-					,data:{					
-						"contentId" : id				
-						,"userId" : userId				
-						,"bookingNumber" : count				
-						,"price" : price				
-						,"date" : date
-					}
-					,success:function(response){
-						if(response){
-							alert("성공");
-							location.reload();
-							
-						}else{
-							alert("db저장 실패");
-						}
-					}
-					,error:function(){
-						alert("서버 문제");
-					}
-				});
-			*/	
-								
+						
 				var IMP = window.IMP;
 				IMP.init("imp12658013");
 				

@@ -2,6 +2,7 @@ package com.example.demo.campingcall.camp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.campingcall.camp.domain.Camp;
 import com.example.demo.campingcall.camp.service.CampService;
+import com.example.demo.campingcall.comment.domain.Comment;
+import com.example.demo.campingcall.comment.service.CommentService;
 import com.example.demo.campingcall.common.Paging;
 
 @RequestMapping("/camp")
@@ -19,8 +22,12 @@ public class CampController {
 	
 	private CampService campService;
 	
-	public CampController(CampService campService) {
+	private CommentService commentService;
+	
+	public CampController(CampService campService
+						, CommentService commentService) {
 		this.campService = campService;
+		this.commentService = commentService;
 	}
 
 	@GetMapping("/campList")
@@ -57,8 +64,12 @@ public class CampController {
 							,Model model) {
 		
 		Camp camp = campService.getDetail(keyword);
+		List<Comment> commentList = commentService.boardCommentList(contentId, 3);
+
+			
 		
 		model.addAttribute("camp", camp);
+		model.addAttribute("commentList", commentList);
 		
 		return "camp/detail";
 	}
