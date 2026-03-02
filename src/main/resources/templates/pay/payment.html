@@ -14,29 +14,39 @@
 	    	<div class="w-75 mt-4">
 		    	<div>
 		    		<div><b id="title">결제완료</b></div>
-		    		<div class="mt-2">결제자명 :  ???  님</div>
+		    		<div class="mt-2 d-flex">결제자명 :  <div class="ml-3 mr-2" th:text = "${name}">???</div>  님</div>
 		    	</div>
 		    	
 		    	<div class="d-flex mt-3">
-		    		<div><img width=350 height=250></div>
+		    		<div><img width=350 height=250 th:src="${camp.firstImageUrl}"></div>
 		    		
 		    		<div class="w-100 p-2 ml-3 d-flex flex-column justify-content-between">
-		    			<div class="d-flex">캠핑장명 : <div class="ml-3">???????</div></div>
-		    			<div>???사이트</div>
-		    			<div>가격 : 50000원</div>
-		    			<div class="d-flex">이용일 : <div class="ml-3">????/??/??</div></div>
-		    			<div class="d-flex">결제일 : <div class="ml-3">????/??/??</div></div>
+		    			<div class="d-flex">캠핑장명 : <div class="ml-3" th:text="${keyword}">???????</div></div>
+		    			<div th:text="${camp.campList.get(campBooking.bookingNumber - 1)}">???사이트</div>
+		    			<div class="d-flex">가격 : <div class="ml-2" th:text="${campBooking.price}">50000</div>원</div>
+		    			<div class="d-flex">이용일 : <div class="ml-3" th:text="${campBooking.date}">????/??/??</div></div>
+		    			<div class="d-flex">결제일 : <div class="ml-3" th:text="${#temporals.format(campBooking.createdAt,'yyyy-MM-dd HH:mm')}">????/??/??</div></div>
 		    		</div>
 		    	</div>
 		    </div>
 	    </div>
 	    
 	    <div class="d-flex justify-content-end p-5">
-	    	<button class="mr-5">목록</button>
+	    	<button id="btn" class="mr-5" th:data-id="${campBooking.contentId}" th:data-name="${keyword}">목록</button>
 	   </div>
    </div>
     </th:block>
     
     <th:block layout:fragment="script">
+    <script>
+    	$(document).ready(function(){
+    		$("#btn").click(function(){
+    			let keyword = $(this).data("name");
+    			let contentId = $(this).data("id");
+
+    			location.href= "/camp/detail?keyword=" + keyword + "&contentsId=" + contentId;
+    		});
+    	});
+    </script>
     </th:block>
 </html>

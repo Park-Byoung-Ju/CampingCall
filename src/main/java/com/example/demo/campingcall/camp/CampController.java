@@ -10,10 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.campingcall.camp.domain.Camp;
+import com.example.demo.campingcall.camp.domain.CampBooking;
 import com.example.demo.campingcall.camp.service.CampService;
 import com.example.demo.campingcall.comment.domain.Comment;
 import com.example.demo.campingcall.comment.service.CommentService;
 import com.example.demo.campingcall.common.Paging;
+import com.example.demo.campingcall.mypage.serivce.MyPageService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/camp")
 @Controller
@@ -23,10 +28,14 @@ public class CampController {
 	
 	private CommentService commentService;
 	
+	private MyPageService myPageService;
+	
 	public CampController(CampService campService
-						, CommentService commentService) {
+						, CommentService commentService
+						, MyPageService myPageService) {
 		this.campService = campService;
 		this.commentService = commentService;
+		this.myPageService = myPageService;
 	}
 
 	@GetMapping("/campList")
@@ -113,7 +122,35 @@ public class CampController {
 	}
 	
 	@GetMapping("/payment")
-	public String paymentFinish() {
+	public String paymentFinish(@RequestParam(name = "id", required=false) Integer id
+								,@RequestParam(name = "keyword", required=false) String keyword
+								,Model model
+								,HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		String name = (String) session.getAttribute("userName");
+		
+		if(id == null || keyword == null) {
+			model.addAttribute("msg", "잘못 된 접근입니다");
+			model.addAttribute("url", "/main");
+			
+			return "board/alert.html";
+		}
+		
+		if(name == null) {
+			model.addAttribute("msg", "로그인을 해주세요");
+			model.addAttribute("url", "/main");
+			
+			return "board/alert.html";
+		}
+		
+		CampBooking campBooking = myPageService.getBooking(id);
+		Camp camp = campService.getDetail(keyword);
+
+		model.addAttribute("keyword",keyword);
+		model.addAttribute("campBooking", campBooking);
+		model.addAttribute("camp", camp);
+		model.addAttribute("name", name);
 		return "pay/payment";
 	}
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.campingcall.camp.domain.Camp;
+import com.example.demo.campingcall.camp.domain.CampBooking;
 import com.example.demo.campingcall.camp.service.CampService;
 
 @RequestMapping("/camp")
@@ -24,7 +25,7 @@ public class CampRestController {
 	}
 	
 	@GetMapping("/pay")
-	public boolean pay(@RequestParam("contentId") String contentId
+	public CampBooking pay(@RequestParam("contentId") String contentId
 					,@RequestParam("userId") int userId
 					,@RequestParam("bookingNumber") int bookingNumber
 					,@RequestParam("price") int price

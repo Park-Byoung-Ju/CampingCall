@@ -82,7 +82,7 @@ public class CampService {
 	// 상세정보 가져오기 끝
 	
 	// 결제정보
-	public boolean setPay(int contentId
+	public CampBooking setPay(int contentId
 			,int userId
 			,int bookingNumber
 			,int price
@@ -98,11 +98,7 @@ public class CampService {
 		
 		CampBooking result = campRepository.save(booking);
 		
-		if(result == null) {
-			return false;
-		}else {
-			return true;
-		}	
+		return result;
 	}
 	
 	// 결제정보 끝

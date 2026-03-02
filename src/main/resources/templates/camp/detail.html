@@ -391,6 +391,10 @@
 				let userName = $("#user").data("name");
 				let id = $("#campTitle").data("id");
 				
+				if($(this).hasClass("btn-danger")){
+					return 0;
+				}
+				
 				if(buttonCount == 0){
 					alert("날짜를 선택하고 확인버튼을 눌러주세요");
 					return false;
@@ -449,13 +453,13 @@
 								"contentId" : id				
 								,"userId" : userId				
 								,"bookingNumber" : count				
-								,"price" : price				
+								,"price" : price
 								,"date" : date
 							}
 							,success:function(response){
-								if(response){
+								if(response != null){
 									alert("성공");
-									location.reload();
+									location.href="/camp/payment?id=" + response.id + "&keyword=" + $("#campTitle").text();
 									
 								}else{
 									alert("db저장 실패");
