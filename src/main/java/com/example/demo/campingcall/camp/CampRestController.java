@@ -28,10 +28,11 @@ public class CampRestController {
 	public CampBooking pay(@RequestParam("contentId") String contentId
 					,@RequestParam("userId") int userId
 					,@RequestParam("bookingNumber") int bookingNumber
+					,@RequestParam("keyword") String keyword
 					,@RequestParam("price") int price
 					,@RequestParam("date") LocalDate date){
 		
-		return campService.setPay(Integer.parseInt(contentId), userId, bookingNumber, price, date);
+		return campService.setPay(Integer.parseInt(contentId), userId, bookingNumber,keyword , price, date);
 	}
 	
 	@GetMapping("/payList")

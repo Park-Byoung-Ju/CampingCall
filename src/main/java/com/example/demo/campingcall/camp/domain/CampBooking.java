@@ -38,6 +38,9 @@ public class CampBooking {
 	@Column(name="bookingNumber") 
     private int bookingNumber;
 	
+	@Column(name="keyword") 
+    private String keyword;
+	
 	@Column(name="price") 
     private int price;
 	

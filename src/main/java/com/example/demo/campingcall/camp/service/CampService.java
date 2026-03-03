@@ -85,6 +85,7 @@ public class CampService {
 	public CampBooking setPay(int contentId
 			,int userId
 			,int bookingNumber
+			,String keyword
 			,int price
 			,LocalDate date) {
 		
@@ -92,6 +93,7 @@ public class CampService {
 										.contentId(contentId)
 										.userId(userId)
 										.bookingNumber(bookingNumber)
+										.keyword(keyword)
 										.price(price)
 										.date(date)
 										.build();

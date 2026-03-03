@@ -13,5 +13,10 @@ public class MyPageController {
 	public String payList() {
 		return "pay/payList";
 	}
+	
+	@GetMapping("/main")
+	public String myPage() {
+		return "user/mypage";
+	}
 
 }

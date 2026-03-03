@@ -14,7 +14,7 @@
 			
 			<div class="col-2 text-right pr-5">
 			<!-- 여기에 회원가입에 쓰이는 중복 효과 사용 -->
-				<th:block th:if="${session.userId != null}"><span th:text="${session.userName}" th:data-id="${session.userId}">???님</span><span id="logout" class="login-logout ml-2">로그아웃</span></th:block>
+				<th:block th:if="${session.userId != null}"><span id="mypage" th:text="${session.userName}" th:data-id="${session.userId}">???님</span><span id="logout" class="login-logout ml-2">로그아웃</span></th:block>
 				<th:block th:unless="${session.userId != null}"><span class="login-logout login">로그인</span></th:block>
 			</div>
 		</header>

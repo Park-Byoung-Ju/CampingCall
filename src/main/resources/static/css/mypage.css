@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.link-text{
+	cursor:pointer;
+	color : gray;
+}
+
+.link-text:hover{
+	text-decoration:underline;
+}
+
+.border-box{
+	border: 2px solid black;
+}
+
+.pay-box{
+	height:60%;
+}
+

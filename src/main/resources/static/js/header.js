@@ -47,4 +47,10 @@ $("#boardLocation").on("click",function(){
 });
 // 게시판 끝
 
-// locaion 끝
+// 마이페이지
+$("#mypage").click(function(){
+	location.href = "/mypage/main";
+});
+// 마이페이지 끝
+
+// location 끝

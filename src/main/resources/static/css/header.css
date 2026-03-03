@@ -30,6 +30,10 @@ nav > ul > .nav-item{
 	color:blue;
 }
 
-.login-logout:hover{
+.login-logout:hover, #mypage:hover{
 	text-decoration:underline;
+}
+
+#mypage{
+	cursor:pointer;
 }
