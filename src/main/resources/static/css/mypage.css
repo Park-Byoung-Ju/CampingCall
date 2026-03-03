@@ -17,3 +17,21 @@
 	height:60%;
 }
 
+#nameTitle{
+	font-size:32px;
+}
+
+#payTitle{
+	font-size: 28px;
+	font-weight : bold;
+}
+
+#nullText{
+	font-size : 48px;
+	color : gray;
+}
+
+.campingPlace{
+	font-size : 24px;
+	font-weight : bold;
+}

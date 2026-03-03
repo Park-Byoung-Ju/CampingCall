@@ -1,5 +1,6 @@
 package com.example.demo.campingcall.mypage.serivce;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +19,12 @@ public class MyPageService {
 	public CampBooking getBooking(int id) {
 		Optional<CampBooking> getCampBooking = myPageRepository.findById(id);
 		CampBooking result = getCampBooking.orElse(null);
+		
+		return result;
+	}
+	
+	public List<CampBooking> getMainBookingList(){
+		List<CampBooking> result = myPageRepository.findTop3ByOrderByDateDesc();
 		
 		return result;
 	}
