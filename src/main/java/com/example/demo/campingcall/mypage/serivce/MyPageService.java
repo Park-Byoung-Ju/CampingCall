@@ -23,10 +23,20 @@ public class MyPageService {
 		return result;
 	}
 	
-	public List<CampBooking> getMainBookingList(){
-		List<CampBooking> result = myPageRepository.findTop3ByOrderByDateDesc();
+	public List<CampBooking> getMainBookingList(int userId){
+		List<CampBooking> result = myPageRepository.findTop3ByUserIdOrderByDateDesc(userId);
 		
 		return result;
+	}
+	
+	public List<CampBooking> getBookingList(int userId, int start, int end){
+		List<CampBooking> bookingList = myPageRepository.boardList(start, end, userId);
+		
+		return bookingList;
+	}
+	
+	public int getCountUserId(int userId) {
+		return myPageRepository.countByUserIdOrderByDateDesc(userId);
 	}
 
 }

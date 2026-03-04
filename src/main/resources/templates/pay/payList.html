@@ -11,46 +11,86 @@
     
     <th:block layout:fragment="contents">
     <div class="w-100">
-    	<div class="d-flex justify-content-between">
+    	<div>
     		<b id="title" class="ml-2">결제 내역</b>
-    		<div class="d-flex mr-3">
-    			<div>??</div>
-    			<div class="ml-3">????</div>
-    		</div>
     	</div>
     	
     	<hr>
     	
     	<div class="p-2">
-    		<div class="d-flex m-3 items">
-    			<div><img width=200 height=150></div>
-    			<div class="ml-4">
-    				<div><b>캠핑장명</b></div>
-    				<div>결제 금액 : 50000원</div>
-    				<div>결제일 : <div>????/??/??</div></div>
-    				<div>이용날짜 : <div>????/??/??</div></div>
-    			</div>
-    		</div>
+    	
+    		<th:block th:if="${bookingList != null}">
+    			<th:block th:each="booking : ${bookingList}">
+		    		<div class="d-flex m-3 items p-2">
+		    			<div><img width=200 height=150 th:src="${booking.camp.firstImageUrl}"></div>
+		    			<div class="ml-4 d-flex flex-column justify-content-between">
+		    				<div class="d-flex"><b th:text="${booking.camp.facltNm}">캠핑장명</b></div>
+		    				<div class="d-flex">결제 금액 : <div class="ml-1" th:text="${booking.campBooking.price}">50000</div>원</div>
+		    				<div class="d-flex">결제일 : <div class="ml-1" th:text="${booking.campBooking.date}">????/??/??</div></div>
+		    				<div class="d-flex">이용날짜 : <div class="ml-1" th:text="${#temporals.format(booking.campBooking.createdAt,'yyyy-MM-dd HH:mm')}">????/??/??</div></div>
+		    			</div>
+		    		</div>
+		    	</th:block>
+		    	
+		    	<div class="d-flex w-100 justify-content-center">
+		    		<th:block>
+			    		<th:block th:if="${pagingList.get(0) == 1}">
+			    			<div th:data-value="${pagingList.get(0)}"><<</div>
+			    		</th:block>
+			    		
+			    		<th:block th:unless="${pagingList.get(0) == 1}">
+			    			<div><a th:href="|/mypage/payList?page=1|"><<</a></div>
+			    		</th:block>
+		    		</th:block>
+		    		
+		    		<th:block>
+		    			<th:block th:if="${pagingList.get(0) == 1}">
+		    				<div class="ml-1"><</div>
+		    			</th:block>
+		    			
+		    			<th:block th:unless="${pagingList.get(0) == 1}">
+		    				<div class="ml-1"><a class="ml-1" th:href="|/mypage/payList?page=${pagingList.get(0) - 1}|"><</a></div>
+		    			</th:block>
+		    		</th:block>
+		    		
+		    		<th:block th:each="paging : ${pagingList}">
+		    			<th:block th:if="${paging != page}">
+		    				<div class="ml-1"><a th:href="|/mypage/payList?page=${paging}|" th:text="${paging}"></a></div>
+		    			</th:block>
+		    			
+		    			<th:block th:unless="${paging != page}">
+		    				<div class="ml-1" th:text="${paging}"></div>
+		    			</th:block>
+		    		</th:block>
+		    		
+		    		<th:block>
+		    			<th:block th:if="${pagingList.get(pagingList.size() - 1) == count}">
+		    				<div class="ml-1">></div>
+		    			</th:block>
+		    			
+		    			<th:block th:unless="${pagingList.get(pagingList.size() - 1) == count}">
+		    				<div class="ml-1"><a th:href="|/mypage/payList?page=${pagingList.get(pagingList.size() - 1) + 1}|">></a></div>
+		    			</th:block>
+		    		</th:block>
+		    		
+		    		<th:block>
+		    			<th:block th:if="${pagingList.get(pagingList.size() - 1) == count}">
+		    				<div class="ml-1">>></div>
+		    			</th:block>
+		    			
+		    			<th:block th:unless="${pagingList.get(pagingList.size() - 1) == count}">
+		    				<div class="ml-1"><a th:href="|/mypage/payList?page=${count}|">>></a></div>
+		    			</th:block>
+		    		</th:block>
+		    		
+		    	</div>
+    		</th:block>
     		
-    		<div class="d-flex m-3 items">
-    			<div><img width=200 height=150></div>
-    			<div class="ml-4">
-    				<div><b>캠핑장명</b></div>
-    				<div>결제 금액 : 50000원</div>
-    				<div>결제일 : <div>????/??/??</div></div>
-    				<div>이용날짜 : <div>????/??/??</div></div>
-    			</div>
-    		</div>
+    		<th:block th:unless="${bookingList != null}">
+    			<div id="nullText" class="text-center">내역 없음</div>
+    		</th:block>
     		
-    		<div class="d-flex m-3 items">
-    			<div><img width=200 height=150></div>
-    			<div class="ml-4">
-    				<div><b>캠핑장명</b></div>
-    				<div>결제 금액 : 50000원</div>
-    				<div>결제일 : <div>????/??/??</div></div>
-    				<div>이용날짜 : <div>????/??/??</div></div>
-    			</div>
-    		</div>
+    		
     	</div>
 
     </div>

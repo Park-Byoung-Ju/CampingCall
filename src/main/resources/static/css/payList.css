@@ -3,3 +3,8 @@
 .items{
 	border:2px solid black;
 }
+
+#nullText{
+	font-size : 32px;
+	color : gray
+}
