@@ -13,7 +13,10 @@
 		<div class="w-100">
 			<div class="d-flex justify-content-between p-2">
 				<div id="title" class="font-weight-bold">계획</div>
-				<div><button id="addBtn" class="btn btn-secondary">추가</button></div>
+				<div class="d-flex flex-column justify-content-around p-2">
+					<button id="addBtn" class="btn btn-secondary mb-2">추가</button>
+					<button id="inviteBtn" class="btn btn-secondary">초대요청</button>
+				</div>
 			</div>
 			
 			<hr>
@@ -71,13 +74,13 @@
 			$("#roomModal").fadeOut();
 		});
 		
-		$("#inviteModal").click(function(){
-			$("#roomModal").fadeIn();
+		$("#inviteBtn").click(function(){
+			$("#inviteModal").fadeIn();
 		})
  
-	/*	$("#closeModalBtn").click(function(){
-			$("#roomModal").fadeOut();
-		});*/
+		$("#inviteCancel").click(function(){
+			$("#inviteModal").fadeOut();
+		});
 		 
 		$("#startDate").datepicker({
 				dateFormat:"yy-mm-dd",
