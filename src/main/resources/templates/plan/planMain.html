@@ -46,6 +46,7 @@
 		</div>
 		
 		<div th:replace="~{plan/addRoom.html}"></div>
+		<div th:replace="~{plan/inviteResponse.html}"></div>
 	</th:block>
 	
 	
@@ -63,12 +64,20 @@
 		});
 		 
 		$("#addBtn").click(function(){
-			$(".modal").fadeIn();
+			$("#roomModal").fadeIn();
 		})
  
 		$("#closeModalBtn").click(function(){
-			$(".modal").fadeOut();
+			$("#roomModal").fadeOut();
 		});
+		
+		$("#inviteModal").click(function(){
+			$("#roomModal").fadeIn();
+		})
+ 
+	/*	$("#closeModalBtn").click(function(){
+			$("#roomModal").fadeOut();
+		});*/
 		 
 		$("#startDate").datepicker({
 				dateFormat:"yy-mm-dd",
