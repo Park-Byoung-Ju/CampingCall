@@ -25,6 +25,15 @@
 	width:400px;
 }
 
+.bg-white{
+	background-color: white;
+}
+
+#modal-title{
+	font-weight:bold;
+	font-size:32px;
+}
+
 #join{
 	color:blue;
 	font-weight:bold;

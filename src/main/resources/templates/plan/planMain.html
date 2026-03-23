@@ -5,12 +5,150 @@
     layout:decorate="~{layout/main.html}">
     
 <th:block layout:fragment="css">
-
+	<link rel="stylesheet" href="/static/css/plan.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
 </th:block>
 
 	<th:block layout:fragment="contents">
+		<div class="w-100">
+			<div class="d-flex justify-content-between p-2">
+				<div id="title" class="font-weight-bold">계획</div>
+				<div><button id="addBtn" class="btn btn-secondary">추가</button></div>
+			</div>
+			
+			<hr>
+			
+			<div>
+				<th:block>
+				<div class="box-room box-border box-border-radius p-3 mt-2">
+					<div class="box-title font-weight-bold">???의 계획</div>
+					<div>????/??/?? ~ ????/??/??</div>
+				</div>
+				</th:block>
+				
+				<th:block>
+				</th:block>
+				<div class="box-room box-border box-border-radius p-3 mt-2">
+					<div class="box-title font-weight-bold">???의 계획</div>
+					<div>????/??/?? ~ ????/??/??</div>
+				</div>
+				
+				<div class="box-room box-border box-border-radius p-3 mt-2">
+					<div class="box-title font-weight-bold">???의 계획</div>
+					<div>????/??/?? ~ ????/??/??</div>
+				</div>
+			</div>
+			
+			<div class="text-center mt-5">
+				<div><< < 1 2 3 4 5 > >></div>
+			</div>
+			
+		</div>
+		
+		<div th:replace="~{plan/addRoom.html}"></div>
 	</th:block>
 	
+	
 	<th:block layout:fragment="script">
+	
+	<script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+	<script>
+	 $(document).ready(function(){
+		var startDate = null;
+		var endDate = null;
+		var selectDate = null;
+		 
+		$(".box-room").click(function(){
+			location.href="/plan/room";
+		});
+		 
+		$("#addBtn").click(function(){
+			$(".modal").fadeIn();
+		})
+ 
+		$("#closeModalBtn").click(function(){
+			$(".modal").fadeOut();
+		});
+		 
+		$("#startDate").datepicker({
+				dateFormat:"yy-mm-dd",
+				dayNamesMin: ['일','월','화','수','목','금','토'],
+				monthNames: ['1월','2월','3월','4월','5월','6월',
+				'7월','8월','9월','10월','11월','12월']
+			
+				,onSelect:function(selectDate){
+					$("#endDate").datepicker("option", "minDate",selectDate);
+					
+					startDate = selectDate;
+					
+					if(startDate != null && endDate != null){
+						if(startDate > endDate){
+							endDate = null;
+							$("#endDate").datepicker("setDate", endDate);
+							
+						}
+					}
+		
+				}
+		});
+		
+		$("#endDate").datepicker({
+			dateFormat:"yy-mm-dd",
+			dayNamesMin: ['일','월','화','수','목','금','토'],
+			monthNames: ['1월','2월','3월','4월','5월','6월',
+			'7월','8월','9월','10월','11월','12월']
+		
+			,onSelect:function(selectDate){
+				endDate = selectDate;
+				
+				if(startDate == null){
+					startDate = selectDate;
+					$("#startDate").datepicker("setDate", startDate);
+				}
+	
+			}
+		});
+		
+		$("#addPlanBtn").on("click",function(){
+			
+			if(startDate == null && endDate == null){
+				alert("날짜를 선택해주세요");
+				return 0;
+			}
+			
+			let title = $("#room-title").val();
+			
+			if(title == null || title == ""){
+				alert("제목을 입력해주세요");
+				return 0;
+			}
+			
+			if(endDate == null){
+				endDate = startDate;
+			}
+			
+			$.ajax({
+				type:"post"
+				,url:"/plan/create"
+				,data:{
+					"title" : title
+					,"startDate" : startDate
+					,"endDate" : endDate
+				}
+				,success:function(response){
+					console.log(response);
+					if(response.truecheck){
+						alert("방 생성");
+					}else{
+						alert("방 생성 실패");
+					}
+				}
+				,error:function(){
+					alert("서버문제");
+				}
+			});
+		});
+	 });
+	</script>
 	</th:block>
 </html>

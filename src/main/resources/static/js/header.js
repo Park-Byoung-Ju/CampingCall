@@ -37,7 +37,7 @@ $("#tripLocation").on("click",function(){
 
 // 계획
 $("#planLocation").on("click",function(){
-	
+	location.href = "/plan/main";
 });
 // 계획 끝
 

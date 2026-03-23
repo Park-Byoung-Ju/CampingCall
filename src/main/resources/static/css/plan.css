@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+.box-border{
+	border : 2px solid black;
+}
+
+.box-border-radius{
+	border-radius: 5px;
+}
+
+.ui-datepicker {
+	z-index: 9999 !important;
+}
+
+.box-room:hover{
+	border : 2px solid red;
+}
+
+#title{
+	font-size : 48px;
+}
+
+.box-title{
+	font-size : 28px;
+}
