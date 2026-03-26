@@ -36,3 +36,14 @@
 .invite-title{
 	font-size : 26px;
 }
+
+#notRoom{
+	font-size : 32px;
+	font-weight : bold;
+	color : gray;
+}
+
+#planRoom{
+	overflow-y : scroll;
+	height : 600px;
+}

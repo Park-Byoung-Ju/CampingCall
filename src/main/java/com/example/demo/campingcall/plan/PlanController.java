@@ -1,17 +1,38 @@
 package com.example.demo.campingcall.plan;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.demo.campingcall.plan.domain.Room;
+import com.example.demo.campingcall.plan.service.PlanService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/plan")
 @Controller
 public class PlanController {
 	
+	private PlanService planService;
+	
+	public PlanController(PlanService planService) {
+		this.planService = planService;
+	}
+	
 	@GetMapping("/main")
-	public String planMain() {
+	public String planMain(HttpServletRequest request
+						,Model model) {
 		
+		HttpSession session = request.getSession();
+		Integer userId = (Integer) session.getAttribute("userId");
+		
+		List<Room> roomList = planService.getRoomList(userId);
+		
+		model.addAttribute("roomList", roomList);
 		return "plan/planMain";
 	}
 	

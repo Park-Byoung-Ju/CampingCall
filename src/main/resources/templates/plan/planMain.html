@@ -22,28 +22,18 @@
 			<hr>
 			
 			<div>
-				<th:block>
-				<div class="box-room box-border box-border-radius p-3 mt-2">
-					<div class="box-title font-weight-bold">???의 계획</div>
-					<div>????/??/?? ~ ????/??/??</div>
+				<th:block th:if="${roomList != null}">
+				<div id="planList">
+					<div class="box-room box-border box-border-radius p-3 mt-2">
+						<div class="box-title font-weight-bold">???의 계획</div>
+						<div>????/??/?? ~ ????/??/??</div>
+					</div>
 				</div>
 				</th:block>
 				
-				<th:block>
+				<th:block th:unless="${roomList != null}">
+					<div id="notRoom" class="text-center mt-5 p-5">방을 생성해 주세요</div>
 				</th:block>
-				<div class="box-room box-border box-border-radius p-3 mt-2">
-					<div class="box-title font-weight-bold">???의 계획</div>
-					<div>????/??/?? ~ ????/??/??</div>
-				</div>
-				
-				<div class="box-room box-border box-border-radius p-3 mt-2">
-					<div class="box-title font-weight-bold">???의 계획</div>
-					<div>????/??/?? ~ ????/??/??</div>
-				</div>
-			</div>
-			
-			<div class="text-center mt-5">
-				<div><< < 1 2 3 4 5 > >></div>
 			</div>
 			
 		</div>
