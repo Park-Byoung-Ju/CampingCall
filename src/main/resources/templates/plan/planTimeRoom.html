@@ -1,0 +1,109 @@
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/main.html}">
+    
+    <th:block layout:fragment="css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+		<link rel="stylesheet" href="/static/css/planTimeRoom.css">
+		<link rel="stylesheet" href="/static/css/invitePeopleModal.css">
+	</th:block>
+    
+    <th:block layout:fragment="contents">
+    	<div class="w-100">
+    		<div class="d-flex justify-content-between">
+    			<div id="title">~~~의 계획</div>
+    			<div>
+    				<button id="updateBtn" class="btn btn-secondary">수정</button>
+    				<button id="roomPeople" class="btn btn-warning">현재 인원</button>
+    			</div>
+    		</div>
+    		
+    		<div id="plan-box" class="border-box scroll d-flex mt-2">
+    			<th:block>
+    			<div class="p-2">
+					<div class="text-center">??/??</div>
+					<th:block>
+					<div class="mt-1 border-box p-1 item-box-size">
+						<div class="d-flex">
+							<div class="p-1 d-flex justify-content-center align-items-center">??:??</div>
+							<div class="p-1 d-flex justify-content-center align-items-center"><img width=50 height =50></div>
+							
+							<div class="p-1">
+								<div class="plan-title">제목</div>
+								<div class="mt-1 plan-memo">내용내용내용내용내용내용내111용내용내용내용</div>
+							</div>
+						</div>
+						
+					</div>
+					</th:block>
+					
+					<div class="mt-1 border-box p-1 item-box-size">
+						<div class="d-flex">
+							<div class="p-1 d-flex justify-content-center align-items-center">??:??</div>
+							<div class="p-1 d-flex justify-content-center align-items-center"><img width=50 height =50></div>
+							
+							<div class="p-1">
+								<div class="plan-title">제목</div>
+								<div class="mt-1 plan-memo">내용내용내용내용내용내용내111용내용내용내용</div>
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="mt-1 border-box p-1 item-box-size">
+						<div class="d-flex">
+							<div class="p-1 d-flex justify-content-center align-items-center">??:??</div>
+							<div class="p-1 d-flex justify-content-center align-items-center"><img width=50 height =50></div>
+							
+							<div class="p-1">
+								<div class="plan-title">제목</div>
+								<div class="mt-1 plan-memo">내용내용내용내용내용내용내111용내용내용내용</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				</th:block>
+				
+			</div>
+    	</div>
+    	
+    	<div th:replace="~{plan/invitePeopleModal.html}"></div>
+    </th:block>
+    
+    <th:block layout:fragment="script">
+    
+    <script>
+    	$(document).ready(function(){
+    		$("#inviteWindow").fadeOut();
+    		
+    		$("#updateBtn").on("click",function(){
+    			location.href="/plan/planBlocking"
+    		});
+    		
+    		$("#roomPeople").on("click", function(){
+    			$("#invitePeopleModal").fadeIn();
+    		});
+    		
+    		$("#cancelBtn").on("click", function(){
+    			$("#invitePeopleModal").fadeOut();
+    		});
+    		
+    		$("#inviteCancelBtn").on("click", function(){
+    			$("#peopleListWindow").fadeIn();
+    			$("#inviteWindow").fadeOut();
+    		});
+    		
+    		$("#addPeople").on("click", function(){
+    			
+    			$("#peopleListWindow").fadeOut();
+    			$("#inviteWindow").fadeIn();
+    			
+    		});
+    		
+    	});
+    </script>
+    
+    </th:block>
+</html>

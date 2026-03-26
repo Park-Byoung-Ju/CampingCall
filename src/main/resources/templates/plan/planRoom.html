@@ -5,12 +5,211 @@
     layout:decorate="~{layout/main.html}">
     
 <th:block layout:fragment="css">
-
+	<link rel="stylesheet" href="/static/css/planRoom.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.2/themes/base/jquery-ui.css">
 </th:block>
 
 	<th:block layout:fragment="contents">
+	<div class="w-100">
+		<div class="d-flex justify-content-between mt-2">
+			<div id="title">~~~의 계획</div>
+			<div>
+				<button id="addBtn" class="btn btn-secondary">추가</button>
+				<button id="updateBtn" class="btn btn-secondary">수정</button>
+			</div>
+		</div>
+		
+		<div id="plan-box" class="d-flex mt-3 p-1 main-plan-box">
+			<div class="border-black">
+				<div class="text-center">예약 및 일정</div>
+				<ul class="connectedSortable overflow-scroll items-box" data-id="box0">
+					<li class="ui-state-default d-flex">
+						<div class="col-2 d-flex align-items-center">??:??</div>
+						<th:block>
+						<div class="col-3 d-flex align-items-center justify-content-center"><img width=50 height=50></div>
+						<div class="col-6">
+							<div>제목</div>
+							<div>메모</div>
+						</div>
+						</th:block>
+						
+						<!-- <th:block>
+						<div class="col-9">
+							<div>제목</div>
+							<div>메모</div>
+						</div>
+						</th:block> -->
+					</li>
+					
+					<li class="ui-state-default d-flex">
+						<div class="col-2 d-flex align-items-center">??:??</div>
+						<th:block>
+						<div class="col-3 d-flex align-items-center justify-content-center"><img width=50 height=50></div>
+						<div class="col-6">
+							<div>제목</div>
+							<div>메모</div>
+						</div>
+						</th:block>
+						
+						<!-- <th:block>
+						<div class="col-9">
+							<div>제목</div>
+							<div>메모</div>
+						</div>
+						</th:block> -->
+					</li>
+					
+					<li class="ui-state-default d-flex">
+						<div class="col-3 d-flex align-items-center">22:22</div>
+						<th:block>
+						<div class="col-3 d-flex align-items-center justify-content-center"><img width=50 height=50></div>
+						<div class="col-6">
+							<div>제목</div>
+							<div>메모</div>
+						</div>
+						</th:block>
+						
+						<!-- <th:block>
+						<div class="col-9">
+							<div>제목</div>
+							<div>메모</div>
+						</div>
+						</th:block> -->
+					</li>
+					
+					<li class="ui-state-default d-flex">
+						<div class="col-2 d-flex align-items-center">??:??</div>
+						<th:block>
+						<div class="col-3 d-flex align-items-center justify-content-center"><img width=50 height=50></div>
+						<div class="col-6">
+							<div>제목</div>
+							<div>메모</div>
+						</div>
+						</th:block>
+						
+						<!-- <th:block>
+						<div class="col-9">
+							<div>제목</div>
+							<div>메모</div>
+						</div>
+						</th:block> -->
+					</li>
+					
+					<li class="ui-state-default d-flex">
+						<div class="col-2 d-flex align-items-center">??:??</div>
+						<th:block>
+						<div class="col-3 d-flex align-items-center justify-content-center"><img width=50 height=50></div>
+						<div class="col-6">
+							<div>제목</div>
+							<div>메모</div>
+						</div>
+						</th:block>
+						
+						<!-- <th:block>
+						<div class="col-9">
+							<div>제목</div>
+							<div>메모</div>
+						</div>
+						</th:block> -->
+					</li>
+				</ul>
+			</div>
+			
+			<div class="border-black d-flex overflow-x-scroll w-100">
+				<div>
+					<div class="text-center">??/??</div>
+					<ul id="sortable1" class="connectedSortable overflow-scroll items-box" data-id="box1">
+					  <li class="ui-state-default box1" id="1" data-id="box1">Item 1</li>
+					  <li class="ui-state-default box1" id="2" data-id="box1">Item 2</li>
+					  <li class="ui-state-default box1" id="3" data-id="box1">Item 3</li>
+					  <li class="ui-state-default box1" id="4" data-id="box1">Item 4</li>
+					  <li class="ui-state-default box1" id="5" data-id="box1">Item 5</li>
+					</ul>
+				</div>
+				
+				<div>
+					<div class="text-center">??/??</div>
+					<ul id="sortable1" class="connectedSortable overflow-scroll items-box" data-id="box2">
+					  <li class="ui-state-default">Item 1</li>
+					  <li class="ui-state-default">Item 2</li>
+					  <li class="ui-state-default">Item 3</li>
+					  <li class="ui-state-default">Item 4</li>
+					  <li class="ui-state-default">Item 5</li>
+					</ul>
+				</div>
+				
+				<div>
+					<div class="text-center">??/??</div>
+					<ul id="sortable2" class="connectedSortable overflow-scroll items-box">
+					  <li class="ui-state-default" id="1">Item 1</li>
+					  <li class="ui-state-default" id="2">Item 2</li>
+					  <li class="ui-state-default" id="3">Item 3</li>
+					  <li class="ui-state-default" id="4">Item 4</li>
+					  <li class="ui-state-default" id="5">Item 5</li>
+					</ul>
+				</div>
+				
+				<div>
+					<div class="text-center">??/??</div>
+					<ul id="sortable1" class="connectedSortable overflow-scroll items-box">
+					  <li class="ui-state-default" id="1">Item 1</li>
+					  <li class="ui-state-default" id="2">Item 2</li>
+					  <li class="ui-state-default" id="3">Item 3</li>
+					  <li class="ui-state-default" id="4">Item 4</li>
+					  <li class="ui-state-default" id="5">Item 5</li>
+					</ul>
+				</div>
+			
+			</div>
+			
+ 		</div>
+	</div>
+	
+	
+	<div th:replace="~{plan/addPlan.html}"></div>
 	</th:block>
 	
 	<th:block layout:fragment="script">
+	<script src="https://code.jquery.com/ui/1.14.2/jquery-ui.js"></script>
+	
+	<script>
+	$(document).ready(function(){
+		let changeBox = null;
+		let changeBoxId = null;
+		
+		$(".connectedSortable").sortable({
+		      connectWith: ".connectedSortable",
+		      change: function( event, ui ) {
+				changeBox = $(this);
+				},update: function(event, ui){
+					
+					$(this).each(function(index, element) {
+						console.log(element);
+					});
+					
+				},receive: function(event, ui) {
+					$(ui.item).addClass($(this).data("id"));
+				},remove: function(event, ui) {
+					$(ui.item).removeClass($(this).data("id"));
+				}
+		}).disableSelection();
+		
+		$("#updateBtn").on("click",function(){
+			//alert();
+		});
+		
+		$("#addBtn").on("click",function(){
+			$("#planModal").fadeIn();
+		});
+		
+		$("#close-btn").on("click", function(){
+			$("#planModal").on("click", function(){
+				$("#planModal").fadeOut();
+			});
+		});
+		/* insertAdjacentHTML로 html 추가하기 */
+		
+	});
+	</script>
 	</th:block>
 </html>

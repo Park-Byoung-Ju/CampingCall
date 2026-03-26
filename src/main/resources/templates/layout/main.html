@@ -33,7 +33,10 @@
 		
 		<!-- section -->
 		<section class="mt-3 d-flex">
-			<th:block th:replace="~{fragments/article.html}"></th:block>
+			 <th:block th:if="${check == null || !check}">
+				<th:block th:replace="~{fragments/article.html}"></th:block>
+			 </th:block>
+			
 			<th:block layout:fragment="contents"></th:block>
 		</section>
 	
